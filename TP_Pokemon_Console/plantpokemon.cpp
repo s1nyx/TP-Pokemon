@@ -1,6 +1,6 @@
 #include "plantpokemon.h"
 
-PlantPokemon::PlantPokemon(const std::string &itsName, float itsSize, float itsWeight, int itsHealthPoint, int itsStrengthPower)
+PlantPokemon::PlantPokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower)
     : Pokemon(itsName, itsSize, itsWeight, itsHealthPoint, itsStrengthPower)
 {}
 

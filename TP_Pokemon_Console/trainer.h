@@ -25,6 +25,11 @@ public:
     void compareWithOpponent(Trainer* opponent);
     void addXP(int xp);
     int getItsLevel() const;
+    float getTotalHealthPoints() const;
+    int getTotalStrengthPower() const;
+    float getAverageAttackSpeed() const;
+
+    friend std::ostream& operator<<(std::ostream& outputStream, Trainer& trainer);
 };
 
 #endif // TRAINER_H

@@ -16,12 +16,12 @@ protected:
     std::string itsName;
     float itsSize;
     float itsWeight;
-    int itsHealthPoint;
+    float itsHealthPoint;
     int itsStrengthPower;
     float itsSpeed;
 
 public:
-    Pokemon(const std::string &itsName, float itsSize, float itsWeight, int itsHealthPoint, int itsStrengthPower);
+    Pokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower);
 
     virtual void calculateSpeed() = 0;
     virtual std::string getDescription() = 0;
@@ -33,6 +33,8 @@ public:
     int getItsHealthPoint() const;
     void setItsHealthPoint(int newItsHealthPoint);
     const std::string &getItsName() const;
+    int getItsStrengthPower() const;
+    float getItsSpeed() const;
 };
 
 #endif // POKEMON_H

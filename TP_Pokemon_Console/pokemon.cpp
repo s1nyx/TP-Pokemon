@@ -16,7 +16,17 @@ const std::string &Pokemon::getItsName() const
     return itsName;
 }
 
-Pokemon::Pokemon(const std::string &itsName, float itsSize, float itsWeight, int itsHealthPoint, int itsStrengthPower)
+int Pokemon::getItsStrengthPower() const
+{
+    return itsStrengthPower;
+}
+
+float Pokemon::getItsSpeed() const
+{
+    return itsSpeed;
+}
+
+Pokemon::Pokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower)
     :
     itsName(itsName),
     itsSize(itsSize),

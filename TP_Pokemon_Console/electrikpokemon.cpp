@@ -1,6 +1,6 @@
 #include "electrikpokemon.h"
 
-ElectrikPokemon::ElectrikPokemon(const std::string &itsName, float itsSize, float itsWeight, int itsHealthPoint, int itsStrengthPower, int itsPaws, int itsIntensity, int itsWings)
+ElectrikPokemon::ElectrikPokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsPaws, int itsIntensity, int itsWings)
     : Pokemon(itsName, itsSize, itsWeight, itsHealthPoint, itsStrengthPower),
     itsPaws(itsPaws),
     itsIntensity(itsIntensity),

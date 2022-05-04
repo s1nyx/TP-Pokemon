@@ -1,7 +1,7 @@
 #include "waterpokemon.h"
 #include <iostream>
 
-WaterPokemon::WaterPokemon(const std::string &itsName, float itsSize, float itsWeight, int itsHealthPoint, int itsStrengthPower, int itsFins)
+WaterPokemon::WaterPokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsFins)
     : Pokemon(itsName, itsSize, itsWeight, itsHealthPoint, itsStrengthPower),
       itsFins(itsFins)
 {}
