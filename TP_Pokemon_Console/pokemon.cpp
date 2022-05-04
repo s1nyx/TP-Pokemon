@@ -16,7 +16,7 @@ const std::string &Pokemon::getItsName() const
     return itsName;
 }
 
-Pokemon::Pokemon(const std::string &itsName, int itsSize, int itsWeight, int itsHealthPoint, int itsStrengthPower)
+Pokemon::Pokemon(const std::string &itsName, float itsSize, float itsWeight, int itsHealthPoint, int itsStrengthPower)
     :
     itsName(itsName),
     itsSize(itsSize),
@@ -27,9 +27,9 @@ Pokemon::Pokemon(const std::string &itsName, int itsSize, int itsWeight, int its
 
 void Pokemon::attack(Pokemon *otherPokemon)
 {
-    otherPokemon->setItsHealthPoint(otherPokemon->getItsHealthPoint() - itsCP);
+    otherPokemon->setItsHealthPoint(otherPokemon->getItsHealthPoint() - itsStrengthPower);
 
-    std::cout << itsName << " inflige " << itsCP << " dégats à " << otherPokemon->getItsName() << std::endl;
+    std::cout << itsName << " inflige " << itsStrengthPower << " dégats à " << otherPokemon->getItsName() << std::endl;
 
     if (otherPokemon->getItsHealthPoint() <= 0)
     {

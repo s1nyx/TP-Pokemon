@@ -1,6 +1,6 @@
 #include "firepokemon.h"
 
-FirePokemon::FirePokemon(const std::string &itsName, int itsSize, int itsWeight, int itsHealthPoint, int itsStrengthPower, int itsPaws)
+FirePokemon::FirePokemon(const std::string &itsName, float itsSize, float itsWeight, int itsHealthPoint, int itsStrengthPower, int itsPaws)
     : Pokemon(itsName, itsSize, itsWeight, itsHealthPoint, itsStrengthPower),
       itsPaws(itsPaws)
 {}

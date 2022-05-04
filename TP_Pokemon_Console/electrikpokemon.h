@@ -11,7 +11,7 @@ private:
     int itsWings;
 
 public:
-    ElectrikPokemon(const std::string &itsName, int itsSize, int itsWeight, int itsHealthPoint, int itsStrengthPower, int itsPaws, int itsIntensity, int itsWings);
+    ElectrikPokemon(const std::string &itsName, float itsSize, float itsWeight, int itsHealthPoint, int itsStrengthPower, int itsPaws, int itsIntensity, int itsWings);
     void calculateSpeed();
     std::string getDescription();
     Type getItsType();

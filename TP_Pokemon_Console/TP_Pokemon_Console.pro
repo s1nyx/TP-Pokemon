@@ -1,4 +1,3 @@
-QT -= gui
 QT += sql
 
 CONFIG += c++11 console

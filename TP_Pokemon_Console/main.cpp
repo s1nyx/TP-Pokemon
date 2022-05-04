@@ -1,9 +1,10 @@
 #include <iostream>
+#include "databasemanager.h"
 #include "game.h"
 
 int main()
 {
-    Game* game = new Game();
+    /*Game* game = new Game();
 
     std::string choseAnswer = "";
     do {
@@ -12,5 +13,5 @@ int main()
     } while (choseAnswer != "B" && choseAnswer != "A" && choseAnswer != "CA");
 
     game->start(choseAnswer);
-    game->gameLoop();
+    game->gameLoop();*/
 }

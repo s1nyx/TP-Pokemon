@@ -21,7 +21,7 @@ protected:
     float itsSpeed;
 
 public:
-    Pokemon(const std::string &itsName, int itsSize, int itsWeight, int itsHealthPoint, int itsStrengthPower);
+    Pokemon(const std::string &itsName, float itsSize, float itsWeight, int itsHealthPoint, int itsStrengthPower);
 
     virtual void calculateSpeed() = 0;
     virtual std::string getDescription() = 0;

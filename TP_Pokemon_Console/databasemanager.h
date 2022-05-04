@@ -1,7 +1,10 @@
 #ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
+#include "pokemon.h"
+
 #include <QSqlDatabase>
+#include <vector>
 
 class DatabaseManager
 {
@@ -12,7 +15,7 @@ public:
     DatabaseManager();
 
     bool connect();
-    void getPokemons();
+    std::vector<Pokemon*>* getPokemons();
 
     DatabaseManager *getItsInstance() const;
 };
