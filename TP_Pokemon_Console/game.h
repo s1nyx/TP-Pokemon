@@ -13,12 +13,12 @@ class Game
 {
 private:
     GameState itsState;
-    Trainer* itsFirstRobot;
-    Trainer* itsSecondRobot;
+    Trainer* itsFirstTrainer;
+    Trainer* itsSecondTrainer;
 public:
     Game();
 
-    void start(std::string robotType);
+    void start();
     void save();
     void gameLoop();
 

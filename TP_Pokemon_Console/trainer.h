@@ -18,8 +18,8 @@ public:
     Trainer(const std::string &itsName);
     ~Trainer();
 
-    void save();
-    void attack(Pokemon* hisPokemon, Trainer* opponent);
+    //void save();
+    //void attack(Pokemon* hisPokemon, Trainer* opponent);
     void addPokemon(Pokemon* pokemon);
     void removePokemon(Pokemon* pokemon);
     void compareWithOpponent(Trainer* opponent);

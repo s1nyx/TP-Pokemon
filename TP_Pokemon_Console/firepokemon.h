@@ -9,7 +9,7 @@ private:
     int itsPaws;
 
 public:
-    FirePokemon(const std::string &itsName, float itsSize, float itsWeight, int itsHealthPoint, int itsStrengthPower, int itsPaws);
+    FirePokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsPaws);
     // Pokemon interface
     void calculateSpeed();
     std::string getDescription();

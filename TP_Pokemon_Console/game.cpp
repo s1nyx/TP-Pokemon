@@ -15,11 +15,11 @@ void Game::setItsState(GameState newItsState)
 Game::Game()
 {
     itsState = LOBBY;
-    itsFirstRobot = new Trainer("AI 1");
-    itsSecondRobot = new Trainer("AI 2");
+    itsFirstTrainer = new Trainer("AI 1");
+    itsSecondTrainer = new Trainer("AI 2");
 }
 
-void Game::start(std::string aiType)
+void Game::start()
 {
     if (!DatabaseManager().getItsInstance()->connect())
     {
@@ -27,27 +27,57 @@ void Game::start(std::string aiType)
         return;
     }
 
-    // TODO: choisir les pokemons aléatoirement pour les 2joueurs
+    // Choisir les pokemons aléatoirement pour les 2 joueurs
     std::vector<Pokemon*>* pokemons = DatabaseManager().getItsInstance()->getPokemons();
-
     std::cout << pokemons->size() << std::endl;
-
-    for (Pokemon* p : *pokemons)
+    for (unsigned int i = 0; i < 12; ++i)
     {
-        std::cout << p->getDescription() << std::endl;
+        int randomIndex = rand() % 40;
+
+        if (i < 6)
+        {
+            try {
+                itsFirstTrainer->addPokemon(pokemons->at(randomIndex));
+            }  catch (...) {
+                std::cout << "Dresseur 1: L'index n'est pas dans le vecteur des pokemons : " << randomIndex << std::endl;
+            }
+        }
+        else
+        {
+            try {
+                itsSecondTrainer->addPokemon(pokemons->at(randomIndex));
+            }  catch (...) {
+                std::cout << "Dresseur 2: L'index n'est pas dans le vecteur des pokemons : " << randomIndex << std::endl;
+            }
+        }
     }
 
-    if (itsFirstRobot->getItsLevel() < itsSecondRobot->getItsLevel())
+    // Gestion du premier joueur qui démarre
+    if (itsFirstTrainer->getItsLevel() < itsSecondTrainer->getItsLevel())
     {
-        std::swap(itsFirstRobot, itsSecondRobot);
+        std::swap(itsFirstTrainer, itsSecondTrainer);
     }
     else
     {
-        // TODO: le dresseur ayant la plus haute puissance de combat totale démarre
+        if (itsFirstTrainer->getAverageAttackSpeed() < itsSecondTrainer->getAverageAttackSpeed())
+        {
+           std::swap(itsFirstTrainer, itsSecondTrainer);
+        }
     }
+
+    itsState = INGAME;
 }
 
 void Game::gameLoop()
 {
+    /*while (itsState == INGAME)
+    {
 
+    }
+
+    if (itsState == FINISHED)
+    {
+
+    }*/
+    std::cout << "LOOP" << std::endl;
 }
