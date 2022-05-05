@@ -30,6 +30,7 @@ public:
     float getAverageAttackSpeed() const;
 
     friend std::ostream& operator<<(std::ostream& outputStream, Trainer& trainer);
+    std::vector<Pokemon *> *getItsPokemons() const;
 };
 
 #endif // TRAINER_H

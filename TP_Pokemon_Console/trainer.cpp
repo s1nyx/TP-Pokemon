@@ -44,6 +44,11 @@ float Trainer::getAverageAttackSpeed() const
     return total / itsPokemons->size();
 }
 
+std::vector<Pokemon *> *Trainer::getItsPokemons() const
+{
+    return itsPokemons;
+}
+
 Trainer::Trainer(const std::string &itsName) : itsName(itsName)
 {
     itsLevel = 0;

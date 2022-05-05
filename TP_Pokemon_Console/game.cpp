@@ -52,6 +52,16 @@ void Game::start()
         }
     }
 
+    // TODO: trier en fonction du type et des PC
+    /*std::sort(itsFirstTrainer->getItsPokemons()->begin(), itsFirstTrainer->getItsPokemons()->end(), [](Pokemon* pokemon1, Pokemon* pokemon2){
+        return pokemon1->getItsType() == pokemon2->getItsType();
+    });
+
+    for (std::vector<Pokemon*>::iterator it = itsFirstTrainer->getItsPokemons()->begin(); it != itsFirstTrainer->getItsPokemons()->end(); ++it)
+    {
+        std::cout << (*it)->getDescription() << std::endl;
+    }*/
+
     // TODO: clean un peu le code ici
 
     // Gestion du premier joueur qui démarre
