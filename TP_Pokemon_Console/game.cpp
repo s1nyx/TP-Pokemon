@@ -52,16 +52,25 @@ void Game::start()
         }
     }
 
+    // TODO: clean un peu le code ici
+
     // Gestion du premier joueur qui démarre
     if (itsFirstTrainer->getItsLevel() < itsSecondTrainer->getItsLevel())
     {
         std::swap(itsFirstTrainer, itsSecondTrainer);
     }
-    else
+    else if (itsFirstTrainer->getItsLevel() == itsSecondTrainer->getItsLevel())
     {
         if (itsFirstTrainer->getAverageAttackSpeed() < itsSecondTrainer->getAverageAttackSpeed())
         {
            std::swap(itsFirstTrainer, itsSecondTrainer);
+        }
+        else if (itsFirstTrainer->getAverageAttackSpeed() == itsSecondTrainer->getAverageAttackSpeed())
+        {
+            if (rand() > 0.5)
+            {
+               std::swap(itsFirstTrainer, itsSecondTrainer);
+            }
         }
     }
 
