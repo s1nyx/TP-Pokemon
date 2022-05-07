@@ -33,7 +33,9 @@ Pokemon::Pokemon(const std::string &itsName, float itsSize, float itsWeight, flo
     itsWeight(itsWeight),
     itsHealthPoint(itsHealthPoint),
     itsStrengthPower(itsStrengthPower)
-{}
+{
+    itsMaxHealthPoint = itsHealthPoint;
+}
 
 void Pokemon::attack(Pokemon *otherPokemon)
 {

@@ -12,6 +12,7 @@ SOURCES += \
     attackwidget.cpp \
     databasemanager.cpp \
     electrikpokemon.cpp \
+    finishwidget.cpp \
     firepokemon.cpp \
     game.cpp \
     homewidget.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     attackwidget.h \
     databasemanager.h \
     electrikpokemon.h \
+    finishwidget.h \
     firepokemon.h \
     game.h \
     homewidget.h \
@@ -37,6 +39,7 @@ HEADERS += \
 
 FORMS += \
     attackwidget.ui \
+    finishwidget.ui \
     homewidget.ui \
     widget.ui
 

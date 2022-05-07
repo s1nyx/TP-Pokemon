@@ -17,6 +17,7 @@ protected:
     float itsSize;
     float itsWeight;
     float itsHealthPoint;
+    float itsMaxHealthPoint;
     int itsStrengthPower;
     float itsSpeed;
 

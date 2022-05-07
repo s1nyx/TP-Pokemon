@@ -21,6 +21,7 @@
 #include "ui_attackwidget.h"
 #include "homewidget.h"
 #include "ui_homewidget.h"
+#include "finishwidget.h"
 
 #include <qboxlayout.h>
 
@@ -29,19 +30,24 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget), currentWidget(HOME)
 {
     ui->setupUi(this);
+    // désactive le resize
+    setWindowFlags(Qt::Widget | Qt::MSWindowsFixedSizeDialogHint);
 
     AttackWidget* attackWidget = new AttackWidget();
     HomeWidget* homeWidget = new HomeWidget();
+    FinishWidget* finishWidget = new FinishWidget();
 
     stackedWidget = new QStackedWidget();
     stackedWidget->addWidget(homeWidget);
     stackedWidget->addWidget(attackWidget);
+    stackedWidget->addWidget(finishWidget);
 
     connect(homeWidget->getUi()->pushButton, SIGNAL(clicked()), this, SLOT(navigate()));
     connect(attackWidget->getUi()->pushButton, SIGNAL(clicked()), this, SLOT(navigate()));
 
     QVBoxLayout* layout = new QVBoxLayout();
     layout->addWidget(stackedWidget);
+
     setLayout(layout);
 }
 
@@ -52,6 +58,7 @@ Widget::~Widget()
 
 void Widget::navigate()
 {
+    // TODO: remplacer l'enum par celle du game?
     switch (currentWidget)
     {
         case HOME:
