@@ -15,6 +15,7 @@
  * contact the author of this file, or the owner of the project in which
  * this file belongs to.
  *****************************************************************************/
+#include "databasemanager.h"
 #include "homewidget.h"
 #include "ui_homewidget.h"
 
@@ -23,6 +24,38 @@ HomeWidget::HomeWidget(QWidget *parent) :
     ui(new Ui::HomeWidget)
 {
     ui->setupUi(this);
+
+    fireTypePokemonsModel = new QSqlTableModel(0, DatabaseManager().getItsInstance()->getItsDatabase());
+    fireTypePokemonsModel->setTable("fire_pokemons");
+    fireTypePokemonsModel->select();
+
+    plantTypePokemonsModel = new QSqlTableModel(0, DatabaseManager().getItsInstance()->getItsDatabase());
+    plantTypePokemonsModel->setTable("plant_pokemons");
+    plantTypePokemonsModel->select();
+
+    electrikTypePokemonsModel = new QSqlTableModel(0, DatabaseManager().getItsInstance()->getItsDatabase());
+    electrikTypePokemonsModel->setTable("electrik_pokemons");
+    electrikTypePokemonsModel->select();
+
+    waterTypePokemonsModel = new QSqlTableModel(0, DatabaseManager().getItsInstance()->getItsDatabase());
+    waterTypePokemonsModel->setTable("water_pokemons");
+    waterTypePokemonsModel->select();
+
+    ui->firePokemonsTableView->setModel(fireTypePokemonsModel);
+    ui->firePokemonsTableView->setAlternatingRowColors(true);
+    ui->firePokemonsTableView->show();
+
+    ui->plantPokemonsTableView->setModel(plantTypePokemonsModel);
+    ui->plantPokemonsTableView->setAlternatingRowColors(true);
+    ui->plantPokemonsTableView->show();
+
+    ui->electrikPokemonsTableView->setModel(electrikTypePokemonsModel);
+    ui->electrikPokemonsTableView->setAlternatingRowColors(true);
+    ui->electrikPokemonsTableView->show();
+
+    ui->waterPokemonsTableView->setModel(waterTypePokemonsModel);
+    ui->waterPokemonsTableView->setAlternatingRowColors(true);
+    ui->waterPokemonsTableView->show();
 }
 
 HomeWidget::~HomeWidget()

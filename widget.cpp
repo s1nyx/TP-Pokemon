@@ -42,7 +42,7 @@ Widget::Widget(QWidget *parent)
     stackedWidget->addWidget(attackWidget);
     stackedWidget->addWidget(finishWidget);
 
-    connect(homeWidget->getUi()->pushButton, SIGNAL(clicked()), this, SLOT(navigate()));
+    connect(homeWidget->getUi()->startGame, SIGNAL(clicked()), this, SLOT(navigate()));
     connect(attackWidget->getUi()->pushButton, SIGNAL(clicked()), this, SLOT(navigate()));
 
     QVBoxLayout* layout = new QVBoxLayout();

@@ -15,14 +15,17 @@
  * contact the author of this file, or the owner of the project in which
  * this file belongs to.
  *****************************************************************************/
+#include "databasemanager.h"
 #include "widget.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
+    qDebug() << DatabaseManager().getItsInstance()->connect();
     QApplication a(argc, argv);
     Widget w;
+
     w.show();
     return a.exec();
 }

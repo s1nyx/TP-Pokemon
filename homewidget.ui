@@ -476,7 +476,7 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="startGame">
     <property name="geometry">
      <rect>
       <x>400</x>
@@ -502,7 +502,7 @@
      <string>Nom du dresseur 1</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="trainer1Name">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -518,7 +518,7 @@
      <string>Entrez le nom..</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="trainer2Name">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -547,7 +547,7 @@
      <string>Nom du dresseur 2</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="aiType">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -585,7 +585,7 @@
      <string>Choix du type d'IA</string>
     </property>
    </widget>
-   <widget class="QTableView" name="tableView">
+   <widget class="QTableView" name="firePokemonsTableView">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -595,7 +595,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTableView" name="tableView_2">
+   <widget class="QTableView" name="electrikPokemonsTableView">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -631,7 +631,7 @@
      <string>Pokemons Type ELECTRIK</string>
     </property>
    </widget>
-   <widget class="QTableView" name="tableView_3">
+   <widget class="QTableView" name="plantPokemonsTableView">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -641,7 +641,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTableView" name="tableView_4">
+   <widget class="QTableView" name="waterPokemonsTableView">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -677,7 +677,7 @@
      <string>Pokemons Type EAU</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="generateTrainer1Pokemon">
     <property name="geometry">
      <rect>
       <x>660</x>
@@ -733,10 +733,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>Equipe du dresseur n°1</string>
+     <string>Equipe du dresseur n°2</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="removeTrainer1Pokemon">
     <property name="geometry">
      <rect>
       <x>580</x>
@@ -749,7 +749,7 @@
      <string>Supprimer</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="removeTrainer2Pokemon">
     <property name="geometry">
      <rect>
       <x>580</x>
@@ -762,7 +762,7 @@
      <string>Supprimer</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="generateTrainer2Pokemon">
     <property name="geometry">
      <rect>
       <x>660</x>

@@ -18,6 +18,7 @@
 #ifndef HOMEWIDGET_H
 #define HOMEWIDGET_H
 
+#include <QSqlTableModel>
 #include <QWidget>
 
 namespace Ui {
@@ -36,6 +37,10 @@ public:
 
 private:
     Ui::HomeWidget *ui;
+    QSqlTableModel* fireTypePokemonsModel;
+    QSqlTableModel* waterTypePokemonsModel;
+    QSqlTableModel* electrikTypePokemonsModel;
+    QSqlTableModel* plantTypePokemonsModel;
 };
 
 #endif // HOMEWIDGET_H

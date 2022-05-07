@@ -8,6 +8,11 @@
 
 DatabaseManager* DatabaseManager::itsInstance = nullptr;
 
+const QSqlDatabase &DatabaseManager::getItsDatabase() const
+{
+    return itsDatabase;
+}
+
 DatabaseManager::DatabaseManager()
 {}
 
@@ -34,6 +39,39 @@ std::vector<Pokemon *>* DatabaseManager::getPokemons()
     std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
 
     // TODO: clean ici c'est vrm dégeu
+
+
+
+
+    return pokemons;
+}
+
+std::vector<Pokemon *> *DatabaseManager::getFireTypePokemons()
+{
+    std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
+
+    QSqlQuery query;
+    query.exec("SELECT * FROM fire_pokemons");
+    while (query.next())
+    {
+        Pokemon* pokemon = new FirePokemon(
+            query.value("name").toString().toStdString(),
+            query.value("size").toFloat(),
+            query.value("weight").toFloat(),
+            query.value("hp").toInt(),
+            query.value("cp").toInt(),
+            query.value("paws").toInt()
+        );
+        pokemons->push_back(pokemon);
+    }
+
+    return pokemons;
+}
+
+std::vector<Pokemon *> *DatabaseManager::getElectrikTypePokemons()
+{
+    std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
+
     QSqlQuery query;
     query.exec("SELECT * FROM electrik_pokemons");
     while (query.next())
@@ -51,33 +89,14 @@ std::vector<Pokemon *>* DatabaseManager::getPokemons()
         pokemons->push_back(pokemon);
     }
 
-    query.exec("SELECT * FROM fire_pokemons");
-    while (query.next())
-    {
-        Pokemon* pokemon = new FirePokemon(
-            query.value("name").toString().toStdString(),
-            query.value("size").toFloat(),
-            query.value("weight").toFloat(),
-            query.value("hp").toInt(),
-            query.value("cp").toInt(),
-            query.value("paws").toInt()
-        );
-        pokemons->push_back(pokemon);
-    }
+    return pokemons;
+}
 
-    query.exec("SELECT * FROM plant_pokemons");
-    while (query.next())
-    {
-        Pokemon* pokemon = new PlantPokemon(
-            query.value("name").toString().toStdString(),
-            query.value("size").toFloat(),
-            query.value("weight").toFloat(),
-            query.value("hp").toInt(),
-            query.value("cp").toInt()
-        );
-        pokemons->push_back(pokemon);
-    }
+std::vector<Pokemon *> *DatabaseManager::getWaterTypePokemons()
+{
+    std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
 
+    QSqlQuery query;
     query.exec("SELECT * FROM water_pokemons");
     while (query.next())
     {
@@ -88,6 +107,27 @@ std::vector<Pokemon *>* DatabaseManager::getPokemons()
             query.value("hp").toInt(),
             query.value("cp").toInt(),
             query.value("fins").toInt()
+        );
+        pokemons->push_back(pokemon);
+    }
+
+    return pokemons;
+}
+
+std::vector<Pokemon *> *DatabaseManager::getPlantTypePokemons()
+{
+    std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
+
+    QSqlQuery query;
+    query.exec("SELECT * FROM plant_pokemons");
+    while (query.next())
+    {
+        Pokemon* pokemon = new PlantPokemon(
+            query.value("name").toString().toStdString(),
+            query.value("size").toFloat(),
+            query.value("weight").toFloat(),
+            query.value("hp").toInt(),
+            query.value("cp").toInt()
         );
         pokemons->push_back(pokemon);
     }
