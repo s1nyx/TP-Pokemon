@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>990</width>
-    <height>395</height>
+    <height>418</height>
    </rect>
   </property>
   <property name="palette">
@@ -461,7 +461,7 @@
      <x>0</x>
      <y>0</y>
      <width>1011</width>
-     <height>391</height>
+     <height>421</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -677,20 +677,7 @@
      <string>Pokemons Type EAU</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="generateTrainer1Pokemon">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>170</y>
-      <width>131</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Générer aléatoirement</string>
-    </property>
-   </widget>
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListWidget" name="trainer1Team">
     <property name="geometry">
      <rect>
       <x>580</x>
@@ -713,7 +700,7 @@
      <string>Equipe du dresseur n°1</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget_2">
+   <widget class="QListWidget" name="trainer2Team">
     <property name="geometry">
      <rect>
       <x>580</x>
@@ -736,43 +723,30 @@
      <string>Equipe du dresseur n°2</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="removeTrainer1Pokemon">
+   <widget class="QPushButton" name="removePokemon">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>170</y>
-      <width>71</width>
+      <x>560</x>
+      <y>380</y>
+      <width>211</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
-     <string>Supprimer</string>
+     <string>Supprimer le(s) pokemon(s) de l'équipe</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="removeTrainer2Pokemon">
+   <widget class="QPushButton" name="generatePokemon">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>360</y>
-      <width>71</width>
+      <x>790</x>
+      <y>380</y>
+      <width>171</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
-     <string>Supprimer</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="generateTrainer2Pokemon">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>360</y>
-      <width>131</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Générer aléatoirement</string>
+     <string>Générer aléatoirement l'équipe</string>
     </property>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -840,6 +814,39 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="addPokemon">
+    <property name="geometry">
+     <rect>
+      <x>307</x>
+      <y>380</y>
+      <width>231</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ajouter le(s) pokemon(s) sélectionné(s)</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="targetedTrainer">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>380</y>
+      <width>101</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Dresseur n°1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Dresseur n°2</string>
+     </property>
+    </item>
    </widget>
   </widget>
  </widget>

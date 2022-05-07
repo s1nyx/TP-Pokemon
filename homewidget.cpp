@@ -16,8 +16,13 @@
  * this file belongs to.
  *****************************************************************************/
 #include "databasemanager.h"
+#include "game.h"
 #include "homewidget.h"
+#include "trainer.h"
 #include "ui_homewidget.h"
+
+#include <QString>
+#include <QSqlRecord>
 
 HomeWidget::HomeWidget(QWidget *parent) :
     QWidget(parent),
@@ -67,3 +72,76 @@ Ui::HomeWidget *HomeWidget::getUi() const
 {
     return ui;
 }
+
+void HomeWidget::on_addPokemon_clicked()
+{
+    int dresser = ui->targetedTrainer->currentIndex();
+    Trainer* currentTrainer;
+    QListWidget* currentTrainerTeam;
+
+    if (dresser == 0)
+    {
+        currentTrainer = Game().getItsInstance()->getItsFirstTrainer();
+        currentTrainerTeam = ui->trainer1Team;
+    }
+    else
+    {
+        currentTrainer = Game().getItsInstance()->getItsSecondTrainer();
+        currentTrainerTeam = ui->trainer2Team;
+    }
+
+    // TODO: checker que le dresseur a pas déjà 6 pokemons
+
+    // TODO: voir pour opti le code dessous car dégeu
+
+    int electrikSelectedID = ui->electrikPokemonsTableView->currentIndex().row();
+
+    if (electrikSelectedID != -1)
+    {
+        QString pokemonName = electrikTypePokemonsModel->record(electrikSelectedID).value("name").toString();
+        currentTrainerTeam->addItem(pokemonName);
+        //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
+        currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getElectrikTypePokemons()->at(electrikSelectedID));
+    }
+
+    int fireSelectedID = ui->firePokemonsTableView->currentIndex().row();
+
+    if (fireSelectedID != -1)
+    {
+        QString pokemonName = fireTypePokemonsModel->record(fireSelectedID).value("name").toString();
+        currentTrainerTeam->addItem(pokemonName);
+        //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
+        currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getFireTypePokemons()->at(fireSelectedID));
+    }
+
+    int waterSelectedID = ui->waterPokemonsTableView->currentIndex().row();
+
+    if (waterSelectedID != -1)
+    {
+        QString pokemonName = waterTypePokemonsModel->record(waterSelectedID).value("name").toString();
+
+        currentTrainerTeam->addItem(pokemonName);
+        //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
+        currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getWaterTypePokemons()->at(waterSelectedID));
+    }
+
+    int plantSelectedID = ui->plantPokemonsTableView->currentIndex().row();
+
+    if (plantSelectedID != -1)
+    {
+        QString pokemonName = plantTypePokemonsModel->record(plantSelectedID).value("name").toString();
+
+        currentTrainerTeam->addItem(pokemonName);
+        //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
+        currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getPlantTypePokemons()->at(plantSelectedID));
+    }
+
+    qDebug() << electrikSelectedID;
+}
+
+
+void HomeWidget::on_removePokemon_clicked()
+{
+
+}
+

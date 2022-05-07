@@ -2,6 +2,8 @@
 #include "game.h"
 #include <iostream>
 
+Game* Game::itsInstance = nullptr;
+
 GameState Game::getItsState() const
 {
     return itsState;
@@ -10,6 +12,26 @@ GameState Game::getItsState() const
 void Game::setItsState(GameState newItsState)
 {
     itsState = newItsState;
+}
+
+Trainer *Game::getItsFirstTrainer() const
+{
+    return itsFirstTrainer;
+}
+
+Trainer *Game::getItsSecondTrainer() const
+{
+    return itsSecondTrainer;
+}
+
+Game *Game::getItsInstance() const
+{
+    if (itsInstance == nullptr)
+    {
+        itsInstance = new Game();
+    }
+
+    return itsInstance;
 }
 
 Game::Game()

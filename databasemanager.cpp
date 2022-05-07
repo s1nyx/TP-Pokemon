@@ -14,7 +14,8 @@ const QSqlDatabase &DatabaseManager::getItsDatabase() const
 }
 
 DatabaseManager::DatabaseManager()
-{}
+{
+}
 
 DatabaseManager *DatabaseManager::getItsInstance() const
 {
@@ -34,7 +35,7 @@ bool DatabaseManager::connect()
     return itsDatabase.open();
 }
 
-std::vector<Pokemon *>* DatabaseManager::getPokemons()
+std::vector<Pokemon *>* DatabaseManager::getPokemons() const
 {
     std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
 
@@ -46,7 +47,7 @@ std::vector<Pokemon *>* DatabaseManager::getPokemons()
     return pokemons;
 }
 
-std::vector<Pokemon *> *DatabaseManager::getFireTypePokemons()
+std::vector<Pokemon *> *DatabaseManager::getFireTypePokemons() const
 {
     std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
 
@@ -68,7 +69,7 @@ std::vector<Pokemon *> *DatabaseManager::getFireTypePokemons()
     return pokemons;
 }
 
-std::vector<Pokemon *> *DatabaseManager::getElectrikTypePokemons()
+std::vector<Pokemon *> *DatabaseManager::getElectrikTypePokemons() const
 {
     std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
 
@@ -92,7 +93,7 @@ std::vector<Pokemon *> *DatabaseManager::getElectrikTypePokemons()
     return pokemons;
 }
 
-std::vector<Pokemon *> *DatabaseManager::getWaterTypePokemons()
+std::vector<Pokemon *> *DatabaseManager::getWaterTypePokemons() const
 {
     std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
 
@@ -114,7 +115,7 @@ std::vector<Pokemon *> *DatabaseManager::getWaterTypePokemons()
     return pokemons;
 }
 
-std::vector<Pokemon *> *DatabaseManager::getPlantTypePokemons()
+std::vector<Pokemon *> *DatabaseManager::getPlantTypePokemons() const
 {
     std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
 

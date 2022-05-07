@@ -15,11 +15,11 @@ public:
     DatabaseManager();
 
     bool connect();
-    std::vector<Pokemon*>* getPokemons();
-    std::vector<Pokemon*>* getFireTypePokemons();
-    std::vector<Pokemon*>* getElectrikTypePokemons();
-    std::vector<Pokemon*>* getWaterTypePokemons();
-    std::vector<Pokemon*>* getPlantTypePokemons();
+    std::vector<Pokemon*>* getPokemons() const;
+    std::vector<Pokemon*>* getFireTypePokemons() const;
+    std::vector<Pokemon*>* getElectrikTypePokemons() const;
+    std::vector<Pokemon*>* getWaterTypePokemons() const;
+    std::vector<Pokemon*>* getPlantTypePokemons() const;
 
     DatabaseManager *getItsInstance() const;
     const QSqlDatabase &getItsDatabase() const;
