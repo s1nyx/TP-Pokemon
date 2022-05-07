@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>890</width>
+    <width>990</width>
     <height>395</height>
    </rect>
   </property>
@@ -460,7 +460,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>891</width>
+     <width>1011</width>
      <height>391</height>
     </rect>
    </property>
@@ -680,7 +680,7 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>660</x>
       <y>170</y>
       <width>131</width>
       <height>22</height>
@@ -693,7 +693,7 @@
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>580</x>
       <y>30</y>
       <width>211</width>
       <height>131</height>
@@ -703,7 +703,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>580</x>
       <y>10</y>
       <width>141</width>
       <height>16</height>
@@ -716,7 +716,7 @@
    <widget class="QListWidget" name="listWidget_2">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>580</x>
       <y>220</y>
       <width>211</width>
       <height>131</height>
@@ -726,7 +726,7 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>580</x>
       <y>200</y>
       <width>141</width>
       <height>16</height>
@@ -739,7 +739,7 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>580</x>
       <y>170</y>
       <width>71</width>
       <height>22</height>
@@ -752,7 +752,7 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>580</x>
       <y>360</y>
       <width>71</width>
       <height>22</height>
@@ -765,7 +765,7 @@
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>660</x>
       <y>360</y>
       <width>131</width>
       <height>22</height>
@@ -774,6 +774,72 @@
     <property name="text">
      <string>Générer aléatoirement</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>30</y>
+      <width>160</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>Points de vie total: 0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>Puissance total: 0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_12">
+       <property name="text">
+        <string>Vitesse moyenne d'attaque: 0</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>220</y>
+      <width>160</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>Points de vie total: 0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_14">
+       <property name="text">
+        <string>Puissance total: 0</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>Vitesse moyenne d'attaque: 0</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
