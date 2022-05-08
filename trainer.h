@@ -31,6 +31,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& outputStream, Trainer& trainer);
     std::vector<Pokemon *> *getItsPokemons() const;
+    void setItsName(const std::string &newItsName);
 };
 
 #endif // TRAINER_H

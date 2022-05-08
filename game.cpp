@@ -37,13 +37,14 @@ Game *Game::getItsInstance() const
 Game::Game()
 {
     itsState = LOBBY;
+
     itsFirstTrainer = new Trainer("AI 1");
     itsSecondTrainer = new Trainer("AI 2");
 }
 
-void Game::start()
+void Game::start(AIType aiType)
 {
-    if (!DatabaseManager().getItsInstance()->connect())
+    /*if (!DatabaseManager().getItsInstance()->connect())
     {
         std::cout << "Connexion a la BDD impossible." << std::endl;
         return;
@@ -72,7 +73,7 @@ void Game::start()
                 std::cout << "Dresseur 2: L'index n'est pas dans le vecteur des pokemons : " << randomIndex << std::endl;
             }
         }
-    }
+    }*/
 
     // TODO: trier en fonction du type et des PC
     /*std::sort(itsFirstTrainer->getItsPokemons()->begin(), itsFirstTrainer->getItsPokemons()->end(), [](Pokemon* pokemon1, Pokemon* pokemon2){

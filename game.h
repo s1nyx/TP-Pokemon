@@ -9,6 +9,12 @@ enum GameState {
     FINISHED
 };
 
+enum AIType {
+    BASIC,
+    ADVANCED,
+    EXPERT
+};
+
 class Game
 {
 private:
@@ -19,7 +25,7 @@ private:
 public:
     Game();
 
-    void start();
+    void start(AIType aiType);
     void save();
     void gameLoop();
 

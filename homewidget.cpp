@@ -30,6 +30,7 @@ HomeWidget::HomeWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // TODO: voir pour opti
     fireTypePokemonsModel = new QSqlTableModel(0, DatabaseManager().getItsInstance()->getItsDatabase());
     fireTypePokemonsModel->setTable("fire_pokemons");
     fireTypePokemonsModel->select();
@@ -90,58 +91,107 @@ void HomeWidget::on_addPokemon_clicked()
         currentTrainerTeam = ui->trainer2Team;
     }
 
-    // TODO: checker que le dresseur a pas déjà 6 pokemons
-
-    // TODO: voir pour opti le code dessous car dégeu
-
-    int electrikSelectedID = ui->electrikPokemonsTableView->currentIndex().row();
-
-    if (electrikSelectedID != -1)
+    // checker que le dresseur a pas déjà 6 pokemons
+    if (currentTrainer->getItsPokemons()->size() < 6)
     {
-        QString pokemonName = electrikTypePokemonsModel->record(electrikSelectedID).value("name").toString();
-        currentTrainerTeam->addItem(pokemonName);
-        //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
-        currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getElectrikTypePokemons()->at(electrikSelectedID));
+        // TODO: voir pour opti le code dessous car dégeu
+
+        int electrikSelectedID = ui->electrikPokemonsTableView->currentIndex().row();
+
+        if (electrikSelectedID != -1)
+        {
+            QString pokemonName = electrikTypePokemonsModel->record(electrikSelectedID).value("name").toString();
+            currentTrainerTeam->addItem(pokemonName);
+            //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
+            currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getElectrikTypePokemons()->at(electrikSelectedID));
+        }
+
+        int fireSelectedID = ui->firePokemonsTableView->currentIndex().row();
+
+        if (fireSelectedID != -1)
+        {
+            QString pokemonName = fireTypePokemonsModel->record(fireSelectedID).value("name").toString();
+            currentTrainerTeam->addItem(pokemonName);
+            //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
+            currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getFireTypePokemons()->at(fireSelectedID));
+        }
+
+        int waterSelectedID = ui->waterPokemonsTableView->currentIndex().row();
+
+        if (waterSelectedID != -1)
+        {
+            QString pokemonName = waterTypePokemonsModel->record(waterSelectedID).value("name").toString();
+
+            currentTrainerTeam->addItem(pokemonName);
+            //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
+            currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getWaterTypePokemons()->at(waterSelectedID));
+        }
+
+        int plantSelectedID = ui->plantPokemonsTableView->currentIndex().row();
+
+        if (plantSelectedID != -1)
+        {
+            QString pokemonName = plantTypePokemonsModel->record(plantSelectedID).value("name").toString();
+
+            currentTrainerTeam->addItem(pokemonName);
+            //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
+            currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getPlantTypePokemons()->at(plantSelectedID));
+        }
+
+        qDebug() << electrikSelectedID;
     }
-
-    int fireSelectedID = ui->firePokemonsTableView->currentIndex().row();
-
-    if (fireSelectedID != -1)
-    {
-        QString pokemonName = fireTypePokemonsModel->record(fireSelectedID).value("name").toString();
-        currentTrainerTeam->addItem(pokemonName);
-        //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
-        currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getFireTypePokemons()->at(fireSelectedID));
-    }
-
-    int waterSelectedID = ui->waterPokemonsTableView->currentIndex().row();
-
-    if (waterSelectedID != -1)
-    {
-        QString pokemonName = waterTypePokemonsModel->record(waterSelectedID).value("name").toString();
-
-        currentTrainerTeam->addItem(pokemonName);
-        //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
-        currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getWaterTypePokemons()->at(waterSelectedID));
-    }
-
-    int plantSelectedID = ui->plantPokemonsTableView->currentIndex().row();
-
-    if (plantSelectedID != -1)
-    {
-        QString pokemonName = plantTypePokemonsModel->record(plantSelectedID).value("name").toString();
-
-        currentTrainerTeam->addItem(pokemonName);
-        //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
-        currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getPlantTypePokemons()->at(plantSelectedID));
-    }
-
-    qDebug() << electrikSelectedID;
 }
 
 
 void HomeWidget::on_removePokemon_clicked()
 {
+    // todo: passer le dresser en attribut pour les autres fonctions
+    int dresser = ui->targetedTrainer->currentIndex();
+    Trainer* currentTrainer;
+    QListWidget* currentTrainerTeam;
 
+    if (dresser == 0)
+    {
+        currentTrainer = Game().getItsInstance()->getItsFirstTrainer();
+        currentTrainerTeam = ui->trainer1Team;
+    }
+    else
+    {
+        currentTrainer = Game().getItsInstance()->getItsSecondTrainer();
+        currentTrainerTeam = ui->trainer2Team;
+    }
+
+    // todo: supprimer le pokemon sélectionné
+}
+
+
+void HomeWidget::on_startGame_clicked()
+{
+    // todo: opti le code
+
+    // on vérifie que les 2 dresseurs ont 6 pokemons
+    if (Game().getItsInstance()->getItsFirstTrainer()->getItsPokemons()->size() == 6
+        && Game().getItsInstance()->getItsSecondTrainer()->getItsPokemons()->size() == 6)
+    {
+        qDebug() << "GOooooooo";
+        // on regarde si les noms des dresseurs ont été définis
+        std::string firstTrainerName = ui->trainer1Name->text().toStdString();
+
+        if (firstTrainerName != "")
+        {
+            Game().getItsInstance()->getItsFirstTrainer()->setItsName(firstTrainerName);
+        }
+
+        std::string secondTrainerName = ui->trainer2Name->text().toStdString();
+
+        if (secondTrainerName != "")
+        {
+            Game().getItsInstance()->getItsSecondTrainer()->setItsName(secondTrainerName);
+        }
+
+        int aiType = ui->aiType->currentIndex();
+
+        Game().getItsInstance()->start(static_cast<AIType>(aiType));
+    }
 }
 

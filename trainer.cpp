@@ -49,6 +49,11 @@ std::vector<Pokemon *> *Trainer::getItsPokemons() const
     return itsPokemons;
 }
 
+void Trainer::setItsName(const std::string &newItsName)
+{
+    itsName = newItsName;
+}
+
 Trainer::Trainer(const std::string &itsName) : itsName(itsName)
 {
     itsLevel = 0;
