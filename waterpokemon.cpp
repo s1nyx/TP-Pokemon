@@ -1,7 +1,7 @@
 #include "waterpokemon.h"
 #include <iostream>
 
-WaterPokemon::WaterPokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsFins)
+WaterPokemon::WaterPokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsFins)
     : Pokemon(itsName, itsSize, itsWeight, itsHealthPoint, itsStrengthPower),
       itsFins(itsFins)
 {
@@ -9,9 +9,9 @@ WaterPokemon::WaterPokemon(const std::string &itsName, float itsSize, float itsW
 }
 
 
-std::string WaterPokemon::getDescription()
+QString WaterPokemon::getDescription()
 {
-    return "Je suis le Pokemon " + itsName + " (type EAU). Mon poids est de " + std::to_string(itsWeight) + " kg, ma vitesse est de " + std::to_string(itsSpeed) + " km/h. J'ai " + std::to_string(itsFins) + " nageoires, ma taille est de " + std::to_string(itsSize) + "m.";
+    return "Je suis le Pokemon " + itsName + " (type EAU). Mon poids est de " + QString::number(itsWeight) + " kg, ma vitesse est de " + QString::number(itsSpeed) + " km/h. J'ai " + QString::number(itsFins) + " nageoires, ma taille est de " + QString::number(itsSize) + "m.";
 }
 
 Type WaterPokemon::getItsType()

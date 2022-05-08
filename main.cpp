@@ -27,5 +27,7 @@ int main(int argc, char *argv[])
     Widget w;
 
     w.show();
+
+    // todo: déconnecté de la bdd
     return a.exec();
 }

@@ -6,9 +6,9 @@
 class PlantPokemon : public Pokemon
 {
 public:
-    PlantPokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower);
+    PlantPokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower);
     // Pokemon interface
-    std::string getDescription();
+    QString getDescription();
     Type getItsType();
     void attack(Pokemon* otherPokemon);
 };

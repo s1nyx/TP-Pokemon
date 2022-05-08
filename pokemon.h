@@ -1,6 +1,7 @@
 #ifndef POKEMON_H
 #define POKEMON_H
 
+#include <QString>
 #include <string>
 
 enum Type {
@@ -13,7 +14,7 @@ enum Type {
 class Pokemon
 {
 protected:
-    std::string itsName;
+    QString itsName;
     float itsSize;
     float itsWeight;
     float itsHealthPoint;
@@ -22,9 +23,9 @@ protected:
     float itsSpeed;
 
 public:
-    Pokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower);
+    Pokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower);
 
-    virtual std::string getDescription() = 0;
+    virtual QString getDescription() = 0;
     virtual Type getItsType() = 0;
     virtual void attack(Pokemon* otherPokemon);
 
@@ -32,7 +33,7 @@ public:
 
     int getItsHealthPoint() const;
     void setItsHealthPoint(int newItsHealthPoint);
-    const std::string &getItsName() const;
+    const QString &getItsName() const;
     int getItsStrengthPower() const;
     float getItsSpeed() const;
 };

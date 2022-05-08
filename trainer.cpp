@@ -60,11 +60,22 @@ const QString &Trainer::getItsName() const
     return itsName;
 }
 
+Pokemon *Trainer::getCurrentPokemon() const
+{
+    return currentPokemon;
+}
+
+void Trainer::setCurrentPokemon(Pokemon *newCurrentPokemon)
+{
+    currentPokemon = newCurrentPokemon;
+}
+
 Trainer::Trainer(const QString &itsName) : itsName(itsName)
 {
     itsLevel = 0;
     itsXP = 0;
     itsPokemons = new std::vector<Pokemon*>;
+    currentPokemon = nullptr;
 }
 
 Trainer::~Trainer()
@@ -78,12 +89,11 @@ void Trainer::addPokemon(Pokemon *pokemon)
 
     addXP(1);
 
-    std::cout << "Pokemon " << pokemon->getItsName() << " ajouté à la collection" << std::endl;
+    //std::cout << "Pokemon " << pokemon->getItsName() << " ajouté à la collection" << std::endl;
 }
 
 bool Trainer::removePokemon(Pokemon *pokemon)
 {
-    // TODO: renvoyer un erreur
     if (itsXP < 2)
     {
        return false;
@@ -94,7 +104,7 @@ bool Trainer::removePokemon(Pokemon *pokemon)
     if (pokemonIterator != itsPokemons->end())
     {
         itsPokemons->erase(pokemonIterator);
-        std::cout << "Pokemon " << (*pokemonIterator)->getItsName() << " retiré de la collection" << std::endl;
+        //std::cout << "Pokemon " << (*pokemonIterator)->getItsName() << " retiré de la collection" << std::endl;
     }
 
     return true;
@@ -138,6 +148,11 @@ void Trainer::addXP(int xp)
     {
         itsXP += xp;
     }
+}
+
+void Trainer::save()
+{
+    DatabaseManager().getItsInstance()->saveTrainer(itsName, itsPokemons);
 }
 
 std::vector<Pokemon*>* Trainer::generatePokemons()

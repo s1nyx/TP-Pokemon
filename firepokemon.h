@@ -9,9 +9,9 @@ private:
     int itsPaws;
 
 public:
-    FirePokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsPaws);
+    FirePokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsPaws);
     // Pokemon interface
-    std::string getDescription();
+    QString getDescription();
     Type getItsType();
     void attack(Pokemon* otherPokemon);
 };

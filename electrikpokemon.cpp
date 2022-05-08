@@ -1,6 +1,6 @@
 #include "electrikpokemon.h"
 
-ElectrikPokemon::ElectrikPokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsPaws, int itsIntensity, int itsWings)
+ElectrikPokemon::ElectrikPokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsPaws, int itsIntensity, int itsWings)
     : Pokemon(itsName, itsSize, itsWeight, itsHealthPoint, itsStrengthPower),
     itsPaws(itsPaws),
     itsIntensity(itsIntensity),
@@ -10,9 +10,9 @@ ElectrikPokemon::ElectrikPokemon(const std::string &itsName, float itsSize, floa
 }
 
 
-std::string ElectrikPokemon::getDescription()
+QString ElectrikPokemon::getDescription()
 {
-    return "Je suis le Pokemon " + itsName + " (type ELECTRIK). Mon poids est de " + std::to_string(itsWeight) +" kg, ma vitesse est de " + std::to_string(itsSpeed) + " km/h. J'ai " + std::to_string(itsPaws) + " pattes, ma taille est de " + std::to_string(itsSize) + "m et mon intensité est de " + std::to_string(itsIntensity) + "mA.";
+    return "Je suis le Pokemon " + itsName + " (type ELECTRIK). Mon poids est de " + QString::number(itsWeight) +" kg, ma vitesse est de " + QString::number(itsSpeed) + " km/h. J'ai " + QString::number(itsPaws) + " pattes, ma taille est de " + QString::number(itsSize) + "m et mon intensité est de " + QString::number(itsIntensity) + "mA.";
 }
 
 Type ElectrikPokemon::getItsType()

@@ -108,5 +108,5 @@ CREATE TABLE trainers_pokemons
 (
 	id_trainer INTEGER NOT NULL,
 	pokemon_name TEXT NOT NULL,
-	pokemon_type TEXT NOT NULL
+	pokemon_type INTEGER NOT NULL
 );

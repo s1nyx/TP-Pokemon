@@ -22,6 +22,7 @@ private:
     GameState itsState;
     Trainer* itsFirstTrainer;
     Trainer* itsSecondTrainer;
+    QString itsWinner;
 public:
     Game();
 
@@ -35,6 +36,8 @@ public:
     Trainer *getItsFirstTrainer() const;
     Trainer *getItsSecondTrainer() const;
     Game *getItsInstance() const;
+    const QString &getItsWinner() const;
+    void setItsWinner(const QString &newItsWinner);
 };
 
 #endif // GAME_H

@@ -11,7 +11,7 @@ void Pokemon::setItsHealthPoint(int newItsHealthPoint)
     itsHealthPoint = newItsHealthPoint;
 }
 
-const std::string &Pokemon::getItsName() const
+const QString &Pokemon::getItsName() const
 {
     return itsName;
 }
@@ -26,7 +26,7 @@ float Pokemon::getItsSpeed() const
     return itsSpeed;
 }
 
-Pokemon::Pokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower)
+Pokemon::Pokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower)
     :
     itsName(itsName),
     itsSize(itsSize),
@@ -41,17 +41,17 @@ void Pokemon::attack(Pokemon *otherPokemon)
 {
     otherPokemon->setItsHealthPoint(otherPokemon->getItsHealthPoint() - itsStrengthPower);
 
-    std::cout << itsName << " inflige " << itsStrengthPower << " dégats à " << otherPokemon->getItsName() << std::endl;
+    //std::cout << itsName.tost << " inflige " << itsStrengthPower << " dégats à " << otherPokemon->getItsName() << std::endl;
 
     if (otherPokemon->getItsHealthPoint() <= 0)
     {
-        std::cout << otherPokemon->getItsName() << " est mort." << std::endl;
+        //std::cout << otherPokemon->getItsName() << " est mort." << std::endl;
     }
 }
 
 std::ostream& operator<<(std::ostream& outputStream, Pokemon& pokemon)
 {
-    outputStream << pokemon.getDescription();
+    outputStream << pokemon.getDescription().toStdString();
 
     return outputStream;
 }

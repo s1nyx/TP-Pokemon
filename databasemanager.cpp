@@ -35,6 +35,29 @@ bool DatabaseManager::connect()
     return itsDatabase.open();
 }
 
+void DatabaseManager::saveTrainer(QString name, std::vector<Pokemon *> *pokemons)
+{
+    QSqlQuery query;
+
+    query.prepare("INSERT INTO trainers (name) VALUES (:name)");
+    query.bindValue(":name", name);
+
+    if (query.exec())
+    {
+        int id = query.lastInsertId().toInt();
+
+        query.prepare("INSERT INTO trainers_pokemons (id_trainer, pokemon_name, pokemon_type) VALUES (:id_trainer, :pokemon_name, :pokemon_type)");
+
+        for (Pokemon* pokemon : *pokemons)
+        {
+            query.bindValue(":id_trainer", id);
+            query.bindValue(":pokemon_name", pokemon->getItsName());
+            query.bindValue(":pokemon_type", pokemon->getItsType());
+            query.exec();
+        }
+    }
+}
+
 // TODO: clean pour que les queries soient faites 1 fois
 std::vector<Pokemon *>* DatabaseManager::getPokemons() const
 {
@@ -64,7 +87,7 @@ std::vector<Pokemon *> *DatabaseManager::getFireTypePokemons() const
     while (query.next())
     {
         Pokemon* pokemon = new FirePokemon(
-            query.value("name").toString().toStdString(),
+            query.value("name").toString(),
             query.value("size").toFloat(),
             query.value("weight").toFloat(),
             query.value("hp").toInt(),
@@ -87,7 +110,7 @@ std::vector<Pokemon *> *DatabaseManager::getElectrikTypePokemons() const
     while (query.next())
     {
         Pokemon* pokemon = new ElectrikPokemon(
-            query.value("name").toString().toStdString(),
+            query.value("name").toString(),
             query.value("size").toFloat(),
             query.value("weight").toFloat(),
             query.value("hp").toInt(),
@@ -112,7 +135,7 @@ std::vector<Pokemon *> *DatabaseManager::getWaterTypePokemons() const
     while (query.next())
     {
         Pokemon* pokemon = new WaterPokemon(
-            query.value("name").toString().toStdString(),
+            query.value("name").toString(),
             query.value("size").toFloat(),
             query.value("weight").toFloat(),
             query.value("hp").toInt(),
@@ -135,7 +158,7 @@ std::vector<Pokemon *> *DatabaseManager::getPlantTypePokemons() const
     while (query.next())
     {
         Pokemon* pokemon = new PlantPokemon(
-            query.value("name").toString().toStdString(),
+            query.value("name").toString(),
             query.value("size").toFloat(),
             query.value("weight").toFloat(),
             query.value("hp").toInt(),

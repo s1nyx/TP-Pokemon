@@ -1,6 +1,6 @@
 #include "plantpokemon.h"
 
-PlantPokemon::PlantPokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower)
+PlantPokemon::PlantPokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower)
     : Pokemon(itsName, itsSize, itsWeight, itsHealthPoint, itsStrengthPower)
 {
     itsSpeed = 10 / (itsWeight * itsSize);
@@ -8,9 +8,9 @@ PlantPokemon::PlantPokemon(const std::string &itsName, float itsSize, float itsW
 
 
 
-std::string PlantPokemon::getDescription()
+QString PlantPokemon::getDescription()
 {
-    return "Je suis le Pokemon " + itsName + " (type PLANTE). Mon poids est de " + std::to_string(itsWeight) + " kg, ma taille est de " + std::to_string(itsSize) + "m, ma vitesse est de " + std::to_string(itsSpeed) + " km/h.";
+    return "Je suis le Pokemon " + itsName + " (type PLANTE). Mon poids est de " + QString::number(itsWeight) + " kg, ma taille est de " + QString::number(itsSize) + "m, ma vitesse est de " + QString::number(itsSpeed) + " km/h.";
 }
 
 Type PlantPokemon::getItsType()

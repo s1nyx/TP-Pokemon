@@ -15,6 +15,7 @@ public:
     DatabaseManager();
 
     bool connect();
+    void saveTrainer(QString name, std::vector<Pokemon*>* pokemons);
     std::vector<Pokemon*>* getPokemons() const;
     std::vector<Pokemon*>* getFireTypePokemons() const;
     std::vector<Pokemon*>* getElectrikTypePokemons() const;

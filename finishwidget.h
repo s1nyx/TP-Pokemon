@@ -32,6 +32,9 @@ public:
     explicit FinishWidget(QWidget *parent = nullptr);
     ~FinishWidget();
 
+private slots:
+    void on_save_clicked();
+
 private:
     Ui::FinishWidget *ui;
 };

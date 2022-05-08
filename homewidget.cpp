@@ -190,7 +190,7 @@ void HomeWidget::on_removePokemon_clicked()
     else
     {
         // todo: vérifier si il a au minimum 2 points;
-        std::string selectedPokemonName = currentTrainerTeam->currentItem()->text().toStdString();
+        QString selectedPokemonName = currentTrainerTeam->currentItem()->text();
 
         bool canRemovePokemon = false;
 
@@ -280,7 +280,7 @@ void HomeWidget::on_generatePokemon_clicked()
 
         for (Pokemon* pokemon : *trainerPokemons)
         {
-            currentTrainerTeam->addItem(QString::fromStdString(pokemon->getItsName()));
+            currentTrainerTeam->addItem(pokemon->getItsName());
         }
 
         generateTeamData(dresser);

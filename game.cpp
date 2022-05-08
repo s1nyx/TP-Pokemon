@@ -48,6 +48,8 @@ Game::Game()
 {
     itsState = LOBBY;
 
+    itsWinner = "";
+
     itsFirstTrainer = new Trainer("AI 1");
     itsSecondTrainer = new Trainer("AI 2");
 }
