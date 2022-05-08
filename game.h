@@ -9,12 +9,6 @@ enum GameState {
     FINISH
 };
 
-enum AIType {
-    BASIC,
-    ADVANCED,
-    EXPERT
-};
-
 class Game
 {
 private:
@@ -23,6 +17,7 @@ private:
     Trainer* itsFirstTrainer;
     Trainer* itsSecondTrainer;
     QString itsWinner;
+
 public:
     Game();
 
@@ -38,6 +33,7 @@ public:
     Game *getItsInstance() const;
     const QString &getItsWinner() const;
     void setItsWinner(const QString &newItsWinner);
+    void setItsAIType(AIType newItsAIType);
 };
 
 #endif // GAME_H

@@ -70,6 +70,11 @@ void Trainer::setCurrentPokemon(Pokemon *newCurrentPokemon)
     currentPokemon = newCurrentPokemon;
 }
 
+void Trainer::setItsAIType(const AIType &newItsAIType)
+{
+    itsAIType = newItsAIType;
+}
+
 Trainer::Trainer(const QString &itsName) : itsName(itsName)
 {
     itsLevel = 0;
@@ -81,6 +86,50 @@ Trainer::Trainer(const QString &itsName) : itsName(itsName)
 Trainer::~Trainer()
 {
     delete itsPokemons;
+}
+
+bool Trainer::choosePokemon()
+{
+    if (getTotalHealthPoints() == 0) return false;
+
+
+    if (itsAIType == BASIC)
+    {
+        do {
+           currentPokemon = (*itsPokemons)[rand() % 6];
+        } while (currentPokemon->isDead());
+
+    }
+    else if (itsAIType == ADVANCED)
+    {
+        Pokemon* max = (*itsPokemons)[0];
+
+        for (Pokemon* pokemon : *itsPokemons)
+        {
+            if (!pokemon->isDead() && max->getItsStrengthPower() < pokemon->getItsStrengthPower())
+            {
+                max = pokemon;
+            }
+        }
+
+        currentPokemon = max;
+    }
+    else
+    {
+        Pokemon* max = (*itsPokemons)[0];
+
+        for (Pokemon* pokemon : *itsPokemons)
+        {
+            if (!pokemon->isDead() && max->getItsHealthPoint() < pokemon->getItsHealthPoint())
+            {
+                max = pokemon;
+            }
+        }
+
+        currentPokemon = max;
+    }
+
+    return true;
 }
 
 void Trainer::addPokemon(Pokemon *pokemon)
@@ -147,6 +196,18 @@ void Trainer::addXP(int xp)
     else
     {
         itsXP += xp;
+    }
+}
+
+void Trainer::removeXP(int xp)
+{
+    if (itsXP - xp < 0)
+    {
+        itsXP = 0;
+    }
+    else
+    {
+        itsXP -= xp;
     }
 }
 

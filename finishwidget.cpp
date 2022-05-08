@@ -24,13 +24,16 @@ FinishWidget::FinishWidget(QWidget *parent) :
     ui(new Ui::FinishWidget)
 {
     ui->setupUi(this);
-
-    ui->winner->setText(Game().getItsInstance()->getItsWinner());
 }
 
 FinishWidget::~FinishWidget()
 {
     delete ui;
+}
+
+void FinishWidget::start()
+{
+    ui->winner->setText(Game().getItsInstance()->getItsWinner());
 }
 
 void FinishWidget::on_save_clicked()

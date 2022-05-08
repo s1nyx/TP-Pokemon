@@ -99,6 +99,9 @@ void Game::start(AIType aiType)
 
     // TODO: clean un peu le code ici
 
+    itsFirstTrainer->setItsAIType(aiType);
+    itsSecondTrainer->setItsAIType(aiType);
+
     // Gestion du premier joueur qui démarre
     if (itsFirstTrainer->getItsLevel() < itsSecondTrainer->getItsLevel())
     {
@@ -118,6 +121,10 @@ void Game::start(AIType aiType)
             }
         }
     }
+
+    itsFirstTrainer->choosePokemon();
+    itsSecondTrainer->choosePokemon();
+
 
     itsState = INGAME;
 }

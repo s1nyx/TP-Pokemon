@@ -18,6 +18,7 @@
 #ifndef ATTACKWIDGET_H
 #define ATTACKWIDGET_H
 
+#include "game.h"
 #include <QWidget>
 
 namespace Ui {
@@ -34,8 +35,20 @@ public:
 
     Ui::AttackWidget *getUi() const;
 
+public slots:
+    void start();
+
+signals:
+    void gameFinished();
+
+private slots:
+    void gameLoop();
+
 private:
     Ui::AttackWidget *ui;
+    Trainer* currentTrainer;
+    QTimer* itsTimer;
+    void updatePokemons();
 };
 
 #endif // ATTACKWIDGET_H

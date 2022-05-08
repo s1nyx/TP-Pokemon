@@ -26,6 +26,16 @@ float Pokemon::getItsSpeed() const
     return itsSpeed;
 }
 
+bool Pokemon::isDead()
+{
+    return itsHealthPoint == 0;
+}
+
+bool Pokemon::hasKoOneAttack() const
+{
+    return itsKoOneAttack;
+}
+
 Pokemon::Pokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower)
     :
     itsName(itsName),
@@ -35,17 +45,25 @@ Pokemon::Pokemon(const QString &itsName, float itsSize, float itsWeight, float i
     itsStrengthPower(itsStrengthPower)
 {
     itsMaxHealthPoint = itsHealthPoint;
+    itsKoOneAttack = false;
 }
 
 void Pokemon::attack(Pokemon *otherPokemon)
 {
-    otherPokemon->setItsHealthPoint(otherPokemon->getItsHealthPoint() - itsStrengthPower);
+    if (otherPokemon->itsMaxHealthPoint == otherPokemon->itsHealthPoint
+        && otherPokemon->itsHealthPoint - itsStrengthPower <= 0)
+    {
+        // pokemon KO en 1 coup
+        itsKoOneAttack = true;
+    }
+
+    otherPokemon->setItsHealthPoint(otherPokemon->itsHealthPoint - itsStrengthPower);
 
     //std::cout << itsName.tost << " inflige " << itsStrengthPower << " dégats à " << otherPokemon->getItsName() << std::endl;
 
-    if (otherPokemon->getItsHealthPoint() <= 0)
+    if (otherPokemon->itsHealthPoint <= 0)
     {
-        //std::cout << otherPokemon->getItsName() << " est mort." << std::endl;
+        otherPokemon->itsHealthPoint = 0;
     }
 }
 

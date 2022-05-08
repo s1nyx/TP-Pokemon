@@ -24,6 +24,7 @@
 #include "finishwidget.h"
 #include "game.h"
 
+#include <QEvent>
 #include <qboxlayout.h>
 
 Widget::Widget(QWidget *parent)
@@ -45,6 +46,9 @@ Widget::Widget(QWidget *parent)
 
     connect(homeWidget->getUi()->startGame, SIGNAL(clicked()), this, SLOT(navigate()));
     connect(attackWidget->getUi()->pushButton, SIGNAL(clicked()), this, SLOT(navigate()));
+    connect(homeWidget->getUi()->startGame, SIGNAL(clicked()), attackWidget, SLOT(start()));
+    connect(attackWidget, SIGNAL(gameFinished()), this, SLOT(navigate()));
+    connect(attackWidget, SIGNAL(gameFinished()), finishWidget, SLOT(start()));
 
     QVBoxLayout* layout = new QVBoxLayout();
     layout->addWidget(stackedWidget);

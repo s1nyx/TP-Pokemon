@@ -22,6 +22,9 @@ protected:
     int itsStrengthPower;
     float itsSpeed;
 
+private:
+    bool itsKoOneAttack;
+
 public:
     Pokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower);
 
@@ -36,6 +39,8 @@ public:
     const QString &getItsName() const;
     int getItsStrengthPower() const;
     float getItsSpeed() const;
+    bool isDead();
+    bool hasKoOneAttack() const;
 };
 
 #endif // POKEMON_H
