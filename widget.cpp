@@ -65,15 +65,13 @@ void Widget::navigate()
     // TODO: remplacer l'enum par celle du game?
     if (Game().getItsInstance()->canStart())
     {
-        switch (currentWidget)
+        if (currentWidget == HOME)
         {
-            case HOME:
-                currentWidget = ATTACK;
-                break;
-
-            case ATTACK:
-                currentWidget = FINISHED;
-                break;
+             currentWidget = ATTACK;
+        }
+        else if (currentWidget == ATTACK)
+        {
+            currentWidget = FINISHED;
         }
 
         stackedWidget->setCurrentIndex(currentWidget);

@@ -44,8 +44,8 @@ Ui::AttackWidget *AttackWidget::getUi() const
 
 void AttackWidget::start()
 {
-    ui->trainer1Name->setText(Game().getItsInstance()->getItsFirstTrainer()->getItsName());
-    ui->trainer2Name->setText(Game().getItsInstance()->getItsSecondTrainer()->getItsName());
+    ui->trainer1Name->setText(Game().getItsInstance()->getItsFirstTrainer()->getItsName() + " (Niv. " + QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsLevel()) + " / " + QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsXP()) + " Exp.)");
+    ui->trainer2Name->setText(Game().getItsInstance()->getItsSecondTrainer()->getItsName() + " (Niv. " + QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsLevel()) + " / " + QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsXP()) + " Exp.)");
 
     updatePokemons();
 
@@ -130,6 +130,9 @@ void AttackWidget::updatePokemons()
     ui->trainer2Pokemon->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     ui->trainer2PokemonDescription->setText(Game().getItsInstance()->getItsSecondTrainer()->getCurrentPokemon()->getDescription());
+
+    ui->trainer1Name->setText(Game().getItsInstance()->getItsFirstTrainer()->getItsName() + " (Niv. " + QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsLevel()) + " / " + QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsXP()) + " Exp.)");
+    ui->trainer2Name->setText(Game().getItsInstance()->getItsSecondTrainer()->getItsName() + " (Niv. " + QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsLevel()) + " / " + QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsXP()) + " Exp.)");
 }
 
 void AttackWidget::updateDataShowed()

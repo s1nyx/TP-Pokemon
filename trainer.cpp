@@ -74,6 +74,11 @@ void Trainer::setItsAIType(const AIType &newItsAIType)
     itsAIType = newItsAIType;
 }
 
+int Trainer::getItsXP() const
+{
+    return itsXP;
+}
+
 Trainer::Trainer(const QString &itsName) : itsName(itsName)
 {
     itsLevel = 0;

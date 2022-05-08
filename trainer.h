@@ -48,6 +48,7 @@ public:
     Pokemon *getCurrentPokemon() const;
     void setCurrentPokemon(Pokemon *newCurrentPokemon);
     void setItsAIType(const AIType &newItsAIType);
+    int getItsXP() const;
 };
 
 #endif // TRAINER_H
