@@ -200,11 +200,11 @@
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QLabel" name="trainer1Name">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>60</y>
+     <x>10</x>
+     <y>50</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -213,17 +213,20 @@
     <string>Nom dresseur 1</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_8">
+  <widget class="QLabel" name="trainer2Name">
    <property name="geometry">
     <rect>
-     <x>660</x>
-     <y>60</y>
+     <x>870</x>
+     <y>50</y>
      <width>91</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
     <string>Nom dresseur 2</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
  </widget>

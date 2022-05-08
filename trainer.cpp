@@ -50,12 +50,17 @@ std::vector<Pokemon *> *Trainer::getItsPokemons() const
     return itsPokemons;
 }
 
-void Trainer::setItsName(const std::string &newItsName)
+void Trainer::setItsName(const QString &newItsName)
 {
     itsName = newItsName;
 }
 
-Trainer::Trainer(const std::string &itsName) : itsName(itsName)
+const QString &Trainer::getItsName() const
+{
+    return itsName;
+}
+
+Trainer::Trainer(const QString &itsName) : itsName(itsName)
 {
     itsLevel = 0;
     itsXP = 0;
@@ -105,11 +110,11 @@ void Trainer::compareWithOpponent(Trainer *opponent)
 
     if (currentTrainerWinningProbability > opponentTrainerWinningProbability)
     {
-        std::cout << itsName << " a plus de chance de gagné que " << opponent->itsName << "(" << currentTrainerWinningProbability << "% vs " << opponentTrainerWinningProbability << "%)";
+        std::cout << itsName.toStdString() << " a plus de chance de gagné que " << opponent->itsName.toStdString() << "(" << currentTrainerWinningProbability << "% vs " << opponentTrainerWinningProbability << "%)";
     }
     else if (currentTrainerWinningProbability < opponentTrainerWinningProbability)
     {
-        std::cout << opponent->itsName << " a plus de chance de gagné que " << itsName << "(" << opponentTrainerWinningProbability << "% vs " << currentTrainerWinningProbability << "%)";
+        std::cout << opponent->itsName.toStdString() << " a plus de chance de gagné que " << itsName.toStdString() << "(" << opponentTrainerWinningProbability << "% vs " << currentTrainerWinningProbability << "%)";
     }
     else
     {
@@ -159,7 +164,7 @@ std::vector<Pokemon*>* Trainer::generatePokemons()
 std::ostream& operator<<(std::ostream& outputStream, Trainer& trainer)
 {
     outputStream << "=====================" << std::endl
-        << "Dresseur: " << trainer.itsName << " (Niv. " << trainer.itsLevel << ", XP: " << trainer.itsXP << ")" << std::endl
+        << "Dresseur: " << trainer.itsName.toStdString() << " (Niv. " << trainer.itsLevel << ", XP: " << trainer.itsXP << ")" << std::endl
         << "PV Total: " << trainer.getTotalHealthPoints()  << std::endl
         << "PC Total: " << trainer.getTotalStrengthPower()  << std::endl
         << "Moyenne vitesse attaque: " << trainer.getAverageAttackSpeed() << std::endl;

@@ -16,6 +16,7 @@
  * this file belongs to.
  *****************************************************************************/
 #include "attackwidget.h"
+#include "game.h"
 #include "ui_attackwidget.h"
 
 AttackWidget::AttackWidget(QWidget *parent) :
@@ -23,6 +24,9 @@ AttackWidget::AttackWidget(QWidget *parent) :
     ui(new Ui::AttackWidget)
 {
     ui->setupUi(this);
+
+    ui->trainer1Name->setText(Game().getItsInstance()->getItsFirstTrainer()->getItsName());
+    ui->trainer2Name->setText(Game().getItsInstance()->getItsSecondTrainer()->getItsName());
 }
 
 AttackWidget::~AttackWidget()

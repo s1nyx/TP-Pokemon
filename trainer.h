@@ -4,18 +4,19 @@
 #include <string>
 #include <vector>
 #include <pokemon.h>
+#include <QString>
 
 class Trainer
 {
 private:
-    std::string itsName;
+    QString itsName;
     int itsLevel;
     int itsXP;
     std::vector<Pokemon*>* itsPokemons; // y'en a 6
     // TODO: checker "il connait la vitesse d’attaque moyenne pour l’ensemble de ses Pokemon ainsi que pour chaque type"
 
 public:
-    Trainer(const std::string &itsName);
+    Trainer(const QString &itsName);
     ~Trainer();
 
     //void save();
@@ -32,7 +33,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& outputStream, Trainer& trainer);
     std::vector<Pokemon *> *getItsPokemons() const;
-    void setItsName(const std::string &newItsName);
+    void setItsName(const QString &newItsName);
+    const QString &getItsName() const;
 };
 
 #endif // TRAINER_H

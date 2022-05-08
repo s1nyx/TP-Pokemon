@@ -230,14 +230,14 @@ void HomeWidget::on_startGame_clicked()
     {
         qDebug() << "GOooooooo";
         // on regarde si les noms des dresseurs ont été définis
-        std::string firstTrainerName = ui->trainer1Name->text().toStdString();
+        QString firstTrainerName = ui->trainer1Name->text();
 
         if (firstTrainerName != "")
         {
             Game().getItsInstance()->getItsFirstTrainer()->setItsName(firstTrainerName);
         }
 
-        std::string secondTrainerName = ui->trainer2Name->text().toStdString();
+        QString secondTrainerName = ui->trainer2Name->text();
 
         if (secondTrainerName != "")
         {
