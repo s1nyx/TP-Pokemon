@@ -15,12 +15,17 @@ const QSqlDatabase &DatabaseManager::getItsDatabase() const
 
 DatabaseManager::DatabaseManager()
 {
+    itsElectrikTypePokemons = new std::vector<Pokemon*>();
+    itsWaterTypePokemons = new std::vector<Pokemon*>();
+    itsFireTypePokemons = new std::vector<Pokemon*>();
+    itsPlantTypePokemons = new std::vector<Pokemon*>();
 }
 
-DatabaseManager *DatabaseManager::getItsInstance() const
+DatabaseManager *DatabaseManager::getItsInstance()
 {
     if (itsInstance == nullptr)
     {
+
         itsInstance = new DatabaseManager();
     }
 
@@ -58,31 +63,10 @@ void DatabaseManager::saveTrainer(QString name, std::vector<Pokemon *> *pokemons
     }
 }
 
-// TODO: clean pour que les queries soient faites 1 fois
-std::vector<Pokemon *>* DatabaseManager::getPokemons() const
+void DatabaseManager::startQueries()
 {
-    std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
-
-    std::vector<Pokemon *>* firePokemons = getFireTypePokemons();
-    pokemons->insert(pokemons->end(), firePokemons->begin(), firePokemons->end());
-
-    std::vector<Pokemon *>* plantPokemons = getPlantTypePokemons();
-    pokemons->insert(pokemons->end(), plantPokemons->begin(), plantPokemons->end());
-
-    std::vector<Pokemon *>* electrikPokemons = getElectrikTypePokemons();
-    pokemons->insert(pokemons->end(), electrikPokemons->begin(), electrikPokemons->end());
-
-    std::vector<Pokemon *>* waterPokemons = getWaterTypePokemons();
-    pokemons->insert(pokemons->end(), waterPokemons->begin(), waterPokemons->end());
-
-    return pokemons;
-}
-
-std::vector<Pokemon *> *DatabaseManager::getFireTypePokemons() const
-{
-    std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
-
     QSqlQuery query;
+
     query.exec("SELECT * FROM fire_pokemons");
     while (query.next())
     {
@@ -94,18 +78,9 @@ std::vector<Pokemon *> *DatabaseManager::getFireTypePokemons() const
             query.value("cp").toInt(),
             query.value("paws").toInt()
         );
-        //pokemon->calculateSpeed();
-        pokemons->push_back(pokemon);
+        itsFireTypePokemons->push_back(pokemon);
     }
 
-    return pokemons;
-}
-
-std::vector<Pokemon *> *DatabaseManager::getElectrikTypePokemons() const
-{
-    std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
-
-    QSqlQuery query;
     query.exec("SELECT * FROM electrik_pokemons");
     while (query.next())
     {
@@ -119,18 +94,9 @@ std::vector<Pokemon *> *DatabaseManager::getElectrikTypePokemons() const
             query.value("intensity").toInt(),
             query.value("wings").toInt()
         );
-        //pokemon->calculateSpeed();
-        pokemons->push_back(pokemon);
+        itsElectrikTypePokemons->push_back(pokemon);
     }
 
-    return pokemons;
-}
-
-std::vector<Pokemon *> *DatabaseManager::getWaterTypePokemons() const
-{
-    std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
-
-    QSqlQuery query;
     query.exec("SELECT * FROM water_pokemons");
     while (query.next())
     {
@@ -142,18 +108,9 @@ std::vector<Pokemon *> *DatabaseManager::getWaterTypePokemons() const
             query.value("cp").toInt(),
             query.value("fins").toInt()
         );
-        //pokemon->calculateSpeed();
-        pokemons->push_back(pokemon);
+        itsWaterTypePokemons->push_back(pokemon);
     }
 
-    return pokemons;
-}
-
-std::vector<Pokemon *> *DatabaseManager::getPlantTypePokemons() const
-{
-    std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
-
-    QSqlQuery query;
     query.exec("SELECT * FROM plant_pokemons");
     while (query.next())
     {
@@ -164,9 +121,39 @@ std::vector<Pokemon *> *DatabaseManager::getPlantTypePokemons() const
             query.value("hp").toInt(),
             query.value("cp").toInt()
         );
-        //pokemon->calculateSpeed();
-        pokemons->push_back(pokemon);
+        itsPlantTypePokemons->push_back(pokemon);
     }
+}
+
+// TODO: clean pour que les queries soient faites 1 fois
+std::vector<Pokemon *>* DatabaseManager::getPokemons() const
+{
+    std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
+
+    pokemons->insert(pokemons->end(), itsFireTypePokemons->begin(), itsFireTypePokemons->end());
+    pokemons->insert(pokemons->end(), itsPlantTypePokemons->begin(), itsPlantTypePokemons->end());
+    pokemons->insert(pokemons->end(), itsElectrikTypePokemons->begin(), itsElectrikTypePokemons->end());
+    pokemons->insert(pokemons->end(), itsWaterTypePokemons->begin(), itsWaterTypePokemons->end());
 
     return pokemons;
+}
+
+std::vector<Pokemon *> *DatabaseManager::getFireTypePokemons() const
+{
+    return itsFireTypePokemons;
+}
+
+std::vector<Pokemon *> *DatabaseManager::getElectrikTypePokemons() const
+{
+    return itsElectrikTypePokemons;
+}
+
+std::vector<Pokemon *> *DatabaseManager::getWaterTypePokemons() const
+{
+    return itsWaterTypePokemons;
+}
+
+std::vector<Pokemon *> *DatabaseManager::getPlantTypePokemons() const
+{
+    return itsPlantTypePokemons;
 }

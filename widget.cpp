@@ -45,7 +45,6 @@ Widget::Widget(QWidget *parent)
     stackedWidget->addWidget(finishWidget);
 
     connect(homeWidget->getUi()->startGame, SIGNAL(clicked()), this, SLOT(navigate()));
-    connect(attackWidget->getUi()->pushButton, SIGNAL(clicked()), this, SLOT(navigate()));
     connect(homeWidget->getUi()->startGame, SIGNAL(clicked()), attackWidget, SLOT(start()));
     connect(attackWidget, SIGNAL(gameFinished()), this, SLOT(navigate()));
     connect(attackWidget, SIGNAL(gameFinished()), finishWidget, SLOT(start()));

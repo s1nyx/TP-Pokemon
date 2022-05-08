@@ -23,8 +23,6 @@ public:
 
     void start(AIType aiType);
     bool canStart();
-    void save();
-    void gameLoop();
 
     GameState getItsState() const;
     void setItsState(GameState newItsState);

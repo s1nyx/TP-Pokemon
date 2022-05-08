@@ -34,7 +34,6 @@ int Trainer::getTotalStrengthPower() const
 
 float Trainer::getAverageAttackSpeed() const
 {
-    // TODO: vérifier que c'est bien la vitesse d'attaque
     float total = 0;
 
     for (Pokemon* pokemon : *itsPokemons)
@@ -137,8 +136,6 @@ void Trainer::addPokemon(Pokemon *pokemon)
     itsPokemons->push_back(pokemon);
 
     addXP(1);
-
-    //std::cout << "Pokemon " << pokemon->getItsName() << " ajouté à la collection" << std::endl;
 }
 
 bool Trainer::removePokemon(Pokemon *pokemon)
@@ -153,7 +150,6 @@ bool Trainer::removePokemon(Pokemon *pokemon)
     if (pokemonIterator != itsPokemons->end())
     {
         itsPokemons->erase(pokemonIterator);
-        //std::cout << "Pokemon " << (*pokemonIterator)->getItsName() << " retiré de la collection" << std::endl;
     }
 
     return true;
@@ -182,7 +178,7 @@ void Trainer::compareWithOpponent(Trainer *opponent)
 }
 
 /*!
- * Permet d'ajouter de l'XP (points) et de faire levelup le dresseur
+ * Permet d'ajouter de l'XP (points) et de faire levelup le dresseur (avec les pokemons)
  * \brief Trainer::addXP
  * \param xp
  */
@@ -191,7 +187,12 @@ void Trainer::addXP(int xp)
     if (itsXP + xp >= 10)
     {
         itsLevel += 1;
-        itsXP = 0; // TODO: est-ce qu'on garde l'XP supplémentaire ?
+        itsXP = 0;
+
+        for (Pokemon* pokemon : *itsPokemons)
+        {
+            if (!pokemon->isDead()) pokemon->evolve();
+        }
     }
     else
     {

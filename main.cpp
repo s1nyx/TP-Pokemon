@@ -22,12 +22,13 @@
 
 int main(int argc, char *argv[])
 {
-    qDebug() << DatabaseManager().getItsInstance()->connect();
+    qDebug() << "Database connected: " << DatabaseManager().getItsInstance()->connect();
+    DatabaseManager().getItsInstance()->startQueries();
+
     QApplication a(argc, argv);
     Widget w;
 
     w.show();
 
-    // todo: déconnecté de la bdd
     return a.exec();
 }

@@ -6,8 +6,6 @@ PlantPokemon::PlantPokemon(const QString &itsName, float itsSize, float itsWeigh
     itsSpeed = 10 / (itsWeight * itsSize);
 }
 
-
-
 QString PlantPokemon::getDescription()
 {
     return "Je suis le Pokemon " + itsName + " (type PLANTE). Mon poids est de " + QString::number(itsWeight) + " kg, ma taille est de " + QString::number(itsSize) + "m, ma vitesse est de " + QString::number(itsSpeed) + " km/h.";

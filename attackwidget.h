@@ -43,12 +43,16 @@ signals:
 
 private slots:
     void gameLoop();
+    void onTick();
 
 private:
     Ui::AttackWidget *ui;
     Trainer* currentTrainer;
     QTimer* itsTimer;
+    QTimer* itsRemainingTime;
+    int itsTimeCounter;
     void updatePokemons();
+    void updateDataShowed();
 };
 
 #endif // ATTACKWIDGET_H

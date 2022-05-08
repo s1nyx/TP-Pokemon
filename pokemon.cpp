@@ -1,12 +1,17 @@
 #include "pokemon.h"
 #include <iostream>
 
-int Pokemon::getItsHealthPoint() const
+float Pokemon::getItsHealthPoint() const
 {
     return itsHealthPoint;
 }
 
-void Pokemon::setItsHealthPoint(int newItsHealthPoint)
+float Pokemon::getHpPercentage() const
+{
+    return itsHealthPoint / itsMaxHealthPoint * 100;
+}
+
+void Pokemon::setItsHealthPoint(float newItsHealthPoint)
 {
     itsHealthPoint = newItsHealthPoint;
 }
@@ -36,6 +41,14 @@ bool Pokemon::hasKoOneAttack() const
     return itsKoOneAttack;
 }
 
+void Pokemon::evolve()
+{
+    itsHealthPoint += 5;
+    itsStrengthPower += 8;
+    itsWeight *= 1.05;
+    itsSize *= 1.05;
+}
+
 Pokemon::Pokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower)
     :
     itsName(itsName),
@@ -59,9 +72,7 @@ void Pokemon::attack(Pokemon *otherPokemon)
 
     otherPokemon->setItsHealthPoint(otherPokemon->itsHealthPoint - itsStrengthPower);
 
-    //std::cout << itsName.tost << " inflige " << itsStrengthPower << " dégats à " << otherPokemon->getItsName() << std::endl;
-
-    if (otherPokemon->itsHealthPoint <= 0)
+    if (otherPokemon->itsHealthPoint < 0)
     {
         otherPokemon->itsHealthPoint = 0;
     }

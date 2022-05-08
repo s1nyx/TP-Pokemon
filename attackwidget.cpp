@@ -17,15 +17,18 @@
  *****************************************************************************/
 #include "attackwidget.h"
 #include "ui_attackwidget.h"
-
 #include <QTimer>
+#define GAME_TIME 1000
 
 AttackWidget::AttackWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AttackWidget)
 {
     itsTimer = new QTimer();
+    itsRemainingTime = new QTimer();
+
     ui->setupUi(this);
+
     currentTrainer = Game().getItsInstance()->getItsFirstTrainer();
 }
 
@@ -46,20 +49,30 @@ void AttackWidget::start()
 
     updatePokemons();
 
-    itsTimer->start(1000);
+    itsTimer->start(GAME_TIME);
+    itsRemainingTime->start(1000);
+
+    itsTimeCounter = GAME_TIME / 1000;
+    ui->lcdNumber->display(itsTimeCounter);
+
     connect(itsTimer, SIGNAL(timeout()), this, SLOT(gameLoop()));
+    connect(itsRemainingTime, SIGNAL(timeout()), this, SLOT(onTick()));
+}
+
+void AttackWidget::onTick()
+{
+    itsTimeCounter -= 1;
+
+    if (itsTimeCounter == 0) itsTimeCounter = GAME_TIME / 1000;
+    ui->lcdNumber->display(itsTimeCounter);
 }
 
 void AttackWidget::gameLoop()
 {
-    // loop du jeu
-    // tant que les pokemons du dresseur 1 et du dresseur sont en vie on continue
-    // On attaque l'autre pokemons si il est encore vivant
-    // Sinon, on change de pokemon (le dresseur qui a le pokemon mort si il en reste pas mort)
-
     if (Game().getItsInstance()->getItsFirstTrainer()->getTotalHealthPoints() == 0 || Game().getItsInstance()->getItsSecondTrainer() == 0)
     {
         itsTimer->stop();
+        itsRemainingTime->stop();
         qDebug() << "FIN";
 
         QString winner;
@@ -88,6 +101,7 @@ void AttackWidget::gameLoop()
         }
 
         currentTrainer->getCurrentPokemon()->attack(opponent->getCurrentPokemon());
+        updateDataShowed();
         qDebug() << "attack";
 
         if (currentTrainer->getCurrentPokemon()->hasKoOneAttack())
@@ -116,4 +130,13 @@ void AttackWidget::updatePokemons()
     ui->trainer2Pokemon->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
     ui->trainer2PokemonDescription->setText(Game().getItsInstance()->getItsSecondTrainer()->getCurrentPokemon()->getDescription());
+}
+
+void AttackWidget::updateDataShowed()
+{
+    ui->trainer1TotalHP->setText(QString::number(Game().getItsInstance()->getItsFirstTrainer()->getTotalHealthPoints()));
+    ui->trainer2TotalHP->setText(QString::number(Game().getItsInstance()->getItsSecondTrainer()->getTotalHealthPoints()));
+
+    ui->trainer1PokemonHP->setText(QString::number(Game().getItsInstance()->getItsFirstTrainer()->getCurrentPokemon()->getHpPercentage()) + "% de vie");
+    ui->trainer2PokemonHP->setText(QString::number(Game().getItsInstance()->getItsSecondTrainer()->getCurrentPokemon()->getHpPercentage()) + "% de vie");
 }

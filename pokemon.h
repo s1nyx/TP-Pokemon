@@ -34,13 +34,16 @@ public:
 
     friend std::ostream& operator<<(std::ostream& outputStream, Pokemon& pokemon);
 
-    int getItsHealthPoint() const;
-    void setItsHealthPoint(int newItsHealthPoint);
+    float getItsHealthPoint() const;
+    float getHpPercentage() const;
+    void setItsHealthPoint(float newItsHealthPoint);
     const QString &getItsName() const;
     int getItsStrengthPower() const;
     float getItsSpeed() const;
     bool isDead();
     bool hasKoOneAttack() const;
+
+    void evolve();
 };
 
 #endif // POKEMON_H
