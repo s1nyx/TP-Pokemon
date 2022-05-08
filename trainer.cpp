@@ -1,3 +1,4 @@
+#include "databasemanager.h"
 #include "trainer.h"
 #include <iostream>
 #include <algorithm>
@@ -77,6 +78,7 @@ void Trainer::addPokemon(Pokemon *pokemon)
 
 void Trainer::removePokemon(Pokemon *pokemon)
 {
+    // TODO: renvoyer un erreur
     if (itsXP < 2)
     {
         std::cout << "Oups! Vous devez avoir au minimum 2 XP pour retirer ce pokemon" << std::endl;
@@ -88,6 +90,7 @@ void Trainer::removePokemon(Pokemon *pokemon)
         if (pokemonIterator != itsPokemons->end())
         {
             itsPokemons->erase(pokemonIterator);
+            std::cout << "Pokemon " << (*pokemonIterator)->getItsName() << " retiré de la collection" << std::endl;
         }
     }
 }
@@ -130,6 +133,27 @@ void Trainer::addXP(int xp)
     {
         itsXP += xp;
     }
+}
+
+std::vector<Pokemon*>* Trainer::generatePokemons()
+{
+    // Choisir les pokemons aléatoirement
+    std::vector<Pokemon*>* pokemons = DatabaseManager().getItsInstance()->getPokemons();
+
+    for (unsigned int i = 0; i < 6; ++i)
+    {
+        int randomIndex = rand() % 40;
+
+        try {
+            addPokemon(pokemons->at(randomIndex));
+        }  catch (...) {
+            std::cout << "Dresseur 1: L'index n'est pas dans le vecteur des pokemons : " << randomIndex << std::endl;
+        }
+    }
+
+    // TODO: les triers par TYPE puis par PC
+
+    return itsPokemons;
 }
 
 std::ostream& operator<<(std::ostream& outputStream, Trainer& trainer)

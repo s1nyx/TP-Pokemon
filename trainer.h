@@ -24,6 +24,7 @@ public:
     void removePokemon(Pokemon* pokemon);
     void compareWithOpponent(Trainer* opponent);
     void addXP(int xp);
+    std::vector<Pokemon*>* generatePokemons();
     int getItsLevel() const;
     float getTotalHealthPoints() const;
     int getTotalStrengthPower() const;

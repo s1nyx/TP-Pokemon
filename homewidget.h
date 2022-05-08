@@ -41,6 +41,8 @@ private slots:
 
     void on_startGame_clicked();
 
+    void on_generatePokemon_clicked();
+
 private:
     Ui::HomeWidget *ui;
     QSqlTableModel* fireTypePokemonsModel;

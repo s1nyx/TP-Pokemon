@@ -35,14 +35,22 @@ bool DatabaseManager::connect()
     return itsDatabase.open();
 }
 
+// TODO: clean pour que les queries soient faites 1 fois
 std::vector<Pokemon *>* DatabaseManager::getPokemons() const
 {
     std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
 
-    // TODO: clean ici c'est vrm dégeu
+    std::vector<Pokemon *>* firePokemons = getFireTypePokemons();
+    pokemons->insert(pokemons->end(), firePokemons->begin(), firePokemons->end());
 
+    std::vector<Pokemon *>* plantPokemons = getPlantTypePokemons();
+    pokemons->insert(pokemons->end(), plantPokemons->begin(), plantPokemons->end());
 
+    std::vector<Pokemon *>* electrikPokemons = getElectrikTypePokemons();
+    pokemons->insert(pokemons->end(), electrikPokemons->begin(), electrikPokemons->end());
 
+    std::vector<Pokemon *>* waterPokemons = getWaterTypePokemons();
+    pokemons->insert(pokemons->end(), waterPokemons->begin(), waterPokemons->end());
 
     return pokemons;
 }

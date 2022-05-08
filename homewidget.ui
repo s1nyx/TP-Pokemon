@@ -726,14 +726,14 @@
    <widget class="QPushButton" name="removePokemon">
     <property name="geometry">
      <rect>
-      <x>560</x>
+      <x>550</x>
       <y>380</y>
-      <width>211</width>
+      <width>221</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
-     <string>Supprimer le(s) pokemon(s) de l'équipe</string>
+     <string>Supprimer le pokemon de l'équipe</string>
     </property>
    </widget>
    <widget class="QPushButton" name="generatePokemon">
@@ -818,7 +818,7 @@
    <widget class="QPushButton" name="addPokemon">
     <property name="geometry">
      <rect>
-      <x>307</x>
+      <x>300</x>
       <y>380</y>
       <width>231</width>
       <height>22</height>
@@ -831,7 +831,7 @@
    <widget class="QComboBox" name="targetedTrainer">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>160</x>
       <y>380</y>
       <width>101</width>
       <height>22</height>

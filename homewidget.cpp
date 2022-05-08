@@ -23,6 +23,7 @@
 
 #include <QString>
 #include <QSqlRecord>
+#include <QList>
 
 HomeWidget::HomeWidget(QWidget *parent) :
     QWidget(parent),
@@ -161,7 +162,18 @@ void HomeWidget::on_removePokemon_clicked()
         currentTrainerTeam = ui->trainer2Team;
     }
 
-    // todo: supprimer le pokemon sélectionné
+    std::string selectedPokemonName = currentTrainerTeam->currentItem()->text().toStdString();
+
+    for (Pokemon* pokemonOwned : *currentTrainer->getItsPokemons())
+    {
+        if (pokemonOwned->getItsName() == selectedPokemonName)
+        {
+            currentTrainer->removePokemon(pokemonOwned);
+            break;
+        }
+    }
+
+    currentTrainerTeam->takeItem(currentTrainerTeam->currentRow());
 }
 
 
@@ -192,6 +204,36 @@ void HomeWidget::on_startGame_clicked()
         int aiType = ui->aiType->currentIndex();
 
         Game().getItsInstance()->start(static_cast<AIType>(aiType));
+    }
+}
+
+
+void HomeWidget::on_generatePokemon_clicked()
+{
+    // todo: passer le dresser en attribut pour les autres fonctions
+    int dresser = ui->targetedTrainer->currentIndex();
+    Trainer* currentTrainer;
+    QListWidget* currentTrainerTeam;
+
+    if (dresser == 0)
+    {
+        currentTrainer = Game().getItsInstance()->getItsFirstTrainer();
+        currentTrainerTeam = ui->trainer1Team;
+    }
+    else
+    {
+        currentTrainer = Game().getItsInstance()->getItsSecondTrainer();
+        currentTrainerTeam = ui->trainer2Team;
+    }
+
+    if (currentTrainer->getItsPokemons()->size() == 0)
+    {
+        std::vector<Pokemon*>* trainerPokemons = currentTrainer->generatePokemons();
+
+        for (Pokemon* pokemon : *trainerPokemons)
+        {
+            currentTrainerTeam->addItem(QString::fromStdString(pokemon->getItsName()));
+        }
     }
 }
 
