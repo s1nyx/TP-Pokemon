@@ -19,12 +19,12 @@ public:
     Trainer(const QString &itsName);
     ~Trainer();
 
-    //void save();
     //void attack(Pokemon* hisPokemon, Trainer* opponent);
     void addPokemon(Pokemon* pokemon);
     bool removePokemon(Pokemon* pokemon);
     void compareWithOpponent(Trainer* opponent);
     void addXP(int xp);
+    void save();
     std::vector<Pokemon*>* generatePokemons();
     int getItsLevel() const;
     float getTotalHealthPoints() const;

@@ -34,6 +34,16 @@ Game *Game::getItsInstance() const
     return itsInstance;
 }
 
+const QString &Game::getItsWinner() const
+{
+    return itsWinner;
+}
+
+void Game::setItsWinner(const QString &newItsWinner)
+{
+    itsWinner = newItsWinner;
+}
+
 Game::Game()
 {
     itsState = LOBBY;

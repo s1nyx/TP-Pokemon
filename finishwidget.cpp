@@ -16,6 +16,7 @@
  * this file belongs to.
  *****************************************************************************/
 #include "finishwidget.h"
+#include "game.h"
 #include "ui_finishwidget.h"
 
 FinishWidget::FinishWidget(QWidget *parent) :
@@ -23,9 +24,18 @@ FinishWidget::FinishWidget(QWidget *parent) :
     ui(new Ui::FinishWidget)
 {
     ui->setupUi(this);
+
+    ui->winner->setText(Game().getItsInstance()->getItsWinner());
 }
 
 FinishWidget::~FinishWidget()
 {
     delete ui;
 }
+
+void FinishWidget::on_save_clicked()
+{
+    Game().getItsInstance()->getItsFirstTrainer()->save();
+    Game().getItsInstance()->getItsSecondTrainer()->save();
+}
+

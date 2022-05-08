@@ -97,3 +97,16 @@ VALUES
 	('Krabboss', 1.3, 60.0, 55, 130, 1),
 	('Poissoroy', 1.3, 39.0, 80, 92, 2)
 ;
+
+CREATE TABLE trainers 
+(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name TEXT NOT NULL
+);
+
+CREATE TABLE trainers_pokemons
+(
+	id_trainer INTEGER NOT NULL,
+	pokemon_name TEXT NOT NULL,
+	pokemon_type TEXT NOT NULL
+);
