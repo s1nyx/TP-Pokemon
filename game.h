@@ -6,7 +6,7 @@
 enum GameState {
     LOBBY,
     INGAME,
-    FINISHED
+    FINISH
 };
 
 enum AIType {
@@ -26,6 +26,7 @@ public:
     Game();
 
     void start(AIType aiType);
+    bool canStart();
     void save();
     void gameLoop();
 

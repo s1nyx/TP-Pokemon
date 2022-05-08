@@ -21,7 +21,7 @@ public:
     //void save();
     //void attack(Pokemon* hisPokemon, Trainer* opponent);
     void addPokemon(Pokemon* pokemon);
-    void removePokemon(Pokemon* pokemon);
+    bool removePokemon(Pokemon* pokemon);
     void compareWithOpponent(Trainer* opponent);
     void addXP(int xp);
     std::vector<Pokemon*>* generatePokemons();

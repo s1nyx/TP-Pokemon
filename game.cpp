@@ -110,6 +110,11 @@ void Game::start(AIType aiType)
     itsState = INGAME;
 }
 
+bool Game::canStart()
+{
+    return itsState == INGAME;
+}
+
 void Game::gameLoop()
 {
     /*while (itsState == INGAME)

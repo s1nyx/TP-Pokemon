@@ -71,6 +71,7 @@ std::vector<Pokemon *> *DatabaseManager::getFireTypePokemons() const
             query.value("cp").toInt(),
             query.value("paws").toInt()
         );
+        //pokemon->calculateSpeed();
         pokemons->push_back(pokemon);
     }
 
@@ -95,6 +96,7 @@ std::vector<Pokemon *> *DatabaseManager::getElectrikTypePokemons() const
             query.value("intensity").toInt(),
             query.value("wings").toInt()
         );
+        //pokemon->calculateSpeed();
         pokemons->push_back(pokemon);
     }
 
@@ -117,6 +119,7 @@ std::vector<Pokemon *> *DatabaseManager::getWaterTypePokemons() const
             query.value("cp").toInt(),
             query.value("fins").toInt()
         );
+        //pokemon->calculateSpeed();
         pokemons->push_back(pokemon);
     }
 
@@ -138,6 +141,7 @@ std::vector<Pokemon *> *DatabaseManager::getPlantTypePokemons() const
             query.value("hp").toInt(),
             query.value("cp").toInt()
         );
+        //pokemon->calculateSpeed();
         pokemons->push_back(pokemon);
     }
 

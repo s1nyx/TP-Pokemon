@@ -5,13 +5,10 @@ ElectrikPokemon::ElectrikPokemon(const std::string &itsName, float itsSize, floa
     itsPaws(itsPaws),
     itsIntensity(itsIntensity),
     itsWings(itsWings)
-{}
-
-
-void ElectrikPokemon::calculateSpeed()
 {
     itsSpeed = (itsPaws + itsWings) * itsIntensity * 0.05;
 }
+
 
 std::string ElectrikPokemon::getDescription()
 {

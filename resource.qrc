@@ -1,0 +1,45 @@
+<RCC>
+    <qresource prefix="/resources">
+        <file>images/Arcanin.png</file>
+        <file>images/Arceus.png</file>
+        <file>images/Boguérisse.png</file>
+        <file>images/Cabriolaine.png</file>
+        <file>images/Caninos.png</file>
+        <file>images/Cheniselle.png</file>
+        <file>images/Chevroum.png</file>
+        <file>images/Crustabri.png</file>
+        <file>images/Dracaufeu.png</file>
+        <file>images/Élekable.png</file>
+        <file>images/Feunard.png</file>
+        <file>images/Flagadoss.png</file>
+        <file>images/Fragilady.png</file>
+        <file>images/Galopa.png</file>
+        <file>images/Goupix.png</file>
+        <file>images/Kokiyas.png</file>
+        <file>images/Krabboss.png</file>
+        <file>images/Kyogre.png</file>
+        <file>images/Lamantine.png</file>
+        <file>images/Lucanon.png</file>
+        <file>images/Luxray.png</file>
+        <file>images/Manternel.png</file>
+        <file>images/Maracachi.png</file>
+        <file>images/Marisson.png</file>
+        <file>images/Méga-Dracaufeu.png</file>
+        <file>images/Milobellus.png</file>
+        <file>images/Mygavolt.png</file>
+        <file>images/Otaria.png</file>
+        <file>images/Paras.png</file>
+        <file>images/Poissoroy.png</file>
+        <file>images/Ponyta.png</file>
+        <file>images/Posipi.png</file>
+        <file>images/Reptincel.png</file>
+        <file>images/Salamèche.png</file>
+        <file>images/Saquedeneu.png</file>
+        <file>images/Silvallié.png</file>
+        <file>images/Statitik.png</file>
+        <file>images/Wailord.png</file>
+        <file>images/Zébibron.png</file>
+        <file>images/Zeraora.png</file>
+        <file>database.db</file>
+    </qresource>
+</RCC>

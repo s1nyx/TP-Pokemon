@@ -28,7 +28,8 @@ QT_END_NAMESPACE
 enum WidgetType
 {
     HOME,
-    ATTACK
+    ATTACK,
+    FINISHED
 };
 
 class Widget : public QWidget

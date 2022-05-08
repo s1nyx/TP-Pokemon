@@ -93,14 +93,22 @@ void HomeWidget::on_addPokemon_clicked()
     }
 
     // checker que le dresseur a pas déjà 6 pokemons
-    if (currentTrainer->getItsPokemons()->size() < 6)
+    if (currentTrainer->getItsPokemons()->size() == 6)
+    {
+        ui->errorInput->setText("Vous possédez déjà 6 pokemons !");
+    }
+    else
     {
         // TODO: voir pour opti le code dessous car dégeu
+
+        bool hasSelectedOne = false;
 
         int electrikSelectedID = ui->electrikPokemonsTableView->currentIndex().row();
 
         if (electrikSelectedID != -1)
         {
+            hasSelectedOne = true;
+
             QString pokemonName = electrikTypePokemonsModel->record(electrikSelectedID).value("name").toString();
             currentTrainerTeam->addItem(pokemonName);
             //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
@@ -111,6 +119,8 @@ void HomeWidget::on_addPokemon_clicked()
 
         if (fireSelectedID != -1)
         {
+            if (!hasSelectedOne) hasSelectedOne = true;
+
             QString pokemonName = fireTypePokemonsModel->record(fireSelectedID).value("name").toString();
             currentTrainerTeam->addItem(pokemonName);
             //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
@@ -121,6 +131,8 @@ void HomeWidget::on_addPokemon_clicked()
 
         if (waterSelectedID != -1)
         {
+            if (!hasSelectedOne) hasSelectedOne = true;
+
             QString pokemonName = waterTypePokemonsModel->record(waterSelectedID).value("name").toString();
 
             currentTrainerTeam->addItem(pokemonName);
@@ -132,6 +144,8 @@ void HomeWidget::on_addPokemon_clicked()
 
         if (plantSelectedID != -1)
         {
+            if (!hasSelectedOne) hasSelectedOne = true;
+
             QString pokemonName = plantTypePokemonsModel->record(plantSelectedID).value("name").toString();
 
             currentTrainerTeam->addItem(pokemonName);
@@ -139,7 +153,14 @@ void HomeWidget::on_addPokemon_clicked()
             currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getPlantTypePokemons()->at(plantSelectedID));
         }
 
-        qDebug() << electrikSelectedID;
+        if (!hasSelectedOne)
+        {
+            ui->errorInput->setText("Vous devez sélectionner au minmum 1 pokemon sur 6");
+        }
+        else
+        {
+            generateTeamData(dresser);
+        }
     }
 }
 
@@ -162,18 +183,36 @@ void HomeWidget::on_removePokemon_clicked()
         currentTrainerTeam = ui->trainer2Team;
     }
 
-    std::string selectedPokemonName = currentTrainerTeam->currentItem()->text().toStdString();
-
-    for (Pokemon* pokemonOwned : *currentTrainer->getItsPokemons())
+    if (currentTrainerTeam->currentItem() == nullptr)
     {
-        if (pokemonOwned->getItsName() == selectedPokemonName)
+        ui->errorInput->setText("Vous n'avez pas sélectionné de pokemon !");
+    }
+    else
+    {
+        // todo: vérifier si il a au minimum 2 points;
+        std::string selectedPokemonName = currentTrainerTeam->currentItem()->text().toStdString();
+
+        bool canRemovePokemon = false;
+
+        for (Pokemon* pokemonOwned : *currentTrainer->getItsPokemons())
         {
-            currentTrainer->removePokemon(pokemonOwned);
-            break;
+            if (pokemonOwned->getItsName() == selectedPokemonName)
+            {
+                canRemovePokemon = currentTrainer->removePokemon(pokemonOwned);
+                break;
+            }
+        }
+
+        if (!canRemovePokemon)
+        {
+            ui->errorInput->setText("Vous n'avez plus assez d'XP pour retirer un pokemon");
+        }
+        else
+        {
+            currentTrainerTeam->takeItem(currentTrainerTeam->currentRow());
+            generateTeamData(dresser);
         }
     }
-
-    currentTrainerTeam->takeItem(currentTrainerTeam->currentRow());
 }
 
 
@@ -182,8 +221,12 @@ void HomeWidget::on_startGame_clicked()
     // todo: opti le code
 
     // on vérifie que les 2 dresseurs ont 6 pokemons
-    if (Game().getItsInstance()->getItsFirstTrainer()->getItsPokemons()->size() == 6
-        && Game().getItsInstance()->getItsSecondTrainer()->getItsPokemons()->size() == 6)
+    if (Game().getItsInstance()->getItsFirstTrainer()->getItsPokemons()->size() != 6
+        || Game().getItsInstance()->getItsSecondTrainer()->getItsPokemons()->size() != 6)
+    {
+        ui->errorInput->setText("Vous n'avez pas choisi les pokemons des dresseurs !");
+    }
+    else
     {
         qDebug() << "GOooooooo";
         // on regarde si les noms des dresseurs ont été définis
@@ -226,14 +269,47 @@ void HomeWidget::on_generatePokemon_clicked()
         currentTrainerTeam = ui->trainer2Team;
     }
 
-    if (currentTrainer->getItsPokemons()->size() == 0)
+    if (currentTrainer->getItsPokemons()->size() == 6)
     {
+        ui->errorInput->setText("Vous possédez déjà 6 pokemons !");
+    }
+    else
+    {
+        currentTrainer->getItsPokemons()->clear();
         std::vector<Pokemon*>* trainerPokemons = currentTrainer->generatePokemons();
 
         for (Pokemon* pokemon : *trainerPokemons)
         {
             currentTrainerTeam->addItem(QString::fromStdString(pokemon->getItsName()));
         }
+
+        generateTeamData(dresser);
     }
 }
 
+void HomeWidget::generateTeamData(int trainerID)
+{
+    Trainer* currentTrainer;
+    QLabel* currentTrainerHPTotal;
+    QLabel* currentTrainerCPTotal;
+    QLabel* currentTrainerSpeedAvg;
+
+    if (trainerID == 0)
+    {
+        currentTrainer = Game().getItsInstance()->getItsFirstTrainer();
+        currentTrainerHPTotal = ui->trainer1TotalHP;
+        currentTrainerCPTotal = ui->trainer1TotalCP;
+        currentTrainerSpeedAvg = ui->trainer1SpeedAvg;
+    }
+    else
+    {
+        currentTrainer = Game().getItsInstance()->getItsSecondTrainer();
+        currentTrainerHPTotal = ui->trainer2TotalHP;
+        currentTrainerCPTotal = ui->trainer2TotalCP;
+        currentTrainerSpeedAvg = ui->trainer2SpeedAvg;
+    }
+
+    currentTrainerHPTotal->setText(QString::number(currentTrainer->getTotalHealthPoints()));
+    currentTrainerCPTotal->setText(QString::number(currentTrainer->getTotalStrengthPower()));
+    currentTrainerSpeedAvg->setText(QString::number(currentTrainer->getAverageAttackSpeed()));
+}

@@ -4,12 +4,10 @@
 WaterPokemon::WaterPokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsFins)
     : Pokemon(itsName, itsSize, itsWeight, itsHealthPoint, itsStrengthPower),
       itsFins(itsFins)
-{}
-
-void WaterPokemon::calculateSpeed()
 {
     itsSpeed = itsWeight * itsFins / 25;
 }
+
 
 std::string WaterPokemon::getDescription()
 {

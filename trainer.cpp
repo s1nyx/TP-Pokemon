@@ -76,23 +76,23 @@ void Trainer::addPokemon(Pokemon *pokemon)
     std::cout << "Pokemon " << pokemon->getItsName() << " ajouté à la collection" << std::endl;
 }
 
-void Trainer::removePokemon(Pokemon *pokemon)
+bool Trainer::removePokemon(Pokemon *pokemon)
 {
     // TODO: renvoyer un erreur
     if (itsXP < 2)
     {
-        std::cout << "Oups! Vous devez avoir au minimum 2 XP pour retirer ce pokemon" << std::endl;
+       return false;
     }
-    else
-    {
-        std::vector<Pokemon*>::iterator pokemonIterator = std::find(itsPokemons->begin(), itsPokemons->end(), pokemon);
 
-        if (pokemonIterator != itsPokemons->end())
-        {
-            itsPokemons->erase(pokemonIterator);
-            std::cout << "Pokemon " << (*pokemonIterator)->getItsName() << " retiré de la collection" << std::endl;
-        }
+    std::vector<Pokemon*>::iterator pokemonIterator = std::find(itsPokemons->begin(), itsPokemons->end(), pokemon);
+
+    if (pokemonIterator != itsPokemons->end())
+    {
+        itsPokemons->erase(pokemonIterator);
+        std::cout << "Pokemon " << (*pokemonIterator)->getItsName() << " retiré de la collection" << std::endl;
     }
+
+    return true;
 }
 
 void Trainer::compareWithOpponent(Trainer *opponent)

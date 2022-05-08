@@ -24,7 +24,6 @@ protected:
 public:
     Pokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower);
 
-    virtual void calculateSpeed() = 0;
     virtual std::string getDescription() = 0;
     virtual Type getItsType() = 0;
     virtual void attack(Pokemon* otherPokemon);

@@ -2,12 +2,11 @@
 
 PlantPokemon::PlantPokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower)
     : Pokemon(itsName, itsSize, itsWeight, itsHealthPoint, itsStrengthPower)
-{}
-
-void PlantPokemon::calculateSpeed()
 {
     itsSpeed = 10 / (itsWeight * itsSize);
 }
+
+
 
 std::string PlantPokemon::getDescription()
 {

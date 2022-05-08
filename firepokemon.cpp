@@ -3,12 +3,11 @@
 FirePokemon::FirePokemon(const std::string &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsPaws)
     : Pokemon(itsName, itsSize, itsWeight, itsHealthPoint, itsStrengthPower),
       itsPaws(itsPaws)
-{}
-
-void FirePokemon::calculateSpeed()
 {
     itsSpeed = itsPaws * itsWeight * 0.03;
 }
+
+
 
 std::string FirePokemon::getDescription()
 {

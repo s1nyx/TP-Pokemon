@@ -22,6 +22,7 @@
 #include "homewidget.h"
 #include "ui_homewidget.h"
 #include "finishwidget.h"
+#include "game.h"
 
 #include <qboxlayout.h>
 
@@ -59,17 +60,20 @@ Widget::~Widget()
 void Widget::navigate()
 {
     // TODO: remplacer l'enum par celle du game?
-    switch (currentWidget)
+    if (Game().getItsInstance()->canStart())
     {
-        case HOME:
-            currentWidget = ATTACK;
-            break;
+        switch (currentWidget)
+        {
+            case HOME:
+                currentWidget = ATTACK;
+                break;
 
-        case ATTACK:
-            currentWidget = HOME;
-            break;
+            case ATTACK:
+                currentWidget = FINISHED;
+                break;
+        }
+
+        stackedWidget->setCurrentIndex(currentWidget);
     }
-
-    stackedWidget->setCurrentIndex(currentWidget);
 }
 

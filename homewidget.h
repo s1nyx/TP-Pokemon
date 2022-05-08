@@ -18,6 +18,7 @@
 #ifndef HOMEWIDGET_H
 #define HOMEWIDGET_H
 
+#include <QListWidget>
 #include <QSqlTableModel>
 #include <QWidget>
 
@@ -49,6 +50,7 @@ private:
     QSqlTableModel* waterTypePokemonsModel;
     QSqlTableModel* electrikTypePokemonsModel;
     QSqlTableModel* plantTypePokemonsModel;
+    void generateTeamData(int trainerID);
 };
 
 #endif // HOMEWIDGET_H
