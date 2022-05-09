@@ -27,23 +27,23 @@ private:
 
 public:
     Pokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower);
+    virtual ~Pokemon();
+
+    virtual void attack(Pokemon* otherPokemon);
+    bool isDead();
+    bool hasKoOneAttack() const;
+    void evolve();
+
+    void setItsHealthPoint(float newItsHealthPoint);
 
     virtual QString getDescription() = 0;
     virtual Type getItsType() = 0;
-    virtual void attack(Pokemon* otherPokemon);
-
-    friend std::ostream& operator<<(std::ostream& outputStream, Pokemon& pokemon);
 
     float getItsHealthPoint() const;
     float getHpPercentage() const;
-    void setItsHealthPoint(float newItsHealthPoint);
-    const QString &getItsName() const;
-    int getItsStrengthPower() const;
     float getItsSpeed() const;
-    bool isDead();
-    bool hasKoOneAttack() const;
-
-    void evolve();
+    int getItsStrengthPower() const;
+    const QString &getItsName() const;
 };
 
 #endif // POKEMON_H

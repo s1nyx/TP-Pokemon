@@ -120,9 +120,9 @@ void AttackWidget::gameLoop()
                 currentTrainer->addXP(3);
                 opponent->removeXP(1);
             }
-        }
 
-        currentTrainer = opponent;
+            currentTrainer = opponent;
+        }
     }
 }
 

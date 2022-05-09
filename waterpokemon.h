@@ -10,10 +10,12 @@ private:
 
 public:
     WaterPokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsFins);
+
     // Pokemon interface
+    void attack(Pokemon* otherPokemon);
+
     QString getDescription();
     Type getItsType();
-    void attack(Pokemon* otherPokemon);
 };
 
 #endif // WATERPOKEMON_H
