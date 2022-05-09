@@ -160,28 +160,6 @@ bool Trainer::removePokemon(Pokemon *pokemon)
     return true;
 }
 
-void Trainer::compareWithOpponent(Trainer *opponent)
-{
-    std::cout << *this << std::endl;
-    std::cout << *opponent << std::endl;
-
-    unsigned int currentTrainerWinningProbability = getTotalStrengthPower() / getTotalHealthPoints() * 100;
-    unsigned int opponentTrainerWinningProbability = getTotalStrengthPower() / getTotalHealthPoints() * 100;
-
-    if (currentTrainerWinningProbability > opponentTrainerWinningProbability)
-    {
-        std::cout << itsName.toStdString() << " a plus de chance de gagné que " << opponent->itsName.toStdString() << "(" << currentTrainerWinningProbability << "% vs " << opponentTrainerWinningProbability << "%)";
-    }
-    else if (currentTrainerWinningProbability < opponentTrainerWinningProbability)
-    {
-        std::cout << opponent->itsName.toStdString() << " a plus de chance de gagné que " << itsName.toStdString() << "(" << opponentTrainerWinningProbability << "% vs " << currentTrainerWinningProbability << "%)";
-    }
-    else
-    {
-        std::cout << "Les deux dresseurs ont autant de chance de gagné." << std::endl;
-    }
-}
-
 /*!
  * Permet d'ajouter de l'XP (points) et de faire levelup le dresseur (avec les pokemons)
  * \brief Trainer::addXP

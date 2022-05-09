@@ -800,7 +800,7 @@
      <rect>
       <x>125</x>
       <y>420</y>
-      <width>840</width>
+      <width>601</width>
       <height>16</height>
      </rect>
     </property>
@@ -915,6 +915,32 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QLabel" name="potentialWinner">
+    <property name="geometry">
+     <rect>
+      <x>865</x>
+      <y>420</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_20">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>420</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Potentiel gagnant:</string>
+    </property>
    </widget>
   </widget>
  </widget>

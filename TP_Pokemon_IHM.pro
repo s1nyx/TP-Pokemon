@@ -19,6 +19,7 @@ SOURCES += \
     main.cpp \
     plantpokemon.cpp \
     pokemon.cpp \
+    tests.cpp \
     trainer.cpp \
     waterpokemon.cpp \
     widget.cpp

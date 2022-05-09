@@ -276,6 +276,8 @@ void HomeWidget::on_generatePokemon_clicked()
     else
     {
         currentTrainer->getItsPokemons()->clear();
+        currentTrainerTeam->clear();
+
         std::vector<Pokemon*>* trainerPokemons = currentTrainer->generatePokemons();
 
         for (Pokemon* pokemon : *trainerPokemons)
@@ -312,4 +314,20 @@ void HomeWidget::generateTeamData(int trainerID)
     currentTrainerHPTotal->setText(QString::number(currentTrainer->getTotalHealthPoints()));
     currentTrainerCPTotal->setText(QString::number(currentTrainer->getTotalStrengthPower()));
     currentTrainerSpeedAvg->setText(QString::number(currentTrainer->getAverageAttackSpeed()));
+
+    unsigned int firstTrainerProbability = Game().getItsInstance()->getItsFirstTrainer()->getTotalStrengthPower() / Game().getItsInstance()->getItsFirstTrainer()->getTotalHealthPoints() * 100;
+    unsigned int opponentTrainerProbability = Game().getItsInstance()->getItsSecondTrainer()->getTotalStrengthPower() / Game().getItsInstance()->getItsSecondTrainer()->getTotalHealthPoints() * 100;
+
+    if (firstTrainerProbability > opponentTrainerProbability)
+    {
+        ui->potentialWinner->setText(Game().getItsInstance()->getItsFirstTrainer()->getItsName() + " (" + QString::number(firstTrainerProbability) + "%)");
+    }
+    else if (firstTrainerProbability < opponentTrainerProbability)
+    {
+        ui->potentialWinner->setText(Game().getItsInstance()->getItsSecondTrainer()->getItsName() + " (" + QString::number(opponentTrainerProbability) + "%)");
+    }
+    else
+    {
+        ui->potentialWinner->setText("50-50");
+    }
 }

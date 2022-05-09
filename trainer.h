@@ -19,7 +19,6 @@ private:
     int itsLevel;
     int itsXP;
     std::vector<Pokemon*>* itsPokemons; // y'en a 6
-    // TODO: checker "il connait la vitesse d’attaque moyenne pour l’ensemble de ses Pokemon ainsi que pour chaque type"
     Pokemon* currentPokemon;
     AIType itsAIType;
 
@@ -27,7 +26,6 @@ public:
     Trainer(const QString &itsName);
     ~Trainer();
 
-    //void attack(Pokemon* hisPokemon, Trainer* opponent);
     bool choosePokemon();
     void addPokemon(Pokemon* pokemon);
     bool removePokemon(Pokemon* pokemon);

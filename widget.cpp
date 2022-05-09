@@ -35,6 +35,7 @@ Widget::Widget(QWidget *parent)
     // désactive le resize
     setWindowFlags(Qt::Widget | Qt::MSWindowsFixedSizeDialogHint);
 
+    // initialisation du système de navigation
     AttackWidget* attackWidget = new AttackWidget();
     HomeWidget* homeWidget = new HomeWidget();
     FinishWidget* finishWidget = new FinishWidget();
