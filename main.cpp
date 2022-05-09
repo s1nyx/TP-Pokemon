@@ -15,15 +15,15 @@
  * contact the author of this file, or the owner of the project in which
  * this file belongs to.
  *****************************************************************************/
-#include "databasemanager.h"
+#include "game.h"
 #include "widget.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
-    qDebug() << "Database connected: " << DatabaseManager().getItsInstance()->connect();
-    DatabaseManager().getItsInstance()->startQueries();
+    qDebug() << "Database connected: " << Game().getItsInstance()->getItsDatabaseManager()->connect();
+    Game().getItsInstance()->getItsDatabaseManager()->startQueries();
 
     QApplication a(argc, argv);
     Widget w;

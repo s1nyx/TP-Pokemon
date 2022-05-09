@@ -44,12 +44,18 @@ void Game::setItsWinner(const QString &newItsWinner)
     itsWinner = newItsWinner;
 }
 
+DatabaseManager *Game::getItsDatabaseManager() const
+{
+    return itsDatabaseManager;
+}
+
 Game::Game()
 {
     itsState = LOBBY;
 
     itsWinner = "";
 
+    itsDatabaseManager = new DatabaseManager();
     itsFirstTrainer = new Trainer("AI 1");
     itsSecondTrainer = new Trainer("AI 2");
 }

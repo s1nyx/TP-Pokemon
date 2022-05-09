@@ -10,7 +10,6 @@ class DatabaseManager
 {
 private:
     QSqlDatabase itsDatabase;
-    static DatabaseManager* itsInstance; // Utilisation du Singleton comme design-pattern
     std::vector<Pokemon*>* itsFireTypePokemons;
     std::vector<Pokemon*>* itsWaterTypePokemons;
     std::vector<Pokemon*>* itsPlantTypePokemons;
@@ -28,7 +27,6 @@ public:
     std::vector<Pokemon*>* getWaterTypePokemons() const;
     std::vector<Pokemon*>* getPlantTypePokemons() const;
 
-    DatabaseManager *getItsInstance();
     const QSqlDatabase &getItsDatabase() const;
 };
 

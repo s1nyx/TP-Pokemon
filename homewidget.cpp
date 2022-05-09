@@ -32,19 +32,19 @@ HomeWidget::HomeWidget(QWidget *parent) :
     ui->setupUi(this);
 
     // TODO: voir pour opti
-    fireTypePokemonsModel = new QSqlTableModel(0, DatabaseManager().getItsInstance()->getItsDatabase());
+    fireTypePokemonsModel = new QSqlTableModel(0, Game().getItsInstance()->getItsDatabaseManager()->getItsDatabase());
     fireTypePokemonsModel->setTable("fire_pokemons");
     fireTypePokemonsModel->select();
 
-    plantTypePokemonsModel = new QSqlTableModel(0, DatabaseManager().getItsInstance()->getItsDatabase());
+    plantTypePokemonsModel = new QSqlTableModel(0, Game().getItsInstance()->getItsDatabaseManager()->getItsDatabase());
     plantTypePokemonsModel->setTable("plant_pokemons");
     plantTypePokemonsModel->select();
 
-    electrikTypePokemonsModel = new QSqlTableModel(0, DatabaseManager().getItsInstance()->getItsDatabase());
+    electrikTypePokemonsModel = new QSqlTableModel(0, Game().getItsInstance()->getItsDatabaseManager()->getItsDatabase());
     electrikTypePokemonsModel->setTable("electrik_pokemons");
     electrikTypePokemonsModel->select();
 
-    waterTypePokemonsModel = new QSqlTableModel(0, DatabaseManager().getItsInstance()->getItsDatabase());
+    waterTypePokemonsModel = new QSqlTableModel(0, Game().getItsInstance()->getItsDatabaseManager()->getItsDatabase());
     waterTypePokemonsModel->setTable("water_pokemons");
     waterTypePokemonsModel->select();
 
@@ -111,7 +111,7 @@ void HomeWidget::on_addPokemon_clicked()
 
             QString pokemonName = electrikTypePokemonsModel->record(electrikSelectedID).value("name").toString();
             currentTrainerTeam->addItem(pokemonName);
-            currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getElectrikTypePokemons()->at(electrikSelectedID));
+            currentTrainer->addPokemon(Game().getItsInstance()->getItsDatabaseManager()->getElectrikTypePokemons()->at(electrikSelectedID));
         }
 
         int fireSelectedID = ui->firePokemonsTableView->currentIndex().row();
@@ -122,7 +122,7 @@ void HomeWidget::on_addPokemon_clicked()
 
             QString pokemonName = fireTypePokemonsModel->record(fireSelectedID).value("name").toString();
             currentTrainerTeam->addItem(pokemonName);
-            currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getFireTypePokemons()->at(fireSelectedID));
+            currentTrainer->addPokemon(Game().getItsInstance()->getItsDatabaseManager()->getFireTypePokemons()->at(fireSelectedID));
         }
 
         int waterSelectedID = ui->waterPokemonsTableView->currentIndex().row();
@@ -134,7 +134,7 @@ void HomeWidget::on_addPokemon_clicked()
             QString pokemonName = waterTypePokemonsModel->record(waterSelectedID).value("name").toString();
 
             currentTrainerTeam->addItem(pokemonName);
-            currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getWaterTypePokemons()->at(waterSelectedID));
+            currentTrainer->addPokemon(Game().getItsInstance()->getItsDatabaseManager()->getWaterTypePokemons()->at(waterSelectedID));
         }
 
         int plantSelectedID = ui->plantPokemonsTableView->currentIndex().row();
@@ -146,7 +146,7 @@ void HomeWidget::on_addPokemon_clicked()
             QString pokemonName = plantTypePokemonsModel->record(plantSelectedID).value("name").toString();
 
             currentTrainerTeam->addItem(pokemonName);
-            currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getPlantTypePokemons()->at(plantSelectedID));
+            currentTrainer->addPokemon(Game().getItsInstance()->getItsDatabaseManager()->getPlantTypePokemons()->at(plantSelectedID));
         }
 
         if (!hasSelectedOne)

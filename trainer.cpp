@@ -1,8 +1,11 @@
 #include "databasemanager.h"
+#include "game.h"
 #include "trainer.h"
 
 #include <iostream>
 #include <algorithm>
+
+class Game;
 
 /*!
  * \brief Trainer::getItsLevel
@@ -89,21 +92,21 @@ const QString &Trainer::getItsName() const
 }
 
 /*!
- * \brief Trainer::getCurrentPokemon
+ * \brief Trainer::getItsCurrentPokemon
  * \return
  */
-Pokemon *Trainer::getCurrentPokemon() const
+Pokemon *Trainer::getItsCurrentPokemon() const
 {
-    return currentPokemon;
+    return itsCurrentPokemon;
 }
 
 /*!
- * \brief Trainer::setCurrentPokemon
- * \param newCurrentPokemon
+ * \brief Trainer::setItsCurrentPokemon
+ * \param newItsCurrentPokemon
  */
-void Trainer::setCurrentPokemon(Pokemon *newCurrentPokemon)
+void Trainer::setItsCurrentPokemon(Pokemon *newItsCurrentPokemon)
 {
-    currentPokemon = newCurrentPokemon;
+    itsCurrentPokemon = newItsCurrentPokemon;
 }
 
 /*!
@@ -133,7 +136,7 @@ Trainer::Trainer(const QString &itsName) : itsName(itsName)
     itsLevel = 0;
     itsXP = 0;
     itsPokemons = new std::vector<Pokemon*>;
-    currentPokemon = nullptr;
+    itsCurrentPokemon = nullptr;
 }
 
 /*!
@@ -156,8 +159,8 @@ bool Trainer::choosePokemon()
     if (itsAIType == BASIC)
     {
         do {
-           currentPokemon = (*itsPokemons)[rand() % 6];
-        } while (currentPokemon->isDead());
+           itsCurrentPokemon = (*itsPokemons)[rand() % 6];
+        } while (itsCurrentPokemon->isDead());
 
     }
     else if (itsAIType == ADVANCED)
@@ -172,7 +175,7 @@ bool Trainer::choosePokemon()
             }
         }
 
-        currentPokemon = max;
+        itsCurrentPokemon = max;
     }
     else
     {
@@ -186,7 +189,7 @@ bool Trainer::choosePokemon()
             }
         }
 
-        currentPokemon = max;
+        itsCurrentPokemon = max;
     }
 
     return true;
@@ -266,13 +269,13 @@ void Trainer::removeXP(int xp)
 
 void Trainer::save()
 {
-    DatabaseManager().getItsInstance()->saveTrainer(itsName, itsPokemons);
+    Game().getItsInstance()->getItsDatabaseManager()->saveTrainer(itsName, itsPokemons);
 }
 
 std::vector<Pokemon*>* Trainer::generatePokemons()
 {
     // Choisir les pokemons aléatoirement
-    std::vector<Pokemon*>* pokemons = DatabaseManager().getItsInstance()->getPokemons();
+    std::vector<Pokemon*>* pokemons = Game().getItsInstance()->getItsDatabaseManager()->getPokemons();
 
     try {
         for (unsigned int i = 0; i < 6; ++i)
@@ -280,7 +283,7 @@ std::vector<Pokemon*>* Trainer::generatePokemons()
             int randomIndex = rand() % 40;
             addPokemon(pokemons->at(randomIndex));
         }
-    }  catch (std::out_of_range e) {
+    }  catch (std::out_of_range const& e) {
         std::cerr << "Dresseur 1: L'index n'est pas dans le vecteur des pokemons : " << e.what() << std::endl;
     }
 

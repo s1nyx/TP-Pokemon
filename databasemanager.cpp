@@ -6,8 +6,6 @@
 #include <iostream>
 #include <QSqlQuery>
 
-DatabaseManager* DatabaseManager::itsInstance = nullptr;
-
 const QSqlDatabase &DatabaseManager::getItsDatabase() const
 {
     return itsDatabase;
@@ -19,17 +17,6 @@ DatabaseManager::DatabaseManager()
     itsWaterTypePokemons = new std::vector<Pokemon*>();
     itsFireTypePokemons = new std::vector<Pokemon*>();
     itsPlantTypePokemons = new std::vector<Pokemon*>();
-}
-
-DatabaseManager *DatabaseManager::getItsInstance()
-{
-    if (itsInstance == nullptr)
-    {
-
-        itsInstance = new DatabaseManager();
-    }
-
-    return itsInstance;
 }
 
 bool DatabaseManager::connect()

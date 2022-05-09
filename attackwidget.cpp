@@ -93,18 +93,18 @@ void AttackWidget::gameLoop()
     {
         Trainer* opponent = currentTrainer == Game().getItsInstance()->getItsFirstTrainer() ? Game().getItsInstance()->getItsSecondTrainer() : Game().getItsInstance()->getItsFirstTrainer();
 
-        if (currentTrainer->getCurrentPokemon()->isDead())
+        if (currentTrainer->getItsCurrentPokemon()->isDead())
         {
             qDebug() << "Change POK";
             currentTrainer->choosePokemon();
             updatePokemons();
         }
 
-        currentTrainer->getCurrentPokemon()->attack(opponent->getCurrentPokemon());
+        currentTrainer->getItsCurrentPokemon()->attack(opponent->getItsCurrentPokemon());
         updateDataShowed();
         qDebug() << "attack";
 
-        if (currentTrainer->getCurrentPokemon()->hasKoOneAttack())
+        if (currentTrainer->getItsCurrentPokemon()->hasKoOneAttack())
         {
             qDebug() << "Oneshot";
             currentTrainer->addXP(3);
@@ -117,19 +117,19 @@ void AttackWidget::gameLoop()
 
 void AttackWidget::updatePokemons()
 {
-    QPixmap pix1(":/images/images/" + Game().getItsInstance()->getItsFirstTrainer()->getCurrentPokemon()->getItsName() + ".png");
+    QPixmap pix1(":/images/images/" + Game().getItsInstance()->getItsFirstTrainer()->getItsCurrentPokemon()->getItsName() + ".png");
     pix1 = pix1.scaled(130, 80);
     ui->trainer1Pokemon->setPixmap(pix1);
     ui->trainer1Pokemon->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-    ui->trainer1PokemonDescription->setText(Game().getItsInstance()->getItsFirstTrainer()->getCurrentPokemon()->getDescription());
+    ui->trainer1PokemonDescription->setText(Game().getItsInstance()->getItsFirstTrainer()->getItsCurrentPokemon()->getDescription());
 
-    QPixmap pix2(":/images/images/" + Game().getItsInstance()->getItsSecondTrainer()->getCurrentPokemon()->getItsName() + ".png");
+    QPixmap pix2(":/images/images/" + Game().getItsInstance()->getItsSecondTrainer()->getItsCurrentPokemon()->getItsName() + ".png");
     pix2 = pix2.scaled(130, 80);
     ui->trainer2Pokemon->setPixmap(pix2);
     ui->trainer2Pokemon->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-    ui->trainer2PokemonDescription->setText(Game().getItsInstance()->getItsSecondTrainer()->getCurrentPokemon()->getDescription());
+    ui->trainer2PokemonDescription->setText(Game().getItsInstance()->getItsSecondTrainer()->getItsCurrentPokemon()->getDescription());
 
     ui->trainer1Name->setText(Game().getItsInstance()->getItsFirstTrainer()->getItsName() + " (Niv. " + QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsLevel()) + " / " + QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsXP()) + " Exp.)");
     ui->trainer2Name->setText(Game().getItsInstance()->getItsSecondTrainer()->getItsName() + " (Niv. " + QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsLevel()) + " / " + QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsXP()) + " Exp.)");
@@ -140,6 +140,6 @@ void AttackWidget::updateDataShowed()
     ui->trainer1TotalHP->setText(QString::number(Game().getItsInstance()->getItsFirstTrainer()->getTotalHealthPoints()));
     ui->trainer2TotalHP->setText(QString::number(Game().getItsInstance()->getItsSecondTrainer()->getTotalHealthPoints()));
 
-    ui->trainer1PokemonHP->setText(QString::number(Game().getItsInstance()->getItsFirstTrainer()->getCurrentPokemon()->getHpPercentage()) + "% de vie");
-    ui->trainer2PokemonHP->setText(QString::number(Game().getItsInstance()->getItsSecondTrainer()->getCurrentPokemon()->getHpPercentage()) + "% de vie");
+    ui->trainer1PokemonHP->setText(QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsCurrentPokemon()->getHpPercentage()) + "% de vie");
+    ui->trainer2PokemonHP->setText(QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsCurrentPokemon()->getHpPercentage()) + "% de vie");
 }

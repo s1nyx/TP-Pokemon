@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "databasemanager.h"
 #include "trainer.h"
 
 enum GameState {
@@ -14,6 +15,7 @@ class Game
 private:
     static Game* itsInstance; // Utilisation du Singleton comme design-pattern
     GameState itsState;
+    DatabaseManager* itsDatabaseManager;
     Trainer* itsFirstTrainer;
     Trainer* itsSecondTrainer;
     QString itsWinner;
@@ -32,6 +34,7 @@ public:
     const QString &getItsWinner() const;
     void setItsWinner(const QString &newItsWinner);
     void setItsAIType(AIType newItsAIType);
+    DatabaseManager *getItsDatabaseManager() const;
 };
 
 #endif // GAME_H

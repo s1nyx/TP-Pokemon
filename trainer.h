@@ -19,7 +19,7 @@ private:
     int itsLevel;
     int itsXP;
     std::vector<Pokemon*>* itsPokemons; // y'en a 6
-    Pokemon* currentPokemon;
+    Pokemon* itsCurrentPokemon;
     AIType itsAIType;
 
 public:
@@ -43,8 +43,8 @@ public:
     std::vector<Pokemon *> *getItsPokemons() const;
     void setItsName(const QString &newItsName);
     const QString &getItsName() const;
-    Pokemon *getCurrentPokemon() const;
-    void setCurrentPokemon(Pokemon *newCurrentPokemon);
+    Pokemon *getItsCurrentPokemon() const;
+    void setItsCurrentPokemon(Pokemon* newItsCurrentPokemon);
     void setItsAIType(const AIType &newItsAIType);
     int getItsXP() const;
 };
