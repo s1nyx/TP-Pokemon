@@ -27,19 +27,19 @@ public:
     ~Trainer();
 
     bool choosePokemon();
+    bool removePokemon(Pokemon* pokemson);
     void addPokemon(Pokemon* pokemon);
-    bool removePokemon(Pokemon* pokemon);
     void compareWithOpponent(Trainer* opponent);
     void addXP(int xp);
     void removeXP(int xp);
     void save();
+
     std::vector<Pokemon*>* generatePokemons();
     int getItsLevel() const;
-    float getTotalHealthPoints() const;
     int getTotalStrengthPower() const;
+    float getTotalHealthPoints() const;
     float getAverageAttackSpeed() const;
 
-    friend std::ostream& operator<<(std::ostream& outputStream, Trainer& trainer);
     std::vector<Pokemon *> *getItsPokemons() const;
     void setItsName(const QString &newItsName);
     const QString &getItsName() const;

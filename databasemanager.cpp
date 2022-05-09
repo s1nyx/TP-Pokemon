@@ -125,7 +125,6 @@ void DatabaseManager::startQueries()
     }
 }
 
-// TODO: clean pour que les queries soient faites 1 fois
 std::vector<Pokemon *>* DatabaseManager::getPokemons() const
 {
     std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;

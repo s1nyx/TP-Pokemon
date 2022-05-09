@@ -1,13 +1,22 @@
 #include "databasemanager.h"
 #include "trainer.h"
+
 #include <iostream>
 #include <algorithm>
 
+/*!
+ * \brief Trainer::getItsLevel
+ * \return
+ */
 int Trainer::getItsLevel() const
 {
     return itsLevel;
 }
 
+/*!
+ * \brief Trainer::getTotalHealthPoints
+ * \return
+ */
 float Trainer::getTotalHealthPoints() const
 {
     float total = 0;
@@ -20,6 +29,10 @@ float Trainer::getTotalHealthPoints() const
     return total;
 }
 
+/*!
+ * \brief Trainer::getTotalStrengthPower
+ * \return
+ */
 int Trainer::getTotalStrengthPower() const
 {
     int total = 0;
@@ -32,6 +45,10 @@ int Trainer::getTotalStrengthPower() const
     return total;
 }
 
+/*!
+ * \brief Trainer::getAverageAttackSpeed
+ * \return
+ */
 float Trainer::getAverageAttackSpeed() const
 {
     float total = 0;
@@ -44,41 +61,73 @@ float Trainer::getAverageAttackSpeed() const
     return total / itsPokemons->size();
 }
 
+/*!
+ * \brief Trainer::getItsPokemons
+ * \return
+ */
 std::vector<Pokemon *> *Trainer::getItsPokemons() const
 {
     return itsPokemons;
 }
 
+/*!
+ * \brief Trainer::setItsName
+ * \param newItsName
+ */
 void Trainer::setItsName(const QString &newItsName)
 {
     itsName = newItsName;
 }
 
+/*!
+ * \brief Trainer::getItsName
+ * \return
+ */
 const QString &Trainer::getItsName() const
 {
     return itsName;
 }
 
+/*!
+ * \brief Trainer::getCurrentPokemon
+ * \return
+ */
 Pokemon *Trainer::getCurrentPokemon() const
 {
     return currentPokemon;
 }
 
+/*!
+ * \brief Trainer::setCurrentPokemon
+ * \param newCurrentPokemon
+ */
 void Trainer::setCurrentPokemon(Pokemon *newCurrentPokemon)
 {
     currentPokemon = newCurrentPokemon;
 }
 
+/*!
+ * \brief Trainer::setItsAIType
+ * \param newItsAIType
+ */
 void Trainer::setItsAIType(const AIType &newItsAIType)
 {
     itsAIType = newItsAIType;
 }
 
+/*!
+ * \brief Trainer::getItsXP
+ * \return
+ */
 int Trainer::getItsXP() const
 {
     return itsXP;
 }
 
+/*!
+ * \brief Trainer::Trainer
+ * \param itsName
+ */
 Trainer::Trainer(const QString &itsName) : itsName(itsName)
 {
     itsLevel = 0;
@@ -87,11 +136,18 @@ Trainer::Trainer(const QString &itsName) : itsName(itsName)
     currentPokemon = nullptr;
 }
 
+/*!
+ * \brief Trainer::~Trainer
+ */
 Trainer::~Trainer()
 {
     delete itsPokemons;
 }
 
+/*!
+ * \brief Trainer::choosePokemon
+ * \return
+ */
 bool Trainer::choosePokemon()
 {
     if (getTotalHealthPoints() == 0) return false;
@@ -136,6 +192,10 @@ bool Trainer::choosePokemon()
     return true;
 }
 
+/*!
+ * \brief Trainer::addPokemon
+ * \param pokemon
+ */
 void Trainer::addPokemon(Pokemon *pokemon)
 {
     itsPokemons->push_back(pokemon);
@@ -143,6 +203,11 @@ void Trainer::addPokemon(Pokemon *pokemon)
     addXP(1);
 }
 
+/*!
+ * \brief Trainer::removePokemon
+ * \param pokemon
+ * \return
+ */
 bool Trainer::removePokemon(Pokemon *pokemon)
 {
     if (itsXP < 2)
@@ -183,6 +248,10 @@ void Trainer::addXP(int xp)
     }
 }
 
+/*!
+ * \brief Trainer::removeXP
+ * \param xp
+ */
 void Trainer::removeXP(int xp)
 {
     if (itsXP - xp < 0)
@@ -205,29 +274,17 @@ std::vector<Pokemon*>* Trainer::generatePokemons()
     // Choisir les pokemons aléatoirement
     std::vector<Pokemon*>* pokemons = DatabaseManager().getItsInstance()->getPokemons();
 
-    for (unsigned int i = 0; i < 6; ++i)
-    {
-        int randomIndex = rand() % 40;
-
-        try {
+    try {
+        for (unsigned int i = 0; i < 6; ++i)
+        {
+            int randomIndex = rand() % 40;
             addPokemon(pokemons->at(randomIndex));
-        }  catch (...) {
-            std::cout << "Dresseur 1: L'index n'est pas dans le vecteur des pokemons : " << randomIndex << std::endl;
         }
+    }  catch (std::out_of_range e) {
+        std::cerr << "Dresseur 1: L'index n'est pas dans le vecteur des pokemons : " << e.what() << std::endl;
     }
 
     // TODO: les triers par TYPE puis par PC
 
     return itsPokemons;
-}
-
-std::ostream& operator<<(std::ostream& outputStream, Trainer& trainer)
-{
-    outputStream << "=====================" << std::endl
-        << "Dresseur: " << trainer.itsName.toStdString() << " (Niv. " << trainer.itsLevel << ", XP: " << trainer.itsXP << ")" << std::endl
-        << "PV Total: " << trainer.getTotalHealthPoints()  << std::endl
-        << "PC Total: " << trainer.getTotalStrengthPower()  << std::endl
-        << "Moyenne vitesse attaque: " << trainer.getAverageAttackSpeed() << std::endl;
-
-    return outputStream;
 }

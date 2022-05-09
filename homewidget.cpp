@@ -111,7 +111,6 @@ void HomeWidget::on_addPokemon_clicked()
 
             QString pokemonName = electrikTypePokemonsModel->record(electrikSelectedID).value("name").toString();
             currentTrainerTeam->addItem(pokemonName);
-            //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
             currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getElectrikTypePokemons()->at(electrikSelectedID));
         }
 
@@ -123,7 +122,6 @@ void HomeWidget::on_addPokemon_clicked()
 
             QString pokemonName = fireTypePokemonsModel->record(fireSelectedID).value("name").toString();
             currentTrainerTeam->addItem(pokemonName);
-            //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
             currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getFireTypePokemons()->at(fireSelectedID));
         }
 
@@ -136,7 +134,6 @@ void HomeWidget::on_addPokemon_clicked()
             QString pokemonName = waterTypePokemonsModel->record(waterSelectedID).value("name").toString();
 
             currentTrainerTeam->addItem(pokemonName);
-            //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
             currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getWaterTypePokemons()->at(waterSelectedID));
         }
 
@@ -149,7 +146,6 @@ void HomeWidget::on_addPokemon_clicked()
             QString pokemonName = plantTypePokemonsModel->record(plantSelectedID).value("name").toString();
 
             currentTrainerTeam->addItem(pokemonName);
-            //TODO: optimiser le get du pokemon via la bd (mettre un cache?)
             currentTrainer->addPokemon(DatabaseManager().getItsInstance()->getPlantTypePokemons()->at(plantSelectedID));
         }
 
@@ -189,9 +185,9 @@ void HomeWidget::on_removePokemon_clicked()
     }
     else
     {
-        // todo: vérifier si il a au minimum 2 points;
         QString selectedPokemonName = currentTrainerTeam->currentItem()->text();
 
+        // vérifie qu'il a au moins 2XP
         bool canRemovePokemon = false;
 
         for (Pokemon* pokemonOwned : *currentTrainer->getItsPokemons())
