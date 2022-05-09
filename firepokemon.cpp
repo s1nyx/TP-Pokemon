@@ -7,8 +7,6 @@ FirePokemon::FirePokemon(const QString &itsName, float itsSize, float itsWeight,
     itsSpeed = itsPaws * itsWeight * 0.03;
 }
 
-
-
 QString FirePokemon::getDescription()
 {
     return "Je suis le Pokemon " + itsName + " (type FEU). Mon poids est de " + QString::number(itsWeight) + " kg, ma vitesse est de " + QString::number(itsSpeed) + " km/h. J'ai " + QString::number(itsPaws) + " pattes, ma taille est de " + QString::number(itsSize) + "m.";

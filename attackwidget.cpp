@@ -92,23 +92,34 @@ void AttackWidget::gameLoop()
     else
     {
         Trainer* opponent = currentTrainer == Game().getItsInstance()->getItsFirstTrainer() ? Game().getItsInstance()->getItsSecondTrainer() : Game().getItsInstance()->getItsFirstTrainer();
+        bool noMorePokemon = false;
 
         if (currentTrainer->getItsCurrentPokemon()->isDead())
         {
             qDebug() << "Change POK";
             currentTrainer->choosePokemon();
-            updatePokemons();
+            if (currentTrainer->getItsCurrentPokemon()->isDead())
+            {
+                noMorePokemon = true;
+            }
+            else
+            {
+                updatePokemons();
+            }
         }
 
-        currentTrainer->getItsCurrentPokemon()->attack(opponent->getItsCurrentPokemon());
-        updateDataShowed();
-        qDebug() << "attack";
-
-        if (currentTrainer->getItsCurrentPokemon()->hasKoOneAttack())
+        if (!noMorePokemon)
         {
-            qDebug() << "Oneshot";
-            currentTrainer->addXP(3);
-            opponent->removeXP(1);
+            currentTrainer->getItsCurrentPokemon()->attack(opponent->getItsCurrentPokemon());
+            updateDataShowed();
+            qDebug() << "attack";
+
+            if (currentTrainer->getItsCurrentPokemon()->hasKoOneAttack())
+            {
+                qDebug() << "Oneshot";
+                currentTrainer->addXP(3);
+                opponent->removeXP(1);
+            }
         }
 
         currentTrainer = opponent;

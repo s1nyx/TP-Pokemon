@@ -6,17 +6,17 @@
 #include <iostream>
 #include <QSqlQuery>
 
-const QSqlDatabase &DatabaseManager::getItsDatabase() const
-{
-    return itsDatabase;
-}
-
 DatabaseManager::DatabaseManager()
 {
     itsElectrikTypePokemons = new std::vector<Pokemon*>();
     itsWaterTypePokemons = new std::vector<Pokemon*>();
     itsFireTypePokemons = new std::vector<Pokemon*>();
     itsPlantTypePokemons = new std::vector<Pokemon*>();
+}
+
+const QSqlDatabase &DatabaseManager::getItsDatabase() const
+{
+    return itsDatabase;
 }
 
 bool DatabaseManager::connect()

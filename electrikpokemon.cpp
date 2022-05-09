@@ -9,7 +9,6 @@ ElectrikPokemon::ElectrikPokemon(const QString &itsName, float itsSize, float it
     itsSpeed = (itsPaws + itsWings) * itsIntensity * 0.05;
 }
 
-
 QString ElectrikPokemon::getDescription()
 {
     return "Je suis le Pokemon " + itsName + " (type ELECTRIK). Mon poids est de " + QString::number(itsWeight) +" kg, ma vitesse est de " + QString::number(itsSpeed) + " km/h. J'ai " + QString::number(itsPaws) + " pattes, ma taille est de " + QString::number(itsSize) + "m et mon intensité est de " + QString::number(itsIntensity) + "mA.";

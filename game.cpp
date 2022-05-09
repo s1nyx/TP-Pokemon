@@ -2,6 +2,17 @@
 #include "game.h"
 #include <iostream>
 
+Game::Game()
+{
+    itsState = LOBBY;
+
+    itsWinner = "";
+
+    itsDatabaseManager = new DatabaseManager();
+    itsFirstTrainer = new Trainer("AI 1");
+    itsSecondTrainer = new Trainer("AI 2");
+}
+
 Game* Game::itsInstance = nullptr;
 
 GameState Game::getItsState() const
@@ -47,17 +58,6 @@ void Game::setItsWinner(const QString &newItsWinner)
 DatabaseManager *Game::getItsDatabaseManager() const
 {
     return itsDatabaseManager;
-}
-
-Game::Game()
-{
-    itsState = LOBBY;
-
-    itsWinner = "";
-
-    itsDatabaseManager = new DatabaseManager();
-    itsFirstTrainer = new Trainer("AI 1");
-    itsSecondTrainer = new Trainer("AI 2");
 }
 
 void Game::start(AIType aiType)

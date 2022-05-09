@@ -1,6 +1,18 @@
 #include "pokemon.h"
 #include <iostream>
 
+Pokemon::Pokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower)
+    :
+    itsName(itsName),
+    itsSize(itsSize),
+    itsWeight(itsWeight),
+    itsHealthPoint(itsHealthPoint),
+    itsStrengthPower(itsStrengthPower)
+{
+    itsMaxHealthPoint = itsHealthPoint;
+    itsKoOneAttack = false;
+}
+
 float Pokemon::getItsHealthPoint() const
 {
     return itsHealthPoint;
@@ -47,18 +59,6 @@ void Pokemon::evolve()
     itsStrengthPower += 8;
     itsWeight *= 1.05;
     itsSize *= 1.05;
-}
-
-Pokemon::Pokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower)
-    :
-    itsName(itsName),
-    itsSize(itsSize),
-    itsWeight(itsWeight),
-    itsHealthPoint(itsHealthPoint),
-    itsStrengthPower(itsStrengthPower)
-{
-    itsMaxHealthPoint = itsHealthPoint;
-    itsKoOneAttack = false;
 }
 
 void Pokemon::attack(Pokemon *otherPokemon)
