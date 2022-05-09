@@ -21,7 +21,7 @@
 #include <QWidget>
 
 namespace Ui {
-class FinishWidget;
+    class FinishWidget;
 }
 
 class FinishWidget : public QWidget

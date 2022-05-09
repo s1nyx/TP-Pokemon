@@ -1,25 +1,12 @@
-/*****************************************************************************
- * attackwidget.cpp
- *
- * Created: 07/05/2022 2022 by sinyx
- *
- * Copyright 2022 sinyx. All rights reserved.
- *
- * This file may be distributed under the terms of GNU Public License version
- * 3 (GPL v3) as defined by the Free Software Foundation (FSF). A copy of the
- * license should have been included with this file, or the project in which
- * this file belongs to. You may also find the details of GPL v3 at:
- * http://www.gnu.org/licenses/gpl-3.0.txt
- *
- * If you have any questions regarding the use of this file, feel free to
- * contact the author of this file, or the owner of the project in which
- * this file belongs to.
- *****************************************************************************/
 #include "attackwidget.h"
 #include "ui_attackwidget.h"
 #include <QTimer>
 #define GAME_TIME 1000
 
+/*!
+ * \brief AttackWidget::AttackWidget
+ * \param parent
+ */
 AttackWidget::AttackWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AttackWidget)
@@ -32,11 +19,22 @@ AttackWidget::AttackWidget(QWidget *parent) :
     currentTrainer = Game().getItsInstance()->getItsFirstTrainer();
 }
 
+/*!
+ * \brief AttackWidget::~AttackWidget
+ */
 AttackWidget::~AttackWidget()
 {
     delete ui;
+    delete currentTrainer;
+    delete itsTimer;
+    delete itsRemainingTime;
 }
 
+/*!
+ * Renvoie l'UI
+ * \brief AttackWidget::getUi
+ * \return
+ */
 Ui::AttackWidget *AttackWidget::getUi() const
 {
     return ui;
@@ -69,7 +67,7 @@ void AttackWidget::onTick()
 
 void AttackWidget::gameLoop()
 {
-    if (Game().getItsInstance()->getItsFirstTrainer()->getTotalHealthPoints() == 0 || Game().getItsInstance()->getItsSecondTrainer() == 0)
+    if (Game().getItsInstance()->getItsFirstTrainer()->getTotalHealthPoints() == 0 || Game().getItsInstance()->getItsSecondTrainer()->getTotalHealthPoints() == 0)
     {
         itsTimer->stop();
         itsRemainingTime->stop();
@@ -96,7 +94,8 @@ void AttackWidget::gameLoop()
 
         if (currentTrainer->getItsCurrentPokemon()->isDead())
         {
-            qDebug() << "Change POK";
+            qDebug() << "Change POK ";
+
             currentTrainer->choosePokemon();
             if (currentTrainer->getItsCurrentPokemon()->isDead())
             {

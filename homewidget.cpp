@@ -1,20 +1,3 @@
-/*****************************************************************************
- * homewidget.cpp
- *
- * Created: 07/05/2022 2022 by sinyx
- *
- * Copyright 2022 sinyx. All rights reserved.
- *
- * This file may be distributed under the terms of GNU Public License version
- * 3 (GPL v3) as defined by the Free Software Foundation (FSF). A copy of the
- * license should have been included with this file, or the project in which
- * this file belongs to. You may also find the details of GPL v3 at:
- * http://www.gnu.org/licenses/gpl-3.0.txt
- *
- * If you have any questions regarding the use of this file, feel free to
- * contact the author of this file, or the owner of the project in which
- * this file belongs to.
- *****************************************************************************/
 #include "databasemanager.h"
 #include "game.h"
 #include "homewidget.h"
@@ -25,13 +8,17 @@
 #include <QSqlRecord>
 #include <QList>
 
+/*!
+ * \brief HomeWidget::HomeWidget
+ * \param parent
+ */
 HomeWidget::HomeWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::HomeWidget)
 {
     ui->setupUi(this);
 
-    // TODO: voir pour opti
+    // Connexion entre la base de donnée et les models
     fireTypePokemonsModel = new QSqlTableModel(0, Game().getItsInstance()->getItsDatabaseManager()->getItsDatabase());
     fireTypePokemonsModel->setTable("fire_pokemons");
     fireTypePokemonsModel->select();
@@ -48,6 +35,7 @@ HomeWidget::HomeWidget(QWidget *parent) :
     waterTypePokemonsModel->setTable("water_pokemons");
     waterTypePokemonsModel->select();
 
+    // Connexion entre les models et les tableviews
     ui->firePokemonsTableView->setModel(fireTypePokemonsModel);
     ui->firePokemonsTableView->setAlternatingRowColors(true);
     ui->firePokemonsTableView->show();
@@ -65,16 +53,32 @@ HomeWidget::HomeWidget(QWidget *parent) :
     ui->waterPokemonsTableView->show();
 }
 
+/*!
+ * \brief HomeWidget::~HomeWidget
+ */
 HomeWidget::~HomeWidget()
 {
     delete ui;
+    delete fireTypePokemonsModel;
+    delete waterTypePokemonsModel;
+    delete electrikTypePokemonsModel;
+    delete plantTypePokemonsModel;
 }
 
+/*!
+ * Renvoie l'UI
+ * \brief HomeWidget::getUi
+ * \return
+ */
 Ui::HomeWidget *HomeWidget::getUi() const
 {
     return ui;
 }
 
+/*!
+ * Slot détectant lorsqu'un pokemon est ajouté
+ * \brief HomeWidget::on_addPokemon_clicked
+ */
 void HomeWidget::on_addPokemon_clicked()
 {
     int dresser = ui->targetedTrainer->currentIndex();
@@ -160,7 +164,10 @@ void HomeWidget::on_addPokemon_clicked()
     }
 }
 
-
+/*!
+ * Slot détectant lorsqu'un pokemon est retiré
+ * \brief HomeWidget::on_removePokemon_clicked
+ */
 void HomeWidget::on_removePokemon_clicked()
 {
     // todo: passer le dresser en attribut pour les autres fonctions
@@ -211,7 +218,10 @@ void HomeWidget::on_removePokemon_clicked()
     }
 }
 
-
+/*!
+ * Slot détectant lorsque la partie commence
+ * \brief HomeWidget::on_startGame_clicked
+ */
 void HomeWidget::on_startGame_clicked()
 {
     // todo: opti le code
@@ -246,7 +256,10 @@ void HomeWidget::on_startGame_clicked()
     }
 }
 
-
+/*!
+ * Slot détectant lorsqu'on souhaite générer la liste des pokemons
+ * \brief HomeWidget::on_generatePokemon_clicked
+ */
 void HomeWidget::on_generatePokemon_clicked()
 {
     // todo: passer le dresser en attribut pour les autres fonctions
@@ -285,6 +298,11 @@ void HomeWidget::on_generatePokemon_clicked()
     }
 }
 
+/*!
+ * Met à jour les informations affichés sur l'UI
+ * \brief HomeWidget::generateTeamData
+ * \param trainerID
+ */
 void HomeWidget::generateTeamData(int trainerID)
 {
     Trainer* currentTrainer;

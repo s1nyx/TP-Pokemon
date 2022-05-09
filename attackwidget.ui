@@ -74,7 +74,7 @@
      <x>20</x>
      <y>290</y>
      <width>260</width>
-     <height>50</height>
+     <height>71</height>
     </rect>
    </property>
    <property name="acceptDrops">
@@ -96,7 +96,7 @@
      <x>690</x>
      <y>290</y>
      <width>260</width>
-     <height>50</height>
+     <height>71</height>
     </rect>
    </property>
    <property name="text">

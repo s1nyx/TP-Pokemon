@@ -10,10 +10,12 @@ private:
 
 public:
     FirePokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower, int itsPaws);
+
     // Pokemon interface
+    void attack(Pokemon* otherPokemon);
+
     QString getDescription();
     Type getItsType();
-    void attack(Pokemon* otherPokemon);
 };
 
 #endif // FIREPOKEMON_H

@@ -7,10 +7,12 @@ class PlantPokemon : public Pokemon
 {
 public:
     PlantPokemon(const QString &itsName, float itsSize, float itsWeight, float itsHealthPoint, int itsStrengthPower);
+
     // Pokemon interface
+    void attack(Pokemon* otherPokemon);
+
     QString getDescription();
     Type getItsType();
-    void attack(Pokemon* otherPokemon);
 };
 
 #endif // PLANTPOKEMON_H

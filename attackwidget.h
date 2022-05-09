@@ -51,6 +51,7 @@ private:
     QTimer* itsTimer;
     QTimer* itsRemainingTime;
     int itsTimeCounter;
+
     void updatePokemons();
     void updateDataShowed();
 };

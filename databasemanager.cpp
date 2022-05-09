@@ -3,9 +3,12 @@
 #include "firepokemon.h"
 #include "plantpokemon.h"
 #include "waterpokemon.h"
-#include <iostream>
+
 #include <QSqlQuery>
 
+/*!
+ * \brief DatabaseManager::DatabaseManager
+ */
 DatabaseManager::DatabaseManager()
 {
     itsElectrikTypePokemons = new std::vector<Pokemon*>();
@@ -14,11 +17,34 @@ DatabaseManager::DatabaseManager()
     itsPlantTypePokemons = new std::vector<Pokemon*>();
 }
 
+/*!
+ * \brief DatabaseManager::~DatabaseManager
+ */
+DatabaseManager::~DatabaseManager()
+{
+    delete itsFireTypePokemons;
+    delete itsElectrikTypePokemons;
+    delete itsWaterTypePokemons;
+    delete itsPlantTypePokemons;
+    itsDatabase.close();
+}
+
+/*!
+ * Renvoie la BDD
+ * \brief DatabaseManager::getItsDatabase
+ * \return
+ */
 const QSqlDatabase &DatabaseManager::getItsDatabase() const
 {
     return itsDatabase;
 }
 
+/*!
+ * Permet de se connecter à la BDD
+ * Renvoie si la connexion a été établie
+ * \brief DatabaseManager::connect
+ * \return
+ */
 bool DatabaseManager::connect()
 {
     itsDatabase = QSqlDatabase::addDatabase("QSQLITE");
@@ -27,6 +53,12 @@ bool DatabaseManager::connect()
     return itsDatabase.open();
 }
 
+/*!
+ * Permet de sauvegarder un dresseur
+ * \brief DatabaseManager::saveTrainer
+ * \param name
+ * \param pokemons
+ */
 void DatabaseManager::saveTrainer(QString name, std::vector<Pokemon *> *pokemons)
 {
     QSqlQuery query;
@@ -50,6 +82,10 @@ void DatabaseManager::saveTrainer(QString name, std::vector<Pokemon *> *pokemons
     }
 }
 
+/*!
+ * Récupère les pokemons des différents types
+ * \brief DatabaseManager::startQueries
+ */
 void DatabaseManager::startQueries()
 {
     QSqlQuery query;
@@ -112,6 +148,11 @@ void DatabaseManager::startQueries()
     }
 }
 
+/*!
+ * Renvoie la liste des pokemons
+ * \brief DatabaseManager::getPokemons
+ * \return
+ */
 std::vector<Pokemon *>* DatabaseManager::getPokemons() const
 {
     std::vector<Pokemon *>* pokemons = new std::vector<Pokemon *>;
@@ -124,21 +165,41 @@ std::vector<Pokemon *>* DatabaseManager::getPokemons() const
     return pokemons;
 }
 
+/*!
+ * Renvoie la liste des pokemons FEU
+ * \brief DatabaseManager::getFireTypePokemons
+ * \return
+ */
 std::vector<Pokemon *> *DatabaseManager::getFireTypePokemons() const
 {
     return itsFireTypePokemons;
 }
 
+/*!
+ * Renvoie la liste des pokemons ELECTRIK
+ * \brief DatabaseManager::getElectrikTypePokemons
+ * \return
+ */
 std::vector<Pokemon *> *DatabaseManager::getElectrikTypePokemons() const
 {
     return itsElectrikTypePokemons;
 }
 
+/*!
+ * Renvoie la liste des pokemons EAU
+ * \brief DatabaseManager::getWaterTypePokemons
+ * \return
+ */
 std::vector<Pokemon *> *DatabaseManager::getWaterTypePokemons() const
 {
     return itsWaterTypePokemons;
 }
 
+/*!
+ * Renvoie la liste des pokemons PLANT
+ * \brief DatabaseManager::getPlantTypePokemons
+ * \return
+ */
 std::vector<Pokemon *> *DatabaseManager::getPlantTypePokemons() const
 {
     return itsPlantTypePokemons;

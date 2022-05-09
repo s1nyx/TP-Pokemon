@@ -19,6 +19,10 @@
 #include "game.h"
 #include "ui_finishwidget.h"
 
+/*!
+ * \brief FinishWidget::FinishWidget
+ * \param parent
+ */
 FinishWidget::FinishWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FinishWidget)
@@ -26,16 +30,27 @@ FinishWidget::FinishWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
+/*!
+ * \brief FinishWidget::~FinishWidget
+ */
 FinishWidget::~FinishWidget()
 {
     delete ui;
 }
 
+/*!
+ * Affiche qui est le gagnant
+ * \brief FinishWidget::start
+ */
 void FinishWidget::start()
 {
     ui->winner->setText(Game().getItsInstance()->getItsWinner());
 }
 
+/*!
+ * Slot appelé lorsque l'utilisateur veut sauvegarder les dresseurs
+ * \brief FinishWidget::on_save_clicked
+ */
 void FinishWidget::on_save_clicked()
 {
     Game().getItsInstance()->getItsFirstTrainer()->save();
