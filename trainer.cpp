@@ -308,7 +308,9 @@ std::vector<Pokemon*>* Trainer::generatePokemons(Game* game)
         std::cerr << "Dresseur 1: L'index n'est pas dans le vecteur des pokemons : " << e.what() << std::endl;
     }
 
-    // TODO: les triers par TYPE puis par PC
+    std::sort(pokemons->begin(), pokemons->end(), [](Pokemon* a, Pokemon* b){
+       return a->getItsType() != b->getItsType() && a->getItsStrengthPower() < b->getItsStrengthPower();
+    });
 
     return itsPokemons;
 }

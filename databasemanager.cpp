@@ -6,9 +6,6 @@
 
 #include <QSqlQuery>
 
-/*!
- * \brief DatabaseManager::DatabaseManager
- */
 DatabaseManager::DatabaseManager()
 {
     itsElectrikTypePokemons = new std::vector<Pokemon*>();
@@ -41,6 +38,15 @@ bool DatabaseManager::connect()
     itsDatabase.setDatabaseName("database.db");
 
     return itsDatabase.open();
+}
+
+/*!
+ * Renvoie la BDD
+ * \brief DatabaseManager::DatabaseManager
+ */
+const QSqlDatabase &DatabaseManager::getItsDatabase() const
+{
+    return itsDatabase;
 }
 
 /*!
