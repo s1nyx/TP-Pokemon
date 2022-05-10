@@ -3,7 +3,7 @@
 
 #include <QTimer>
 
-#define GAME_TIME 1000
+#define GAME_TIME 3000
 
 /*!
  * \brief AttackWidget::AttackWidget

@@ -17,6 +17,7 @@ Trainer::Trainer(const QString &itsName) : itsName(itsName)
     itsXP = 0;
     itsPokemons = new std::vector<Pokemon*>;
     itsCurrentPokemon = nullptr;
+    itsAIType = BASIC;
 }
 
 /*!
@@ -24,6 +25,12 @@ Trainer::Trainer(const QString &itsName) : itsName(itsName)
  */
 Trainer::~Trainer()
 {
+    for (std::vector<Pokemon*>::iterator it = itsPokemons->begin(); it != itsPokemons->end(); ++it)
+    {
+        itsPokemons->erase(it);
+        delete *it;
+    }
+
     delete itsPokemons;
     delete itsCurrentPokemon;
 }

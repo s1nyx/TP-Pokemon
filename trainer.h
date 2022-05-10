@@ -31,7 +31,7 @@ public:
     ~Trainer();
 
     bool choosePokemon();
-    bool removePokemon(Pokemon* pokemson);
+    bool removePokemon(Pokemon* pokemon);
     void addPokemon(Pokemon* pokemon);
     void addXP(int xp);
     void removeXP(int xp);

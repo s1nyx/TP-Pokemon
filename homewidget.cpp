@@ -99,6 +99,7 @@ void HomeWidget::on_addPokemon_clicked()
         int electrikSelectedID = ui->electrikPokemonsTableView->currentIndex().row();
         QString pokemonName;
 
+        // Si un pokemon electrik est sélectionné
         if (electrikSelectedID != -1)
         {
             hasSelectedOne = true;
@@ -109,6 +110,7 @@ void HomeWidget::on_addPokemon_clicked()
 
         int fireSelectedID = ui->firePokemonsTableView->currentIndex().row();
 
+        // Si un pokemon feu est sélectionné
         if (fireSelectedID != -1)
         {
             if (!hasSelectedOne) hasSelectedOne = true;
@@ -119,6 +121,7 @@ void HomeWidget::on_addPokemon_clicked()
 
         int waterSelectedID = ui->waterPokemonsTableView->currentIndex().row();
 
+        // Si un pokemon eau est sélectionné
         if (waterSelectedID != -1)
         {
             if (!hasSelectedOne) hasSelectedOne = true;
@@ -129,6 +132,7 @@ void HomeWidget::on_addPokemon_clicked()
 
         int plantSelectedID = ui->plantPokemonsTableView->currentIndex().row();
 
+        // Si un pokemon plante est sélectionné
         if (plantSelectedID != -1)
         {
             if (!hasSelectedOne) hasSelectedOne = true;
