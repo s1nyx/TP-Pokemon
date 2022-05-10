@@ -1,6 +1,6 @@
 #include "databasemanager.h"
-#include "game.h"
 #include "trainer.h"
+#include "game.h"
 
 #include <iostream>
 #include <algorithm>
@@ -286,24 +286,17 @@ void Trainer::removeXP(int xp)
     }
 }
 
-/*!
- * Enregistre le dresseur dans la BDD
- * \brief Trainer::save
- */
-void Trainer::save()
+
+void Trainer::save(Game* game)
 {
-    Game().getItsInstance()->getItsDatabaseManager()->saveTrainer(itsName, itsPokemons);
+    game->getItsDatabaseManager()->saveTrainer(itsName, itsPokemons);
 }
 
-/*!
- * Génère les pokemons aléatoirement
- * \brief Trainer::generatePokemons
- * \return
- */
-std::vector<Pokemon*>* Trainer::generatePokemons()
+
+std::vector<Pokemon*>* Trainer::generatePokemons(Game* game)
 {
     // Récupère la liste des pokemons
-    std::vector<Pokemon*>* pokemons = Game().getItsInstance()->getItsDatabaseManager()->getPokemons();
+    std::vector<Pokemon*>* pokemons = game->getItsDatabaseManager()->getPokemons();
 
     try {
         for (unsigned int i = 0; i < 6; ++i)

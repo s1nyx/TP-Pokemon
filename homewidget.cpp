@@ -12,43 +12,45 @@
  * \brief HomeWidget::HomeWidget
  * \param parent
  */
-HomeWidget::HomeWidget(QWidget *parent) :
+HomeWidget::HomeWidget(QWidget *parent, Game* game) :
     QWidget(parent),
     ui(new Ui::HomeWidget)
 {
+    itsGame = game;
     ui->setupUi(this);
+    on_targetedTrainer_currentIndexChanged(0);
 
     // Connexion entre la base de donnée et les models
-    fireTypePokemonsModel = new QSqlTableModel(0, Game().getItsInstance()->getItsDatabaseManager()->getItsDatabase());
-    fireTypePokemonsModel->setTable("fire_pokemons");
-    fireTypePokemonsModel->select();
+    itsFireTypePokemonsModel = new QSqlTableModel(0, itsGame->getItsDatabaseManager()->getItsDatabase());
+    itsFireTypePokemonsModel->setTable("fire_pokemons");
+    itsFireTypePokemonsModel->select();
 
-    plantTypePokemonsModel = new QSqlTableModel(0, Game().getItsInstance()->getItsDatabaseManager()->getItsDatabase());
-    plantTypePokemonsModel->setTable("plant_pokemons");
-    plantTypePokemonsModel->select();
+    itsPlantTypePokemonsModel = new QSqlTableModel(0, itsGame->getItsDatabaseManager()->getItsDatabase());
+    itsPlantTypePokemonsModel->setTable("plant_pokemons");
+    itsPlantTypePokemonsModel->select();
 
-    electrikTypePokemonsModel = new QSqlTableModel(0, Game().getItsInstance()->getItsDatabaseManager()->getItsDatabase());
-    electrikTypePokemonsModel->setTable("electrik_pokemons");
-    electrikTypePokemonsModel->select();
+    itsElectrikTypePokemonsModel = new QSqlTableModel(0, itsGame->getItsDatabaseManager()->getItsDatabase());
+    itsElectrikTypePokemonsModel->setTable("electrik_pokemons");
+    itsElectrikTypePokemonsModel->select();
 
-    waterTypePokemonsModel = new QSqlTableModel(0, Game().getItsInstance()->getItsDatabaseManager()->getItsDatabase());
-    waterTypePokemonsModel->setTable("water_pokemons");
-    waterTypePokemonsModel->select();
+    itsWaterTypePokemonsModel = new QSqlTableModel(0, itsGame->getItsDatabaseManager()->getItsDatabase());
+    itsWaterTypePokemonsModel->setTable("water_pokemons");
+    itsWaterTypePokemonsModel->select();
 
     // Connexion entre les models et les tableviews
-    ui->firePokemonsTableView->setModel(fireTypePokemonsModel);
+    ui->firePokemonsTableView->setModel(itsFireTypePokemonsModel);
     ui->firePokemonsTableView->setAlternatingRowColors(true);
     ui->firePokemonsTableView->show();
 
-    ui->plantPokemonsTableView->setModel(plantTypePokemonsModel);
+    ui->plantPokemonsTableView->setModel(itsPlantTypePokemonsModel);
     ui->plantPokemonsTableView->setAlternatingRowColors(true);
     ui->plantPokemonsTableView->show();
 
-    ui->electrikPokemonsTableView->setModel(electrikTypePokemonsModel);
+    ui->electrikPokemonsTableView->setModel(itsElectrikTypePokemonsModel);
     ui->electrikPokemonsTableView->setAlternatingRowColors(true);
     ui->electrikPokemonsTableView->show();
 
-    ui->waterPokemonsTableView->setModel(waterTypePokemonsModel);
+    ui->waterPokemonsTableView->setModel(itsWaterTypePokemonsModel);
     ui->waterPokemonsTableView->setAlternatingRowColors(true);
     ui->waterPokemonsTableView->show();
 }
@@ -59,10 +61,15 @@ HomeWidget::HomeWidget(QWidget *parent) :
 HomeWidget::~HomeWidget()
 {
     delete ui;
-    delete fireTypePokemonsModel;
-    delete waterTypePokemonsModel;
-    delete electrikTypePokemonsModel;
-    delete plantTypePokemonsModel;
+    delete itsFireTypePokemonsModel;
+    delete itsWaterTypePokemonsModel;
+    delete itsElectrikTypePokemonsModel;
+    delete itsPlantTypePokemonsModel;
+    delete itsCurrentTrainer;
+    delete itsCurrentTrainerHPTotal;
+    delete itsCurrentTrainerCPTotal;
+    delete itsCurrentTrainerSpeedAvg;
+    delete itsCurrentTrainerTeam;
 }
 
 /*!
@@ -81,41 +88,23 @@ Ui::HomeWidget *HomeWidget::getUi() const
  */
 void HomeWidget::on_addPokemon_clicked()
 {
-    int dresser = ui->targetedTrainer->currentIndex();
-    Trainer* currentTrainer;
-    QListWidget* currentTrainerTeam;
-
-    if (dresser == 0)
-    {
-        currentTrainer = Game().getItsInstance()->getItsFirstTrainer();
-        currentTrainerTeam = ui->trainer1Team;
-    }
-    else
-    {
-        currentTrainer = Game().getItsInstance()->getItsSecondTrainer();
-        currentTrainerTeam = ui->trainer2Team;
-    }
-
     // checker que le dresseur a pas déjà 6 pokemons
-    if (currentTrainer->getItsPokemons()->size() == 6)
+    if (itsCurrentTrainer->getItsPokemons()->size() == 6)
     {
         ui->errorInput->setText("Vous possédez déjà 6 pokemons !");
     }
     else
     {
-        // TODO: voir pour opti le code dessous car dégeu
-
         bool hasSelectedOne = false;
-
         int electrikSelectedID = ui->electrikPokemonsTableView->currentIndex().row();
+        QString pokemonName;
 
         if (electrikSelectedID != -1)
         {
             hasSelectedOne = true;
 
-            QString pokemonName = electrikTypePokemonsModel->record(electrikSelectedID).value("name").toString();
-            currentTrainerTeam->addItem(pokemonName);
-            currentTrainer->addPokemon(Game().getItsInstance()->getItsDatabaseManager()->getElectrikTypePokemons()->at(electrikSelectedID));
+            pokemonName = itsElectrikTypePokemonsModel->record(electrikSelectedID).value("name").toString();
+            itsCurrentTrainer->addPokemon(itsGame->getItsDatabaseManager()->getElectrikTypePokemons()->at(electrikSelectedID));
         }
 
         int fireSelectedID = ui->firePokemonsTableView->currentIndex().row();
@@ -124,9 +113,8 @@ void HomeWidget::on_addPokemon_clicked()
         {
             if (!hasSelectedOne) hasSelectedOne = true;
 
-            QString pokemonName = fireTypePokemonsModel->record(fireSelectedID).value("name").toString();
-            currentTrainerTeam->addItem(pokemonName);
-            currentTrainer->addPokemon(Game().getItsInstance()->getItsDatabaseManager()->getFireTypePokemons()->at(fireSelectedID));
+            pokemonName = itsFireTypePokemonsModel->record(fireSelectedID).value("name").toString();
+            itsCurrentTrainer->addPokemon(itsGame->getItsDatabaseManager()->getFireTypePokemons()->at(fireSelectedID));
         }
 
         int waterSelectedID = ui->waterPokemonsTableView->currentIndex().row();
@@ -135,10 +123,8 @@ void HomeWidget::on_addPokemon_clicked()
         {
             if (!hasSelectedOne) hasSelectedOne = true;
 
-            QString pokemonName = waterTypePokemonsModel->record(waterSelectedID).value("name").toString();
-
-            currentTrainerTeam->addItem(pokemonName);
-            currentTrainer->addPokemon(Game().getItsInstance()->getItsDatabaseManager()->getWaterTypePokemons()->at(waterSelectedID));
+            pokemonName = itsWaterTypePokemonsModel->record(waterSelectedID).value("name").toString();
+            itsCurrentTrainer->addPokemon(itsGame->getItsDatabaseManager()->getWaterTypePokemons()->at(waterSelectedID));
         }
 
         int plantSelectedID = ui->plantPokemonsTableView->currentIndex().row();
@@ -147,10 +133,8 @@ void HomeWidget::on_addPokemon_clicked()
         {
             if (!hasSelectedOne) hasSelectedOne = true;
 
-            QString pokemonName = plantTypePokemonsModel->record(plantSelectedID).value("name").toString();
-
-            currentTrainerTeam->addItem(pokemonName);
-            currentTrainer->addPokemon(Game().getItsInstance()->getItsDatabaseManager()->getPlantTypePokemons()->at(plantSelectedID));
+            pokemonName = itsPlantTypePokemonsModel->record(plantSelectedID).value("name").toString();
+            itsCurrentTrainer->addPokemon(itsGame->getItsDatabaseManager()->getPlantTypePokemons()->at(plantSelectedID));
         }
 
         if (!hasSelectedOne)
@@ -159,7 +143,8 @@ void HomeWidget::on_addPokemon_clicked()
         }
         else
         {
-            generateTeamData(dresser);
+            itsCurrentTrainerTeam->addItem(pokemonName);
+            generateTeamData();
         }
     }
 }
@@ -170,38 +155,22 @@ void HomeWidget::on_addPokemon_clicked()
  */
 void HomeWidget::on_removePokemon_clicked()
 {
-    // todo: passer le dresser en attribut pour les autres fonctions
-    int dresser = ui->targetedTrainer->currentIndex();
-    Trainer* currentTrainer;
-    QListWidget* currentTrainerTeam;
-
-    if (dresser == 0)
-    {
-        currentTrainer = Game().getItsInstance()->getItsFirstTrainer();
-        currentTrainerTeam = ui->trainer1Team;
-    }
-    else
-    {
-        currentTrainer = Game().getItsInstance()->getItsSecondTrainer();
-        currentTrainerTeam = ui->trainer2Team;
-    }
-
-    if (currentTrainerTeam->currentItem() == nullptr)
+    if (itsCurrentTrainerTeam->currentItem() == nullptr)
     {
         ui->errorInput->setText("Vous n'avez pas sélectionné de pokemon !");
     }
     else
     {
-        QString selectedPokemonName = currentTrainerTeam->currentItem()->text();
+        QString selectedPokemonName = itsCurrentTrainerTeam->currentItem()->text();
 
         // vérifie qu'il a au moins 2XP
         bool canRemovePokemon = false;
 
-        for (Pokemon* pokemonOwned : *currentTrainer->getItsPokemons())
+        for (Pokemon* pokemonOwned : *itsCurrentTrainer->getItsPokemons())
         {
             if (pokemonOwned->getItsName() == selectedPokemonName)
             {
-                canRemovePokemon = currentTrainer->removePokemon(pokemonOwned);
+                canRemovePokemon = itsCurrentTrainer->removePokemon(pokemonOwned);
                 break;
             }
         }
@@ -212,8 +181,8 @@ void HomeWidget::on_removePokemon_clicked()
         }
         else
         {
-            currentTrainerTeam->takeItem(currentTrainerTeam->currentRow());
-            generateTeamData(dresser);
+            itsCurrentTrainerTeam->takeItem(itsCurrentTrainerTeam->currentRow());
+            generateTeamData();
         }
     }
 }
@@ -224,11 +193,9 @@ void HomeWidget::on_removePokemon_clicked()
  */
 void HomeWidget::on_startGame_clicked()
 {
-    // todo: opti le code
-
     // on vérifie que les 2 dresseurs ont 6 pokemons
-    if (Game().getItsInstance()->getItsFirstTrainer()->getItsPokemons()->size() != 6
-        || Game().getItsInstance()->getItsSecondTrainer()->getItsPokemons()->size() != 6)
+    if (itsGame->getItsFirstTrainer()->getItsPokemons()->size() != 6
+        || itsGame->getItsSecondTrainer()->getItsPokemons()->size() != 6)
     {
         ui->errorInput->setText("Vous n'avez pas choisi les pokemons des dresseurs !");
     }
@@ -240,19 +207,19 @@ void HomeWidget::on_startGame_clicked()
 
         if (firstTrainerName != "")
         {
-            Game().getItsInstance()->getItsFirstTrainer()->setItsName(firstTrainerName);
+            itsGame->getItsFirstTrainer()->setItsName(firstTrainerName);
         }
 
         QString secondTrainerName = ui->trainer2Name->text();
 
         if (secondTrainerName != "")
         {
-            Game().getItsInstance()->getItsSecondTrainer()->setItsName(secondTrainerName);
+            itsGame->getItsSecondTrainer()->setItsName(secondTrainerName);
         }
 
         int aiType = ui->aiType->currentIndex();
 
-        Game().getItsInstance()->start(static_cast<AIType>(aiType));
+        itsGame->start(static_cast<AIType>(aiType));
     }
 }
 
@@ -262,39 +229,23 @@ void HomeWidget::on_startGame_clicked()
  */
 void HomeWidget::on_generatePokemon_clicked()
 {
-    // todo: passer le dresser en attribut pour les autres fonctions
-    int dresser = ui->targetedTrainer->currentIndex();
-    Trainer* currentTrainer;
-    QListWidget* currentTrainerTeam;
-
-    if (dresser == 0)
-    {
-        currentTrainer = Game().getItsInstance()->getItsFirstTrainer();
-        currentTrainerTeam = ui->trainer1Team;
-    }
-    else
-    {
-        currentTrainer = Game().getItsInstance()->getItsSecondTrainer();
-        currentTrainerTeam = ui->trainer2Team;
-    }
-
-    if (currentTrainer->getItsPokemons()->size() == 6)
+    if (itsCurrentTrainer->getItsPokemons()->size() == 6)
     {
         ui->errorInput->setText("Vous possédez déjà 6 pokemons !");
     }
     else
     {
-        currentTrainer->getItsPokemons()->clear();
-        currentTrainerTeam->clear();
+        itsCurrentTrainer->getItsPokemons()->clear();
+        itsCurrentTrainerTeam->clear();
 
-        std::vector<Pokemon*>* trainerPokemons = currentTrainer->generatePokemons();
+        std::vector<Pokemon*>* trainerPokemons = itsCurrentTrainer->generatePokemons(itsGame);
 
         for (Pokemon* pokemon : *trainerPokemons)
         {
-            currentTrainerTeam->addItem(pokemon->getItsName());
+            itsCurrentTrainerTeam->addItem(pokemon->getItsName());
         }
 
-        generateTeamData(dresser);
+        generateTeamData();
     }
 }
 
@@ -303,45 +254,51 @@ void HomeWidget::on_generatePokemon_clicked()
  * \brief HomeWidget::generateTeamData
  * \param trainerID
  */
-void HomeWidget::generateTeamData(int trainerID)
+void HomeWidget::generateTeamData()
 {
-    Trainer* currentTrainer;
-    QLabel* currentTrainerHPTotal;
-    QLabel* currentTrainerCPTotal;
-    QLabel* currentTrainerSpeedAvg;
+    itsCurrentTrainerHPTotal->setText(QString::number(itsCurrentTrainer->getTotalHealthPoints()));
+    itsCurrentTrainerCPTotal->setText(QString::number(itsCurrentTrainer->getTotalStrengthPower()));
+    itsCurrentTrainerSpeedAvg->setText(QString::number(itsCurrentTrainer->getAverageAttackSpeed()));
 
-    if (trainerID == 0)
-    {
-        currentTrainer = Game().getItsInstance()->getItsFirstTrainer();
-        currentTrainerHPTotal = ui->trainer1TotalHP;
-        currentTrainerCPTotal = ui->trainer1TotalCP;
-        currentTrainerSpeedAvg = ui->trainer1SpeedAvg;
-    }
-    else
-    {
-        currentTrainer = Game().getItsInstance()->getItsSecondTrainer();
-        currentTrainerHPTotal = ui->trainer2TotalHP;
-        currentTrainerCPTotal = ui->trainer2TotalCP;
-        currentTrainerSpeedAvg = ui->trainer2SpeedAvg;
-    }
-
-    currentTrainerHPTotal->setText(QString::number(currentTrainer->getTotalHealthPoints()));
-    currentTrainerCPTotal->setText(QString::number(currentTrainer->getTotalStrengthPower()));
-    currentTrainerSpeedAvg->setText(QString::number(currentTrainer->getAverageAttackSpeed()));
-
-    unsigned int firstTrainerProbability = Game().getItsInstance()->getItsFirstTrainer()->getTotalStrengthPower() / Game().getItsInstance()->getItsFirstTrainer()->getTotalHealthPoints() * 100;
-    unsigned int opponentTrainerProbability = Game().getItsInstance()->getItsSecondTrainer()->getTotalStrengthPower() / Game().getItsInstance()->getItsSecondTrainer()->getTotalHealthPoints() * 100;
+    unsigned int firstTrainerProbability = itsGame->getItsFirstTrainer()->getTotalStrengthPower() / itsGame->getItsFirstTrainer()->getTotalHealthPoints() * 100;
+    unsigned int opponentTrainerProbability = itsGame->getItsSecondTrainer()->getTotalStrengthPower() / itsGame->getItsSecondTrainer()->getTotalHealthPoints() * 100;
 
     if (firstTrainerProbability > opponentTrainerProbability)
     {
-        ui->potentialWinner->setText(Game().getItsInstance()->getItsFirstTrainer()->getItsName() + " (" + QString::number(firstTrainerProbability) + "%)");
+        ui->potentialWinner->setText(itsGame->getItsFirstTrainer()->getItsName() + " (" + QString::number(firstTrainerProbability) + "%)");
     }
     else if (firstTrainerProbability < opponentTrainerProbability)
     {
-        ui->potentialWinner->setText(Game().getItsInstance()->getItsSecondTrainer()->getItsName() + " (" + QString::number(opponentTrainerProbability) + "%)");
+        ui->potentialWinner->setText(itsGame->getItsSecondTrainer()->getItsName() + " (" + QString::number(opponentTrainerProbability) + "%)");
     }
     else
     {
         ui->potentialWinner->setText("50-50");
     }
 }
+
+/*!
+ * Met à jour les pointeurs en fonction du dresseur que l'on souhaite modifier
+ * \brief HomeWidget::on_targetedTrainer_currentIndexChanged
+ * \param index
+ */
+void HomeWidget::on_targetedTrainer_currentIndexChanged(int index)
+{
+    if (index == 0)
+    {
+        itsCurrentTrainer = itsGame->getItsFirstTrainer();
+        itsCurrentTrainerTeam = ui->trainer1Team;
+        itsCurrentTrainerHPTotal = ui->trainer1TotalHP;
+        itsCurrentTrainerCPTotal = ui->trainer1TotalCP;
+        itsCurrentTrainerSpeedAvg = ui->trainer1SpeedAvg;
+    }
+    else
+    {
+        itsCurrentTrainer = itsGame->getItsSecondTrainer();
+        itsCurrentTrainerTeam = ui->trainer2Team;
+        itsCurrentTrainerHPTotal = ui->trainer2TotalHP;
+        itsCurrentTrainerCPTotal = ui->trainer2TotalCP;
+        itsCurrentTrainerSpeedAvg = ui->trainer2SpeedAvg;
+    }
+}
+

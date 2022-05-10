@@ -15,9 +15,6 @@ Game::Game()
     itsSecondTrainer = new Trainer("AI 2");
 }
 
-
-Game* Game::itsInstance = nullptr;
-
 /*!
  * Renvoie le statut actuel de la partie
  * \brief Game::getItsState
@@ -56,21 +53,6 @@ Trainer *Game::getItsFirstTrainer() const
 Trainer *Game::getItsSecondTrainer() const
 {
     return itsSecondTrainer;
-}
-
-/*!
- * Renvoie l'instance de la classe (Singleton)
- * \brief Game::getItsInstance
- * \return
- */
-Game *Game::getItsInstance() const
-{
-    if (itsInstance == nullptr)
-    {
-        itsInstance = new Game();
-    }
-
-    return itsInstance;
 }
 
 /*!

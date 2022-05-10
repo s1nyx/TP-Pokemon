@@ -10,10 +10,11 @@ enum GameState {
     FINISH
 };
 
+class Trainer;
+
 class Game
 {
 private:
-    static Game* itsInstance; // Utilisation du Singleton comme design-pattern
     GameState itsState;
     DatabaseManager* itsDatabaseManager;
     Trainer* itsFirstTrainer;
@@ -33,7 +34,6 @@ public:
     GameState getItsState() const;
     Trainer *getItsFirstTrainer() const;
     Trainer *getItsSecondTrainer() const;
-    Game *getItsInstance() const;
     DatabaseManager *getItsDatabaseManager() const;
     const QString &getItsWinner() const;
 };

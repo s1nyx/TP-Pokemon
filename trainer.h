@@ -6,6 +6,8 @@
 #include <pokemon.h>
 #include <QString>
 
+class Game;
+
 // Types d'IA possibles
 enum AIType {
     BASIC,
@@ -33,8 +35,8 @@ public:
     void addPokemon(Pokemon* pokemon);
     void addXP(int xp);
     void removeXP(int xp);
-    void save();
-    std::vector<Pokemon*>* generatePokemons();
+    void save(Game* game);
+    std::vector<Pokemon*>* generatePokemons(Game* game);
 
     void setItsName(const QString &newItsName);
     void setItsCurrentPokemon(Pokemon* newItsCurrentPokemon);

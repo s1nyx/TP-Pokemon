@@ -1,6 +1,8 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include <game.h>
+
 #include <QStackedWidget>
 #include <QWidget>
 
@@ -21,7 +23,7 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = nullptr);
+    Widget(QWidget *parent = nullptr, Game* game = nullptr);
     ~Widget();
 
 private slots:
@@ -29,7 +31,8 @@ private slots:
 
 private:
     Ui::Widget *ui;
-    WidgetType currentWidget;
-    QStackedWidget* stackedWidget;
+    Game* itsGame;
+    WidgetType itsCurrentWidget;
+    QStackedWidget* itsStackedWidget;
 };
 #endif // WIDGET_H

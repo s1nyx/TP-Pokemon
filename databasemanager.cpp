@@ -30,16 +30,6 @@ DatabaseManager::~DatabaseManager()
 }
 
 /*!
- * Renvoie la BDD
- * \brief DatabaseManager::getItsDatabase
- * \return
- */
-const QSqlDatabase &DatabaseManager::getItsDatabase() const
-{
-    return itsDatabase;
-}
-
-/*!
  * Permet de se connecter à la BDD
  * Renvoie si la connexion a été établie
  * \brief DatabaseManager::connect

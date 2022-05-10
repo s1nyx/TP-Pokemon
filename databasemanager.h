@@ -28,7 +28,6 @@ public:
     std::vector<Pokemon*>* getElectrikTypePokemons() const;
     std::vector<Pokemon*>* getWaterTypePokemons() const;
     std::vector<Pokemon*>* getPlantTypePokemons() const;
-    const QSqlDatabase &getItsDatabase() const;
 };
 
 #endif // DATABASEMANAGER_H

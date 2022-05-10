@@ -1,22 +1,25 @@
 #include "attackwidget.h"
 #include "ui_attackwidget.h"
+
 #include <QTimer>
+
 #define GAME_TIME 1000
 
 /*!
  * \brief AttackWidget::AttackWidget
  * \param parent
  */
-AttackWidget::AttackWidget(QWidget *parent) :
+AttackWidget::AttackWidget(QWidget *parent, Game* game) :
     QWidget(parent),
     ui(new Ui::AttackWidget)
 {
+    itsGame = game;
     itsTimer = new QTimer();
     itsRemainingTime = new QTimer();
 
     ui->setupUi(this);
 
-    currentTrainer = Game().getItsInstance()->getItsFirstTrainer();
+    itsCurrentTrainer = itsGame->getItsFirstTrainer();
 }
 
 /*!
@@ -25,7 +28,7 @@ AttackWidget::AttackWidget(QWidget *parent) :
 AttackWidget::~AttackWidget()
 {
     delete ui;
-    delete currentTrainer;
+    delete itsCurrentTrainer;
     delete itsTimer;
     delete itsRemainingTime;
 }
@@ -40,10 +43,14 @@ Ui::AttackWidget *AttackWidget::getUi() const
     return ui;
 }
 
+/*!
+ * Lance la partie
+ * \brief AttackWidget::start
+ */
 void AttackWidget::start()
 {
-    ui->trainer1Name->setText(Game().getItsInstance()->getItsFirstTrainer()->getItsName() + " (Niv. " + QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsLevel()) + " / " + QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsXP()) + " Exp.)");
-    ui->trainer2Name->setText(Game().getItsInstance()->getItsSecondTrainer()->getItsName() + " (Niv. " + QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsLevel()) + " / " + QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsXP()) + " Exp.)");
+    ui->trainer1Name->setText(itsGame->getItsFirstTrainer()->getItsName() + " (Niv. " + QString::number(itsGame->getItsFirstTrainer()->getItsLevel()) + " / " + QString::number(itsGame->getItsFirstTrainer()->getItsXP()) + " Exp.)");
+    ui->trainer2Name->setText(itsGame->getItsSecondTrainer()->getItsName() + " (Niv. " + QString::number(itsGame->getItsSecondTrainer()->getItsLevel()) + " / " + QString::number(itsGame->getItsSecondTrainer()->getItsXP()) + " Exp.)");
 
     updatePokemons();
 
@@ -57,17 +64,30 @@ void AttackWidget::start()
     connect(itsRemainingTime, SIGNAL(timeout()), this, SLOT(onTick()));
 }
 
+/*!
+ * Permet de modifier l'affichage du compteur de l'intervalle de temps d'attaque
+ * \brief AttackWidget::onTick
+ */
 void AttackWidget::onTick()
 {
     itsTimeCounter -= 1;
 
     if (itsTimeCounter == 0) itsTimeCounter = GAME_TIME / 1000;
+
     ui->lcdNumber->display(itsTimeCounter);
 }
 
+/*!
+ * Boucle de jeu
+ * \brief AttackWidget::gameLoop
+ */
 void AttackWidget::gameLoop()
 {
-    if (Game().getItsInstance()->getItsFirstTrainer()->getTotalHealthPoints() == 0 || Game().getItsInstance()->getItsSecondTrainer()->getTotalHealthPoints() == 0)
+    Trainer* firstTrainer = itsGame->getItsFirstTrainer();
+    Trainer* secondTrainer = itsGame->getItsSecondTrainer();
+
+    // Si une des deux équipes n'a plus de pokemon en vie, c'est finit
+    if (firstTrainer->getTotalHealthPoints() == 0 || secondTrainer->getTotalHealthPoints() == 0)
     {
         itsTimer->stop();
         itsRemainingTime->stop();
@@ -75,29 +95,33 @@ void AttackWidget::gameLoop()
 
         QString winner;
 
-        if (Game().getItsInstance()->getItsFirstTrainer()->getTotalHealthPoints() == 0)
+        if (firstTrainer->getTotalHealthPoints() == 0)
         {
-            winner = Game().getItsInstance()->getItsSecondTrainer()->getItsName();
+            winner = secondTrainer->getItsName();
         }
         else
         {
-            winner = Game().getItsInstance()->getItsFirstTrainer()->getItsName();
+            winner = firstTrainer->getItsName();
         }
 
-        Game().getItsInstance()->setItsWinner(winner);
+        itsGame->setItsWinner(winner);
         emit gameFinished();
     }
     else
     {
-        Trainer* opponent = currentTrainer == Game().getItsInstance()->getItsFirstTrainer() ? Game().getItsInstance()->getItsSecondTrainer() : Game().getItsInstance()->getItsFirstTrainer();
+        Trainer* opponent = itsCurrentTrainer == firstTrainer ? secondTrainer : firstTrainer;
+        Pokemon* currentPokemon = itsCurrentTrainer->getItsCurrentPokemon();
         bool noMorePokemon = false;
 
-        if (currentTrainer->getItsCurrentPokemon()->isDead())
+        // Si le pokemon est mort on le change
+        if (currentPokemon->isDead())
         {
-            qDebug() << "Change POK ";
+            qDebug() << "Change Pokemon";
 
-            currentTrainer->choosePokemon();
-            if (currentTrainer->getItsCurrentPokemon()->isDead())
+            itsCurrentTrainer->choosePokemon();
+            currentPokemon = itsCurrentTrainer->getItsCurrentPokemon();
+
+            if (currentPokemon->isDead())
             {
                 noMorePokemon = true;
             }
@@ -107,49 +131,64 @@ void AttackWidget::gameLoop()
             }
         }
 
+        // Si il reste des pokemons on attaque
         if (!noMorePokemon)
         {
-            currentTrainer->getItsCurrentPokemon()->attack(opponent->getItsCurrentPokemon());
+            currentPokemon->attack(opponent->getItsCurrentPokemon());
             updateDataShowed();
             qDebug() << "attack";
 
-            if (currentTrainer->getItsCurrentPokemon()->hasKoOneAttack())
+            if (currentPokemon->hasKoOneAttack())
             {
                 qDebug() << "Oneshot";
-                currentTrainer->addXP(3);
+                itsCurrentTrainer->addXP(3);
                 opponent->removeXP(1);
             }
 
-            currentTrainer = opponent;
+            itsCurrentTrainer = opponent;
         }
     }
 }
 
+/*!
+ * Permet de mettre à jour les informations des pokemons
+ * \brief AttackWidget::updatePokemons
+ */
 void AttackWidget::updatePokemons()
 {
-    QPixmap pix1(":/images/images/" + Game().getItsInstance()->getItsFirstTrainer()->getItsCurrentPokemon()->getItsName() + ".png");
+    Trainer* firstTrainer = itsGame->getItsFirstTrainer();
+    Trainer* secondTrainer = itsGame->getItsSecondTrainer();
+
+    QPixmap pix1(":/images/images/" + firstTrainer->getItsCurrentPokemon()->getItsName() + ".png");
     pix1 = pix1.scaled(130, 80);
     ui->trainer1Pokemon->setPixmap(pix1);
     ui->trainer1Pokemon->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-    ui->trainer1PokemonDescription->setText(Game().getItsInstance()->getItsFirstTrainer()->getItsCurrentPokemon()->getDescription());
+    ui->trainer1PokemonDescription->setText(firstTrainer->getItsCurrentPokemon()->getDescription());
 
-    QPixmap pix2(":/images/images/" + Game().getItsInstance()->getItsSecondTrainer()->getItsCurrentPokemon()->getItsName() + ".png");
+    QPixmap pix2(":/images/images/" + secondTrainer->getItsCurrentPokemon()->getItsName() + ".png");
     pix2 = pix2.scaled(130, 80);
     ui->trainer2Pokemon->setPixmap(pix2);
     ui->trainer2Pokemon->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 
-    ui->trainer2PokemonDescription->setText(Game().getItsInstance()->getItsSecondTrainer()->getItsCurrentPokemon()->getDescription());
+    ui->trainer2PokemonDescription->setText(itsGame->getItsSecondTrainer()->getItsCurrentPokemon()->getDescription());
 
-    ui->trainer1Name->setText(Game().getItsInstance()->getItsFirstTrainer()->getItsName() + " (Niv. " + QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsLevel()) + " / " + QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsXP()) + " Exp.)");
-    ui->trainer2Name->setText(Game().getItsInstance()->getItsSecondTrainer()->getItsName() + " (Niv. " + QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsLevel()) + " / " + QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsXP()) + " Exp.)");
+    ui->trainer1Name->setText(firstTrainer->getItsName() + " (Niv. " + QString::number(firstTrainer->getItsLevel()) + " / " + QString::number(firstTrainer->getItsXP()) + " Exp.)");
+    ui->trainer2Name->setText(secondTrainer->getItsName() + " (Niv. " + QString::number(secondTrainer->getItsLevel()) + " / " + QString::number(secondTrainer->getItsXP()) + " Exp.)");
 }
 
+/*!
+ * Permet de mettre à jour les informations du dresseur et la vie du pokemon
+ * \brief AttackWidget::updateDataShowed
+ */
 void AttackWidget::updateDataShowed()
 {
-    ui->trainer1TotalHP->setText(QString::number(Game().getItsInstance()->getItsFirstTrainer()->getTotalHealthPoints()));
-    ui->trainer2TotalHP->setText(QString::number(Game().getItsInstance()->getItsSecondTrainer()->getTotalHealthPoints()));
+    Trainer* firstTrainer = itsGame->getItsFirstTrainer();
+    Trainer* secondTrainer = itsGame->getItsSecondTrainer();
 
-    ui->trainer1PokemonHP->setText(QString::number(Game().getItsInstance()->getItsFirstTrainer()->getItsCurrentPokemon()->getHpPercentage()) + "% de vie");
-    ui->trainer2PokemonHP->setText(QString::number(Game().getItsInstance()->getItsSecondTrainer()->getItsCurrentPokemon()->getHpPercentage()) + "% de vie");
+    ui->trainer1TotalHP->setText(QString::number(firstTrainer->getTotalHealthPoints()));
+    ui->trainer2TotalHP->setText(QString::number(secondTrainer->getTotalHealthPoints()));
+
+    ui->trainer1PokemonHP->setText(QString::number(firstTrainer->getItsCurrentPokemon()->getHpPercentage()) + "% de vie");
+    ui->trainer2PokemonHP->setText(QString::number(secondTrainer->getItsCurrentPokemon()->getHpPercentage()) + "% de vie");
 }

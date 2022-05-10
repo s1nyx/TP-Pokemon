@@ -11,24 +11,27 @@
  * \brief Widget::Widget
  * \param parent
  */
-Widget::Widget(QWidget *parent)
+Widget::Widget(QWidget *parent, Game* game)
     : QWidget(parent)
-    , ui(new Ui::Widget), currentWidget(HOME)
+    , ui(new Ui::Widget), itsCurrentWidget(HOME)
 {
     ui->setupUi(this);
+
+    itsGame = game;
+
     // désactive le resize
     setWindowFlags(Qt::Widget | Qt::MSWindowsFixedSizeDialogHint);
 
     // initialisation du système de navigation
-    AttackWidget* attackWidget = new AttackWidget();
-    HomeWidget* homeWidget = new HomeWidget();
-    FinishWidget* finishWidget = new FinishWidget();
+    AttackWidget* attackWidget = new AttackWidget(nullptr, game);
+    HomeWidget* homeWidget = new HomeWidget(nullptr, game);
+    FinishWidget* finishWidget = new FinishWidget(nullptr, game);
 
     // ajout au widget widget principal
-    stackedWidget = new QStackedWidget();
-    stackedWidget->addWidget(homeWidget);
-    stackedWidget->addWidget(attackWidget);
-    stackedWidget->addWidget(finishWidget);
+    itsStackedWidget = new QStackedWidget();
+    itsStackedWidget->addWidget(homeWidget);
+    itsStackedWidget->addWidget(attackWidget);
+    itsStackedWidget->addWidget(finishWidget);
 
     // connecter les menus entre eux
     connect(homeWidget->getUi()->startGame, SIGNAL(clicked()), this, SLOT(navigate()));
@@ -38,7 +41,7 @@ Widget::Widget(QWidget *parent)
 
     // affiché le QStackedWidget grâce à un VerticalBoxLayout
     QVBoxLayout* layout = new QVBoxLayout();
-    layout->addWidget(stackedWidget);
+    layout->addWidget(itsStackedWidget);
 
     setLayout(layout);
 }
@@ -49,7 +52,7 @@ Widget::Widget(QWidget *parent)
 Widget::~Widget()
 {
     delete ui;
-    delete stackedWidget;
+    delete itsStackedWidget;
 }
 
 /*!
@@ -59,18 +62,18 @@ Widget::~Widget()
 void Widget::navigate()
 {
     // Si les pokemons ont été générés, on peut commencer la partie
-    if (Game().getItsInstance()->canStart())
+    if (itsGame->canStart())
     {
-        if (currentWidget == HOME)
+        if (itsCurrentWidget == HOME)
         {
-             currentWidget = ATTACK;
+             itsCurrentWidget = ATTACK;
         }
-        else if (currentWidget == ATTACK)
+        else if (itsCurrentWidget == ATTACK)
         {
-            currentWidget = FINISHED;
+            itsCurrentWidget = FINISHED;
         }
 
-        stackedWidget->setCurrentIndex(currentWidget);
+        itsStackedWidget->setCurrentIndex(itsCurrentWidget);
     }
 }
 
